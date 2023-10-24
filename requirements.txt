@@ -1,0 +1,8 @@
+fredapi
+nasdaqdatalink
+numpy
+pandas
+plotly
+sgs
+streamlit
+yfinance
