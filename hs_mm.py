@@ -18,7 +18,7 @@ import datetime
 import warnings
 import numpy as np
 import nasdaqdatalink
-import requirements
+import requests
 
 
 # Suppress FutureWarnings
