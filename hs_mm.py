@@ -368,7 +368,7 @@ if selected == 'Macro Indicators':
 
 
             # Plot both 'Value' and '12M MA' on the same figure
-            fig_yc = px.line(df_yc, x='Date', y=['T10Y3M', 'T10Y2Y'], title='US Yield Curve')
+            fig_yc = px.line(df_yc, x='Date', y=['T10Y3M', 'T10Y2Y'], title='Yield Curve')
                 
             fig_yc.update_xaxes(
                 rangeslider_visible=True,
@@ -404,6 +404,10 @@ if selected == 'Macro Indicators':
     )
 )
 
+            fig_yc.update_layout( width=600,  # Largura do gráfico
+height=600  # Altura do gráfico
+)
+            
             st.plotly_chart(fig_yc)
 
 
@@ -496,6 +500,20 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_t1y.update_yaxes(tickformat=".2f", ticksuffix="%")
+
+            fig_t1y.update_layout( width=600,  # Largura do gráfico
+        height=600  # Altura do gráfico
+    )
+
+            fig_t1y.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
             
             st.plotly_chart(fig_t1y)
 
