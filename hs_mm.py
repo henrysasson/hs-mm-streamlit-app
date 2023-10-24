@@ -1117,8 +1117,12 @@ if selected == 'Positioning':
         temp_df = fetch_data(contract_code)
         all_dataframes.append(temp_df)
 
+    # Asegurando que a coluna 'Dates' é uma data
+    for df in all_dataframes:
+        df['Dates'] = pd.to_datetime(df['Dates'])
+
     # Etapa 3: Concatenar todos esses DataFrames individuais em um único DataFrame
-    data = pd.concat(all_dataframes, ignore_index=True)
+    data = pd.concat(all_dataframes, ignore_index=True).set_index('Dates').groupby(level=0).sum()
 
     dates = data.index
 
