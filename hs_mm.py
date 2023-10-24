@@ -390,8 +390,8 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_yc.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_yc.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
+            fig_yc.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
 
             fig_yc.update_layout(
@@ -402,10 +402,6 @@ if selected == 'Macro Indicators':
         xanchor="right",
         x=1
     )
-)
-
-            fig_yc.update_layout( width=600,  # Largura do gráfico
-height=600  # Altura do gráfico
 )
             
             st.plotly_chart(fig_yc)
@@ -453,8 +449,8 @@ height=600  # Altura do gráfico
             # Adicionar o símbolo de % ao eixo y
             fig_hys.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_hys.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
+            fig_hys.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
 
             fig_hys.update_layout(
@@ -501,8 +497,8 @@ height=600  # Altura do gráfico
             # Adicionar o símbolo de % ao eixo y
             fig_t1y.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_t1y.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
+            fig_t1y.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
 
             fig_t1y.update_layout(
