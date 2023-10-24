@@ -709,6 +709,20 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_nfpr.update_yaxes(tickformat='.2%')
+
+            fig_nfpr.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
+    )
+
+            fig_nfpr.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
             
             st.plotly_chart(fig_nfpr)
 
@@ -736,7 +750,20 @@ if selected == 'Macro Indicators':
                 ])
             )
             )
-        
+
+            fig_oh.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
+    )
+
+            fig_oh.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
 
             st.plotly_chart(fig_oh)
 
@@ -765,7 +792,20 @@ if selected == 'Macro Indicators':
                 ])
             )
             )
-        
+
+            fig_gea.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
+    )
+
+            fig_gea.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
         
             st.plotly_chart(fig_gea)
         
