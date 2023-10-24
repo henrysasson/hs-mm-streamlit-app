@@ -374,7 +374,6 @@ if selected == 'Macro Indicators':
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
                         dict(count=1, label="YTD", step="year", stepmode="todate"),
                         dict(count=1, label="1y", step="year", stepmode="backward"),
                         dict(count=3, label="3y", step="year", stepmode="backward"),
@@ -432,7 +431,6 @@ if selected == 'Macro Indicators':
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
                         dict(count=1, label="YTD", step="year", stepmode="todate"),
                         dict(count=1, label="1y", step="year", stepmode="backward"),
                         dict(count=3, label="3y", step="year", stepmode="backward"),
