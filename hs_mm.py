@@ -445,7 +445,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_hys.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_hys.update_layout( width=800,  # Largura do gráfico
+            fig_hys.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
 
@@ -505,7 +505,7 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fci.update_yaxes(tickformat=".2f")
 
-            fig_fci.update_layout( width=800,  # Largura do gráfico
+            fig_fci.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
                 
@@ -542,7 +542,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_fci_comp.update_yaxes(tickformat=".2f")
 
-            fig_fci_comp.update_layout( width=800,  # Largura do gráfico
+            fig_fci_comp.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
 
@@ -592,7 +592,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_m2_us.update_yaxes(tickformat=".2%")
 
-            fig_m2_us.update_layout( width=800,  # Largura do gráfico
+            fig_m2_us.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
                 
@@ -638,7 +638,7 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fed_liq.update_yaxes(tickformat=".2f")
 
-            fig_fed_liq.update_layout( width=800,  # Largura do gráfico
+            fig_fed_liq.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
                 
@@ -685,7 +685,7 @@ if selected == 'Macro Indicators':
             )
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_aiae.update_yaxes(tickformat=".2%")
-            fig_aiae.update_layout( width=800,  # Largura do gráfico
+            fig_aiae.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
             st.plotly_chart(fig_aiae)
@@ -720,7 +720,7 @@ if selected == 'Macro Indicators':
             )
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_dxy.update_yaxes(tickformat=".2f")
-            fig_dxy.update_layout( width=800,  # Largura do gráfico
+            fig_dxy.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
     
@@ -764,7 +764,7 @@ if selected == 'Macro Indicators':
                 )
             )
 
-            fig_scl.update_layout( width=800,  # Largura do gráfico
+            fig_scl.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
             fig_scl.update_layout(
@@ -815,7 +815,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_icc.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_icc.update_layout( width=800,  # Largura do gráfico
+            fig_icc.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
             fig_icc.update_layout(
@@ -862,7 +862,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_ef.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_ef.update_layout( width=800,  # Largura do gráfico
+            fig_ef.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
             fig_ef.update_layout(
@@ -909,7 +909,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_crf.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_crf.update_layout( width=800,  # Largura do gráfico
+            fig_crf.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
             fig_crf.update_layout(
@@ -963,7 +963,7 @@ if selected == 'Macro Indicators':
             )
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_inf.update_yaxes(tickformat=".2f", ticksuffix="%")
-            fig_inf.update_layout( width=800,  # Largura do gráfico
+            fig_inf.update_layout( width=600,  # Largura do gráfico
         height=600,
         # Altura do gráfico
     )
@@ -976,7 +976,7 @@ if selected == 'Macro Indicators':
             x=1
         )
     )
-            fig_inf.update_layout( width=800,  # Largura do gráfico
+            fig_inf.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
 
@@ -1012,14 +1012,9 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_m2_br.update_yaxes(tickformat=".2%")
-            fig_m2_br.update_layout( width=800,  # Largura do gráfico
+            fig_m2_br.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
-            
-            fig_m2_br.update_layout( width=800,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
-
             st.plotly_chart(fig_m2_br)
 
 
