@@ -18,6 +18,9 @@ import datetime
 import warnings
 import numpy as np
 import nasdaqdatalink
+import os
+os.environ['NASDAQ_DATA_LINK_API_KEY'] = 'xhzW3vmVVALs4xStA47P'
+
 
 # Suppress FutureWarnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
