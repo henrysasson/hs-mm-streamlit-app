@@ -850,7 +850,7 @@ if selected == 'Macro Indicators':
             )
 
 
-             fig_nhs.update_layout(height=500  # Altura do gráfico
+            fig_nhs.update_layout(height=500  # Altura do gráfico
     )
             
             st.plotly_chart(fig_nhs)
