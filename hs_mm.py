@@ -348,9 +348,11 @@ if selected == 'Macro Indicators':
 
     if economy == "United States":
 
+        st.subheader('Credit')
+        
         # Yield Curve
-
-        col1, col2 = st.columns(2)
+        
+        col1, col2, col3 = st.columns(3)
 
         with col1:
 
@@ -463,9 +465,46 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_hys)
 
 
-        col3, col4 = st.columns(2)
 
         with col3:
+            T01Y = fred.get_series('DGS1').dropna()
+
+            # Convert to DataFrame for plotting
+            df_t1 = pd.DataFrame({'Date':T01Y.index,
+                                'T01Y':T01Y.values,
+                                 '12 MA': T01Y.rolling(260).mean().values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_t1y = px.line(df_t1, x='Date', y=['T01Y', '12 MA'], title='Hike Indicator')
+            
+            fig_t1y.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=1, label="YTD", step="year", stepmode="todate"),
+                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(count=20, label="20y", step="year", stepmode="todate"),
+                    dict(step="all")
+                ])
+            )
+            )
+            
+            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
+            # Adicionar o símbolo de % ao eixo y
+            fig_t1y.update_yaxes(tickformat=".2f", ticksuffix="%")
+            
+            st.plotly_chart(fig_t1y)
+
+
+        st.subheader('Liquidity')
+
+        col4, col5, col6, col7 = st.columns(7)
+
+        with col4:
 
             fci = fred.get_series('NFCI')
 
@@ -491,11 +530,6 @@ if selected == 'Macro Indicators':
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
-                        dict(count=1, label="YTD", step="year", stepmode="backward"),
-                        dict(count=1, label="1y", step="year", stepmode="todate"),
-                        dict(count=5, label="5y", step="year", stepmode="backward"),
-                        dict(count=7, label="7y", step="year", stepmode="backward"),
                         dict(count=10, label="10y", step="year", stepmode="backward"),
                         dict(count=15, label="15y", step="year", stepmode="backward"),
                         dict(count=20, label="20y", step="year", stepmode="todate"),            
@@ -506,15 +540,11 @@ if selected == 'Macro Indicators':
 
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fci.update_yaxes(tickformat=".2f")
-
-            fig_fci.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
                 
             st.plotly_chart(fig_fci)
 
 
-        with col4:
+        with col5:
     
             df_fci_comp = pd.concat([fci_risk, fci_leverage, fci_credit], axis=1).dropna()
             df_fci_comp.columns= ['Risk', 'Leverage', 'Credit']
@@ -543,64 +573,10 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_fci_comp.update_yaxes(tickformat=".2f")
-
-            fig_fci_comp.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
-
-            fig_fci_comp.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
-)
                 
             st.plotly_chart(fig_fci_comp)
 
 
-        col5, col6 = st.columns(2)
-
-        with col5:
-
-            # ## United States M2
-
-            m2_us = fred.get_series('WM2NS').dropna()
-
-            # Convert to DataFrame for plotting
-            df_m2_us = pd.DataFrame({
-                    'Date': np.array(m2_us.index.to_pydatetime()),
-                    '12-month change': m2_us.pct_change(52).values,  
-                }).dropna()
-
-            # Plot both 'Value' and '12M MA' on the same figure
-            fig_m2_us = px.line(df_m2_us, x='Date', y='12-month change', title='United States M2')
-                
-            fig_m2_us.update_xaxes(
-                rangeslider_visible=True,
-                rangeselector=dict(
-                    buttons=list([
-                        dict(count=5, label="5y", step="year", stepmode="backward"),
-                        dict(count=10, label="10y", step="year", stepmode="backward"),
-                        dict(count=20, label="20y", step="year", stepmode="todate"),
-                        dict(count=50, label="50y", step="year", stepmode="backward"),
-                        dict(step="all")
-                    ])
-                )
-            )
-            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
-            # Adicionar o símbolo de % ao eixo y
-            fig_m2_us.update_yaxes(tickformat=".2%")
-
-            fig_m2_us.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
-                
-            st.plotly_chart(fig_m2_us)
-
-    
         with col6:
             
             fed_bs = fred.get_series('QBPBSTAS')
@@ -639,17 +615,209 @@ if selected == 'Macro Indicators':
                 
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fed_liq.update_yaxes(tickformat=".2f")
-
-            fig_fed_liq.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
                 
             st.plotly_chart(fig_fed_liq)
 
-        
-        col7, col8 = st.columns(2)
 
         with col7:
+
+            # ## United States M2
+
+            m2_us = fred.get_series('WM2NS').dropna()
+
+            # Convert to DataFrame for plotting
+            df_m2_us = pd.DataFrame({
+                    'Date': np.array(m2_us.index.to_pydatetime()),
+                    '12-month change': m2_us.pct_change(52).values,  
+                }).dropna()
+
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_m2_us = px.line(df_m2_us, x='Date', y='12-month change', title='United States M2')
+                
+            fig_m2_us.update_xaxes(
+                rangeslider_visible=True,
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=5, label="5y", step="year", stepmode="backward"),
+                        dict(count=10, label="10y", step="year", stepmode="backward"),
+                        dict(count=20, label="20y", step="year", stepmode="todate"),
+                        dict(count=50, label="50y", step="year", stepmode="backward"),
+                        dict(step="all")
+                    ])
+                )
+            )
+            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
+            # Adicionar o símbolo de % ao eixo y
+            fig_m2_us.update_yaxes(tickformat=".2%")
+
+            fig_m2_us.update_layout( width=600,  # Largura do gráfico
+        height=600  # Altura do gráfico
+    )
+                
+            st.plotly_chart(fig_m2_us)
+
+        
+        st.subheader('Economic Activity')
+        
+        col8, col9, col10 = st.columns(3)
+
+        with col8:
+            
+            nfpr = fred.get_series('ADPWNUSNERSA').dropna()
+
+            # Convert to DataFrame for plotting
+            nfpr = pd.DataFrame({'Date': nfpr.index,
+                                'Nonfarm Payroll':nfpr.pct_change(52).values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_nfpr = px.line(nfpr, x='Date', y='Nonfarm Payroll', title='Nonfarm Payroll 12-month change')
+            
+            fig_nfpr.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=6, label="6m", step="month", stepmode="backward"),
+                    dict(count=1, label="YTD", step="year", stepmode="todate"),
+                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(step="all")
+                ])
+            )
+            )
+            
+            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
+            # Adicionar o símbolo de % ao eixo y
+            fig_nfpr.update_yaxes(tickformat='.2%')
+            
+            st.plotly_chart(fig_nfpr)
+
+
+        with col9:
+            
+            oh = fred.get_series('AWOTMAN').dropna()
+
+            # Convert to DataFrame for plotting
+            oh = pd.DataFrame({'Date': oh.index,
+                                'Overtime Hours':oh.values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_oh = px.line(oh, x='Date', y='Overtime Hours', title='Average Weekly Overtime Hours of Production and Nonsupervisory Employees, Manufacturing')
+            
+            fig_oh.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(count=20, label="20y", step="year", stepmode="backward"),
+                    dict(step="all")
+                ])
+            )
+            )
+        
+
+            st.plotly_chart(fig_oh)
+
+
+        with col10:
+
+            gea = fred.get_series('IGREA').dropna()
+
+            # Convert to DataFrame for plotting
+            gea = pd.DataFrame({'Date': gea.index,
+                                'Index of Global Real Economic Activity':gea.values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_gea = px.line(gea, x='Date', y='Index of Global Real Economic Activity', title='Index of Global Real Economic Activity')
+            
+            fig_gea.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(count=20, label="20y", step="year", stepmode="backward"),
+                    dict(step="all")
+                ])
+            )
+            )
+        
+        
+            st.plotly_chart(fig_gea)
+        
+        
+
+        st.subheader('Housing')
+        
+        col11, col12 = st.columns(2)
+
+        with col11:
+
+            nhs = fred.get_series('HSN1F').dropna()
+            
+            
+            # Convert to DataFrame for plotting
+            nhs = pd.DataFrame({'Date': nhs.index,
+                                'New Home Sales':nhs.values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_nhs = px.line(nhs, x='Date', y='New Home Sales', title='New Home Sales')
+            
+            fig_nhs.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(count=20, label="20y", step="year", stepmode="todate"),
+                    dict(step="all")
+                ])
+            )
+            )
+
+            st.plotly_chart(fig_nhs)
+
+        with col12:
+
+            hperm = fred.get_series('PERMIT').dropna()
+
+
+            # Convert to DataFrame for plotting
+            hperm = pd.DataFrame({'Date': hperm.index,
+                                'Housing Permits and Starts':hperm.values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_hperm = px.line(hperm, x='Date', y='Housing Permits and Starts', title='Housing Permits and Starts')
+            
+            fig_hperm.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(count=20, label="20y", step="year", stepmode="todate"),
+                    dict(step="all")
+                ])
+            )
+            )
+        
+            st.plotly_chart(fig_hperm)
+        
+
+
+        st.subheader('Sentiment')
+
+        col13, col14 = st.columns(2)
+        
+        with col13:
 
             non_fin_corp = fred.get_series('NCBEILQ027S')/1000
             fin_corp = fred.get_series('FBCELLQ027S')/1000
@@ -687,46 +855,36 @@ if selected == 'Macro Indicators':
             )
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_aiae.update_yaxes(tickformat=".2%")
-            fig_aiae.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
+        
             st.plotly_chart(fig_aiae)
 
         
-        
-        with col8:
+        with col14:
 
-            dxy = fred.get_series('DTWEXBGS').dropna()
+            cons = fred.get_series('UMCSENT').dropna()
 
-             # Convert to DataFrame for plotting
-            df_dxy= pd.DataFrame({
-                    'Date': dxy.index,
-                    'Value': dxy.values
-                }).dropna()
-            fig_dxy = px.line(df_dxy, x='Date', y='Value', title='Dollar Index')
-                
-            fig_dxy.update_xaxes(
-                rangeslider_visible=True,
-                rangeselector=dict(
-                    buttons=list([
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
-                        dict(count=1, label="YTD", step="year", stepmode="todate"),
-                        dict(count=1, label="1y", step="year", stepmode="backward"),
-                        dict(count=3, label="3y", step="year", stepmode="backward"),
-                        dict(count=5, label="5y", step="year", stepmode="backward"),
-                        dict(count=10, label="10y", step="year", stepmode="backward"),
-                        dict(count=20, label="20y", step="year", stepmode="todate"),
-                        dict(step="all")
-                    ])
-                )
+            # Convert to DataFrame for plotting
+            cons = pd.DataFrame({'Date': cons.index,
+                                'Consumer Sentiment':cons.values})
+            
+            
+            # Plot both 'Value' and '12M MA' on the same figure
+            fig_cons = px.line(cons, x='Date', y='Consumer Sentiment', title='Consumer Sentiment')
+            
+            fig_cons.update_xaxes(
+            rangeslider_visible=True,
+            rangeselector=dict(
+                buttons=list([
+                    dict(count=5, label="5y", step="year", stepmode="backward"),
+                    dict(count=10, label="10y", step="year", stepmode="backward"),
+                    dict(count=20, label="20y", step="year", stepmode="backward"),
+                    dict(step="all")
+                ])
             )
-            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
-            fig_dxy.update_yaxes(tickformat=".2f")
-            fig_dxy.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
+            )
+            
     
-            st.plotly_chart(fig_dxy)
+            st.plotly_chart(fig_cons)
     
 
     if economy == "Brazil":
