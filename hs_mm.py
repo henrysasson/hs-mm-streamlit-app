@@ -18,6 +18,7 @@ import datetime
 import warnings
 import numpy as np
 import nasdaqdatalink
+import requirements
 
 
 # Suppress FutureWarnings
