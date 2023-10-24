@@ -569,12 +569,8 @@ if selected == 'Macro Indicators':
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
-                        dict(count=1, label="YTD", step="year", stepmode="todate"),
-                        dict(count=1, label="1y", step="year", stepmode="backward"),
-                        dict(count=3, label="3y", step="year", stepmode="backward"),
-                        dict(count=5, label="5y", step="year", stepmode="backward"),
                         dict(count=10, label="10y", step="year", stepmode="backward"),
+                        dict(count=15, label="15y", step="year", stepmode="backward"),
                         dict(count=20, label="20y", step="year", stepmode="todate"),
                         dict(step="all")
                     ])
@@ -650,7 +646,6 @@ if selected == 'Macro Indicators':
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=5, label="5y", step="year", stepmode="backward"),
                         dict(count=10, label="10y", step="year", stepmode="backward"),
                         dict(count=20, label="20y", step="year", stepmode="todate"),
                         dict(count=50, label="50y", step="year", stepmode="backward"),
@@ -661,10 +656,6 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_m2_us.update_yaxes(tickformat=".2%")
-
-            fig_m2_us.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
                 
             st.plotly_chart(fig_m2_us)
 
