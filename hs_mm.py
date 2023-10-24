@@ -502,7 +502,7 @@ if selected == 'Macro Indicators':
 
         st.subheader('Liquidity')
 
-        col4, col5, col6, col7 = st.columns(7)
+        col4, col5, col6, col7 = st.columns(4)
 
         with col4:
 
