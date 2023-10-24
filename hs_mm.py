@@ -553,7 +553,7 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fci.update_yaxes(tickformat=".2f")
 
-             fig_fci.update_layout( width=400,  # Largura do gráfico
+            fig_fci.update_layout( width=400,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
                 
@@ -585,11 +585,10 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_fci_comp.update_yaxes(tickformat=".2f")
-
+            
             fig_fci_comp.update_layout( width=400,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
-                
             st.plotly_chart(fig_fci_comp)
 
 
