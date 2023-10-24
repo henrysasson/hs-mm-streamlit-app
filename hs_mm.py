@@ -1118,7 +1118,7 @@ if selected == 'Positioning':
         all_dataframes.append(temp_df)
 
     # Etapa 3: Concatenar todos esses DataFrames individuais em um único DataFrame
-    data = pd.concat(all_dataframes).groupby(level=0).sum()
+    data = pd.concat(all_dataframes, ignore_index=True)
 
     dates = data.index
 
