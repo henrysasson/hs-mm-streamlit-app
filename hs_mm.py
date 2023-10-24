@@ -4,8 +4,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import os
-os.environ['NASDAQ_DATA_LINK_API_KEY'] = 'xhzW3vmVVALs4xStA47P'
 import streamlit as st
 import yfinance as yf
 import pandas as pd
@@ -20,6 +18,7 @@ import datetime
 import warnings
 import numpy as np
 import nasdaqdatalink
+nasdaqdatalink.api_key = 'xhzW3vmVVALs4xStA47P'
 
 
 # Suppress FutureWarnings
