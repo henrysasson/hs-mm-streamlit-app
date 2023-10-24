@@ -15,6 +15,7 @@ import bcb
 from bcb import Expectativas
 from bcb import sgs
 import datetime
+from datetime import datetime, timedelta
 import warnings
 import numpy as np
 import nasdaqdatalink
@@ -26,9 +27,17 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
-#@st.cache_data
+@st.cache_data
 def get_data(tickers):
-    data = yf.download(tickers, period='3y')['Close']
+    # Calcular a data três anos atrás (aproximadamente, usando 780 dias)
+    start_date = (datetime.now() - timedelta(days=780)).strftime('%Y-%m-%d')
+
+    # Obter a data atual
+    end_date = datetime.now().strftime('%Y-%m-%d')
+
+    # Baixar os dados
+    data = yf.download(tickers, start=start_date, end=end_date)['Close']
+    
     return data
 
 # Ações
