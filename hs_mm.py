@@ -543,7 +543,6 @@ if selected == 'Macro Indicators':
                 rangeselector=dict(
                     buttons=list([
                         dict(count=10, label="10y", step="year", stepmode="backward"),
-                        dict(count=15, label="15y", step="year", stepmode="backward"),
                         dict(count=20, label="20y", step="year", stepmode="todate"),            
                         dict(step="all")
                     ])
@@ -574,7 +573,6 @@ if selected == 'Macro Indicators':
                 rangeselector=dict(
                     buttons=list([
                         dict(count=10, label="10y", step="year", stepmode="backward"),
-                        dict(count=15, label="15y", step="year", stepmode="backward"),
                         dict(count=20, label="20y", step="year", stepmode="todate"),
                         dict(step="all")
                     ])
@@ -589,6 +587,17 @@ if selected == 'Macro Indicators':
             fig_fci_comp.update_layout( width=400,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
+
+            fig_fci_comp.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
+            
             st.plotly_chart(fig_fci_comp)
 
 
@@ -737,7 +746,7 @@ if selected == 'Macro Indicators':
             
             
             # Plot both 'Value' and '12M MA' on the same figure
-            fig_oh = px.line(oh, x='Date', y='Overtime Hours', title='Average Weekly Overtime Hours of Production and Nonsupervisory Employees, Manufacturing')
+            fig_oh = px.line(oh, x='Date', y='Overtime Hours', title='Average Weekly Overtime Hours')
             
             fig_oh.update_xaxes(
             rangeslider_visible=True,
@@ -840,6 +849,10 @@ if selected == 'Macro Indicators':
             )
             )
 
+
+             fig_nhs.update_layout(height=500  # Altura do gráfico
+    )
+            
             st.plotly_chart(fig_nhs)
 
         with col12:
@@ -866,6 +879,9 @@ if selected == 'Macro Indicators':
                 ])
             )
             )
+
+            fig_hperm.update_layout(height=500  # Altura do gráfico
+    )
         
             st.plotly_chart(fig_hperm)
         
@@ -913,6 +929,9 @@ if selected == 'Macro Indicators':
             )
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_aiae.update_yaxes(tickformat=".2%")
+
+            fig_aiae.update_layout(height=500  # Altura do gráfico
+    )
         
             st.plotly_chart(fig_aiae)
 
@@ -940,7 +959,9 @@ if selected == 'Macro Indicators':
                 ])
             )
             )
-            
+
+            fig_cons.update_layout(height=500  # Altura do gráfico
+    )
     
             st.plotly_chart(fig_cons)
     
