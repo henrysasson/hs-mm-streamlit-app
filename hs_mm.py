@@ -18,7 +18,6 @@ import datetime
 import warnings
 import numpy as np
 import nasdaqdatalink
-nasdaqdatalink.api_key = 'xhzW3vmVVALs4xStA47P'
 
 
 # Suppress FutureWarnings
