@@ -346,6 +346,8 @@ if selected == 'Macro Indicators':
     "Choose the economy:",
     ["United States", "Brazil"])
 
+    st.markdown('##')
+
     if economy == "United States":
 
         st.subheader('Credit')
