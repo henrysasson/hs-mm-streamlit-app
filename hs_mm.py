@@ -757,7 +757,6 @@ if selected == 'Macro Indicators':
                         dict(count=3, label="3y", step="year", stepmode="backward"),
                         dict(count=5, label="5y", step="year", stepmode="backward"),
                         dict(count=10, label="10y", step="year", stepmode="backward"),
-                        dict(count=20, label="20y", step="year", stepmode="todate"),
                         dict(step="all")
                     ])
                 )
