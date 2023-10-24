@@ -1119,10 +1119,10 @@ if selected == 'Positioning':
 
     # Asegurando que a coluna 'Dates' é uma data
     for df in all_dataframes:
-        df['Dates'] = pd.to_datetime(df['Dates'])
+        df['Date'] = pd.to_datetime(df['Date'])
 
     # Etapa 3: Concatenar todos esses DataFrames individuais em um único DataFrame
-    data = pd.concat(all_dataframes, ignore_index=True).set_index('Dates').groupby(level=0).sum()
+    data = pd.concat(all_dataframes, ignore_index=True).set_index('Date').groupby(level=0).sum()
 
     dates = data.index
 
