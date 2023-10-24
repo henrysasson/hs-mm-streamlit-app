@@ -1027,6 +1027,18 @@ if selected == 'Positioning':
     st.markdown('Commitment of Traders')
     st.markdown('##')
 
+    def fetch_data(contract_code):
+        base_url = "https://data.nasdaq.com/api/v3/datasets/CFTC/{}.json"
+        params = {"api_key": "xhzW3vmVVALs4xStA47P"}  # Substitua pela sua chave
+    
+        response = requests.get(base_url.format(contract_code), params=params)
+        if response.status_code == 200:
+            data_json = response.json()
+            df = pd.DataFrame(data_json['dataset']['data'], columns=data_json['dataset']['column_names'])
+            return df
+        else:
+            st.error(f"Erro ao buscar os dados: {response.status_code}")
+            return pd.DataFrame()
 
     category = [
         "CRYPTO CURRENCIES", "CRYPTO CURRENCIES", "CRYPTO CURRENCIES", "CRYPTO CURRENCIES",
@@ -1101,11 +1113,7 @@ if selected == 'Positioning':
 
     # Etapa 2: Para cada código de contrato, faça a chamada à API e obtenha os dados
     for contract_code in contract_codes_for_selected_market:
-
-        codigo_ativo = 'CFTC/' + contract_code
-
-        temp_df = nasdaqdatalink.get(codigo_ativo)
-
+        temp_df = fetch_data(contract_code)
         all_dataframes.append(temp_df)
 
     # Etapa 3: Concatenar todos esses DataFrames individuais em um único DataFrame
