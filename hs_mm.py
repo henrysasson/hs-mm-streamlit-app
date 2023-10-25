@@ -554,7 +554,8 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fci.update_yaxes(tickformat=".2f")
 
-            fig_fci.update_layout(height=500  # Altura do gráfico
+            fig_fci.update_layout( width=600,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
                 
             st.plotly_chart(fig_fci)
@@ -585,7 +586,8 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_fci_comp.update_yaxes(tickformat=".2f")
             
-            fig_fci_comp.update_layout(height=500  # Altura do gráfico
+            fig_fci_comp.update_layout( width=600,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
 
             fig_fci_comp.update_layout(
@@ -642,7 +644,7 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fed_liq.update_yaxes(tickformat=".2f")
 
-            fig_fed_liq.update_layout( width=400,  # Largura do gráfico
+            fig_fed_liq.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
                 
@@ -679,7 +681,8 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_m2_us.update_yaxes(tickformat=".2%")
 
-            fig_m2_us.update_layout(height=500  # Altura do gráfico
+            fig_m2_us.update_layout( width=600,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
                 
             st.plotly_chart(fig_m2_us)
@@ -850,7 +853,8 @@ if selected == 'Macro Indicators':
             )
 
 
-            fig_nhs.update_layout(height=500  # Altura do gráfico
+            fig_nhs.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
             
             st.plotly_chart(fig_nhs)
@@ -880,7 +884,8 @@ if selected == 'Macro Indicators':
             )
             )
 
-            fig_hperm.update_layout(height=500  # Altura do gráfico
+            fig_hperm.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
         
             st.plotly_chart(fig_hperm)
@@ -930,7 +935,8 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_aiae.update_yaxes(tickformat=".2%")
 
-            fig_aiae.update_layout(height=500  # Altura do gráfico
+            fig_aiae.update_layout( width=600,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
         
             st.plotly_chart(fig_aiae)
@@ -960,7 +966,8 @@ if selected == 'Macro Indicators':
             )
             )
 
-            fig_cons.update_layout(height=500  # Altura do gráfico
+            fig_cons.update_layout( width=600,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
     
             st.plotly_chart(fig_cons)
