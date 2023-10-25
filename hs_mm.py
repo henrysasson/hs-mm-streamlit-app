@@ -1092,9 +1092,9 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_pmc)
 
         
-        col3, col4 = st.columns(2)
+        col4, col5, col6 = st.columns(3)
 
-        with col3:
+        with col4:
 
             # Endividamento das Famílias
             
@@ -1124,24 +1124,15 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_ef.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_ef.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
-            fig_ef.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
-)
-
+            fig_ef.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+            )
+    
 
             st.plotly_chart(fig_ef)
 
         
-        with col4:
+        with col5:
 
             # Comprometimento de Renda das Famílias
 
@@ -1171,22 +1162,48 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_crf.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_crf.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
-            fig_crf.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
-)
+            fig_crf.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+            )
+         
                 
             st.plotly_chart(fig_crf)
 
 
+        with col6:
+
+            inad = sgs.get({'Total': 21082,
+            'Households':21084,
+            'Non-financial corporations':21083
+            }).dropna()
+
+            inad['Date'] = inad.index
+            
+            fig_inad = px.line(inad, x='Date', y=['Total', 'Households', 'Non-financial corporations'], title='Delinquent loans')
+            
+            fig_inad.update_xaxes(
+                rangeslider_visible=True,
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=3, label="3y", step="year", stepmode="backward"),
+                        dict(count=5, label="5y", step="year", stepmode="backward"),
+                        dict(count=10, label="10y", step="year", stepmode="backward"),
+                        dict(step="all")
+                    ])
+                )
+            )
+            
+            fig_inad.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+            )
+            
+            
+            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
+            # Adicionar o símbolo de % ao eixo y
+            fig_inad.update_yaxes(ticksuffix="%")
+
+        
+            st.plotly_chart(fig_inad)
 
 
         col5, col6 = st.columns(2)
