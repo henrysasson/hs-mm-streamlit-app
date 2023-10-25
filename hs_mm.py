@@ -1289,7 +1289,7 @@ if selected == 'Macro Indicators':
                           'Household Consumption':22100,
                           'Goverment Cosnumption':22101}).dropna()
 
-            pib['Date'] = fig_pib.index
+            pib['Date'] = pib.index
             
             fig_pib = px.line(fig_pib , x='Date', y=['Investment','Services', 'Household Consumption','Goverment Cosnumption']  , title='GDP')
             
