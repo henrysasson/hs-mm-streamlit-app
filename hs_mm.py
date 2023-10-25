@@ -1312,8 +1312,8 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_pib)
 
 
-if selected == 'Relative Rptation Graph':
-    st.title('Relative Rptation Graph')
+if selected == 'Relative Rotation Graph':
+    st.title('Relative Rotation Graph')
     st.markdown('##')
 
     lookback = st.number_input(label="Choose the lookback period", value=14)
