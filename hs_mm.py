@@ -306,8 +306,8 @@ if selected == 'Relative Rotation Graph':
             xaxis=dict(showgrid=True, zeroline=False),
             yaxis=dict(showgrid=True, zeroline=False),
             shapes=[
-                dict(type='line', x0=100, y0=95, x1=100, y1=105, line=dict(color='Black', width=2)),
-                dict(type='line', x0=95, y0=100, x1=105, y1=100, line=dict(color='Black', width=2)),
+                dict(type='line', x0=100, y0=95, x1=100, y1=105, line=dict(color='White', width=2)),
+                dict(type='line', x0=95, y0=100, x1=105, y1=100, line=dict(color='White', width=2)),
                 
                 # Quadrantes coloridos
                 dict(type='rect', x0=95, x1=100, y0=100, y1=105, fillcolor='red', opacity=0.2),
