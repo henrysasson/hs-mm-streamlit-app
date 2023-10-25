@@ -28,7 +28,7 @@ st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
 #@st.cache_data
 def get_data(tickers):
-    data = yf.download(tickers, period='3y')['Close']
+    data = yf.download(tickers, period='3y')['Adj Close']
     return data
 
 # Ações
@@ -1325,8 +1325,8 @@ if selected == 'Relative Rotation Graph':
     window = lookback
     
     # Baixando os dados
-    tickers_data = yf.download(tickers, period=period, interval="1d")['Adj Close']
-    benchmark_data = yf.download(benchmark, period=period, interval="1d")['Adj Close']
+    tickers_data = get_data(tickers).fillna(method='ffill')
+    benchmark_data = get_data(benchmark).fillna(method='ffill')
     
     # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
     rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
