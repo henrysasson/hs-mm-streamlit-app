@@ -26,7 +26,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
-@st.cache_data
+#@st.cache_data
 def get_data(tickers):
     data = yf.download(tickers, period='3y')['Close']
     return data
