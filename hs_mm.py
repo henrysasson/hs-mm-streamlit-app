@@ -1284,13 +1284,16 @@ if selected == 'Macro Indicators':
 
         with col9:
 
-            fbcf = sgs.get({'Investment/PIB': 24363}).dropna()
+            pib = sgs.get({'Investment': 24363,
+                          'Services':22107,
+                          'Household Consumption':22100,
+                          'Goverment Cosnumption':22101}).dropna()
 
-            fbcf['Date'] = ibc.index
+            pib['Date'] = fig_pib.index
             
-            fig_fbcf = px.line(fbcf , x='Date', y='Investment/PIB', title='Investment/PIB')
+            fig_pib = px.line(fig_pib , x='Date', y=['Investment','Services', 'Household Consumption','Goverment Cosnumption']  , title='GDP')
             
-            fig_fbcf.update_xaxes(
+            fig_pib.update_xaxes(
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
@@ -1302,13 +1305,11 @@ if selected == 'Macro Indicators':
                 )
             )
             
-            fig_fbcf.update_layout( width=500,  # Largura do gráfico
+            fig_pib.update_layout( width=500,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
-
-            fig_fbcf.update_yaxes(ticksuffix="%")
             
-            st.plotly_chart(fig_fbcf)
+            st.plotly_chart(fig_pib)
 
 
 
