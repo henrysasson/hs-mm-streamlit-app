@@ -33,14 +33,14 @@ def get_data(tickers):
 
 # Ações
 tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI']
-df_acoes = get_data(tickers_acoes).dropna()
+df_acoes = get_data(tickers_acoes).fillna(method='ffill')
 names_acoes = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE']
 column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
 # Moedas
 tickers_moedas = ['EURUSD=X', 'JPY=X', 'GBPUSD=X', 'BRL=X', 'AUDUSD=X', 'MXN=X']
-df_moedas = get_data(tickers_moedas).dropna()
+df_moedas = get_data(tickers_moedas).fillna(method='ffill')
 names_moedas = ['EURUSD', 'USDJPY', 'GBPUSD', 'USDBRL', 'AUDUSD', 'MXNUSD']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
 # Renomeie as colunas
@@ -52,7 +52,7 @@ df_commodities = get_data(tickers_commodities).dropna()
 
 # Renda Fixa
 tickers_rf = ['BILL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA']
-df_rf = get_data(tickers_rf).dropna()
+df_rf = get_data(tickers_rf).fillna(method='ffill')
 names_rf = ['BILL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB']
 column_mapping = dict(zip(tickers_rf, names_rf))
 # Renomeie as colunas
@@ -60,7 +60,7 @@ df_rf.rename(columns=column_mapping, inplace=True)
 
 # Crypto
 tickers_crypto = ['BTC-USD', 'ETH-USD']
-df_crypto = get_data(tickers_crypto).dropna()
+df_crypto = get_data(tickers_crypto).fillna(method='ffill')
 names_crypto = ['BTCUSD', 'ETHUSD']
 column_mapping = dict(zip(tickers_crypto, names_crypto))
 # Renomeie as colunas
