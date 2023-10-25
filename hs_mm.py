@@ -975,8 +975,10 @@ if selected == 'Macro Indicators':
 
     if economy == "Brazil":
         
-        col1, col2 = st.columns(2)
+        col1, col2, col3 = st.columns(3)
 
+        st.subheader('Credit')
+        
         with col1:
 
             # Saldo de Créditos Livres
@@ -1071,6 +1073,45 @@ if selected == 'Macro Indicators':
 )
                 
             st.plotly_chart(fig_icc)
+
+        
+        with col3:
+
+            # Prazo Médio dos Empréstimos
+            
+            pmc = sgs.get({'Total': 20927,
+            'Households':20954,
+            'Non-financial corporations':20928
+            }).dropna()
+
+            pmc['Date'] = pmc.index
+
+            fig_pmc = px.line(pmc, x='Date', y=['Total', 'Households', 'Non-financial corporations'], title='Average remaining maturity (months)')
+            
+            fig_pmc.update_xaxes(
+                rangeslider_visible=True,
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=3, label="3y", step="year", stepmode="backward"),
+                        dict(count=5, label="5y", step="year", stepmode="backward"),
+                        dict(count=10, label="10y", step="year", stepmode="backward"),
+                        dict(step="all")
+                    ])
+                )
+            )
+            
+            fig_pmc.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+            )
+            fig_pmc.update_layout(
+            legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+            )
+            )
 
         col3, col4 = st.columns(2)
 
