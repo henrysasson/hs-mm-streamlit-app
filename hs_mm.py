@@ -71,7 +71,7 @@ all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], 
 
 
 
-options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning']
+options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Relative Rotation Graph', 'Positioning']
 selected = st.sidebar.selectbox('Main Menu', options)
 
 
@@ -1310,6 +1310,95 @@ if selected == 'Macro Indicators':
             )
             
             st.plotly_chart(fig_pib)
+
+
+if selected == 'Relative Rptation Graph':
+    st.title('Relative Rptation Graph')
+    st.markdown('##')
+
+    lookback = st.number_input(label="Choose the lookback period", value=14)
+    
+    # Definindo os tickers e o período
+    period = '3y'
+    tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
+    benchmark = '^GSPC'
+    window = lookback
+    
+    # Baixando os dados
+    tickers_data = yf.download(tickers, period=period, interval="1d")['Adj Close']
+    benchmark_data = yf.download(benchmark, period=period, interval="1d")['Adj Close']
+    
+    # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
+    rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
+    
+    for i in range(len(tickers)):
+        rs_tickers.append(100 * (tickers_data[tickers[i]] / benchmark_data))
+        rsr_tickers.append((100 + (rs_tickers[i] - rs_tickers[i].rolling(window=window).mean()) / rs_tickers[i].rolling(window=window).std(ddof=0)).dropna())
+        rsr_roc_tickers.append(100 * ((rsr_tickers[i] / rsr_tickers[i][1]) - 1))
+        rsm_tickers.append((101 + ((rsr_roc_tickers[i] - rsr_roc_tickers[i].rolling(window=window).mean()) / rsr_roc_tickers[i].rolling(window=window).std(ddof=0))).dropna())
+        rsr_tickers[i] = rsr_tickers[i][rsr_tickers[i].index.isin(rsm_tickers[i].index)]
+        rsm_tickers[i] = rsm_tickers[i][rsm_tickers[i].index.isin(rsr_tickers[i].index)]
+    
+    # Criando o gráfico RRG
+    def create_rrg_graph():
+        fig = go.Figure()
+    
+        # Adicionando cada ticker ao gráfico
+        for i in range(len(tickers)):
+            
+            # Definindo os tamanhos dos marcadores
+            marker_size = [5 for _ in range(4)] + [10]  # 4 primeiros valores têm tamanho 5 e o último valor tem tamanho 10
+            
+            fig.add_trace(
+                go.Scatter(
+                    x=rsr_tickers[i].tail(5).values,
+                    y=rsm_tickers[i].tail(5).values,
+                    mode='lines+markers',
+                    name=tickers[i],
+                    marker=dict(size=marker_size)
+                )
+            )
+    
+        # Configuração do layout do gráfico
+        fig.update_layout(
+            title='RRG Indicator',
+            xaxis_title='JdK RS Ratio',
+            yaxis_title='JdK RS Momentum',
+            xaxis=dict(showgrid=True, zeroline=False),
+            yaxis=dict(showgrid=True, zeroline=False),
+            shapes=[
+                dict(type='line', x0=100, y0=95, x1=100, y1=105, line=dict(color='Black', width=2)),
+                dict(type='line', x0=95, y0=100, x1=105, y1=100, line=dict(color='Black', width=2)),
+                
+                # Quadrantes coloridos
+                dict(type='rect', x0=95, x1=100, y0=100, y1=105, fillcolor='red', opacity=0.2),
+                dict(type='rect', x0=100, x1=105, y0=100, y1=105, fillcolor='green', opacity=0.2),
+                dict(type='rect', x0=95, x1=100, y0=95, y1=100, fillcolor='yellow', opacity=0.2),
+                dict(type='rect', x0=100, x1=105, y0=95, y1=100, fillcolor='blue', opacity=0.2)
+            ]
+        )
+        
+        
+        # Adicionando as legendas dos quadrantes
+    #     fig.add_annotation(text="Leading", x=102, y=103, showarrow=False, font=dict(size=12, color="black"))
+    #     fig.add_annotation(text="Weakening", x=102, y=97, showarrow=False, font=dict(size=12, color="black"))
+    #     fig.add_annotation(text="Lagging", x=97, y=97, showarrow=False, font=dict(size=12, color="black"))
+    #     fig.add_annotation(text="Improving", x=97, y=103, showarrow=False, font=dict(size=12, color="black"))
+        
+        # Adicionando as legendas dos quadrantes nas pontas
+        fig.add_annotation(text="Leading", x=104.5, y=104.5, showarrow=False, font=dict(size=12, color="black"))
+        fig.add_annotation(text="Weakening", x=104.5, y=95.5, showarrow=False, font=dict(size=12, color="black"))
+        fig.add_annotation(text="Lagging", x=95.5, y=95.5, showarrow=False, font=dict(size=12, color="black"))
+        fig.add_annotation(text="Improving", x=95.5, y=104.5, showarrow=False, font=dict(size=12, color="black"))
+    
+        fig.update_layout(yaxis_tickformat = '.2f')
+        fig.update_layout(xaxis_tickformat = '.2f')
+    
+        # Exibindo o gráfico
+        st.plotly_chart(fig)
+
+
+
 
 
 
