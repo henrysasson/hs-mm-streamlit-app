@@ -974,10 +974,10 @@ if selected == 'Macro Indicators':
     
 
     if economy == "Brazil":
-        
-        col1, col2, col3 = st.columns(3)
 
         st.subheader('Credit')
+        
+        col1, col2, col3 = st.columns(3)
         
         with col1:
 
@@ -1103,16 +1103,11 @@ if selected == 'Macro Indicators':
             fig_pmc.update_layout( width=500,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
-            fig_pmc.update_layout(
-            legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1
-            )
-            )
+        
 
+            st.plotly_chart(fig_pmc)
+
+        
         col3, col4 = st.columns(2)
 
         with col3:
