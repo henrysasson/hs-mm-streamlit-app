@@ -1265,10 +1265,10 @@ if selected == 'Macro Indicators':
         
         with col8:
 
-           ibc = sgs.get({'IBC-Br': 24363}).dropna()
+            ibc = sgs.get({'IBC-Br': 24363}).dropna()
 
             ibc['Date'] = ibc.index
-            
+        
             fig_ibc = px.line(ibc , x='Date', y='IBC-Br', title='IBC-Br')
             
             fig_ibc.update_xaxes(
