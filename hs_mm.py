@@ -1325,9 +1325,8 @@ if selected == 'Relative Rotation Graph':
     window = lookback
 
 # Baixando os dados
-tickers_data = yf.download(tickers, period=period, interval="1wk")['Adj Close']
-benchmark_data = yf.download(benchmark, period=period, interval="1wk")['Adj Close']
-    window = lookback
+    tickers_data = yf.download(tickers, period=period, interval="1wk")['Adj Close']
+    benchmark_data = yf.download(benchmark, period=period, interval="1wk")['Adj Close']
     
     # Baixando os dados
     tickers_data = get_data(tickers).fillna(method='ffill')
