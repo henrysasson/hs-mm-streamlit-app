@@ -1397,10 +1397,7 @@ if selected == 'Relative Rotation Graph':
         # Exibindo o gráfico
         st.plotly_chart(fig)
 
-
-
-
-
+    create_rrg_graph()
 
 
 
