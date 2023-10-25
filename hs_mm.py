@@ -1207,7 +1207,7 @@ if selected == 'Macro Indicators':
 
         st.subheader('Economic Activity')
         
-        col7, col8, col9 = st.columns(2)
+        col7, col8, col9 = st.columns(3)
 
         with col7:
             
