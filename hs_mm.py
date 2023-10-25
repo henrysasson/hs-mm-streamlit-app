@@ -992,7 +992,7 @@ if selected == 'Macro Indicators':
 
             scl.dropna(inplace=True)
 
-            fig_scl = px.line(scl, x='Date', y=['Total', 'Households', 'Non-financial corporations'], title='Nonearmarked credit operations outstanding - Total (12-month change)')
+            fig_scl = px.line(scl, x='Date', y=['Total', 'Households', 'Non-financial corporations'], title='Nonearmarked credit operations outstanding (12-month change)')
 
             fig_scl.update_xaxes(
                 rangeslider_visible=True,
