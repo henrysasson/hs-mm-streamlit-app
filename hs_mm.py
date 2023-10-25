@@ -48,7 +48,7 @@ df_moedas.rename(columns=column_mapping, inplace=True)
 
 # Commodities
 tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'BDRY']
-df_commodities = get_data(tickers_commodities).dropna()
+df_commodities = get_data(tickers_commodities).fillna(method='ffill')
 
 # Renda Fixa
 tickers_rf = ['BILL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA']
@@ -67,7 +67,7 @@ column_mapping = dict(zip(tickers_crypto, names_crypto))
 df_crypto.rename(columns=column_mapping, inplace=True)
 
 # Todos os Ativos
-all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).dropna()
+all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).fillna(method='ffill')
 
 
 
