@@ -1006,8 +1006,8 @@ if selected == 'Macro Indicators':
                 )
             )
 
-            fig_scl.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
+            fig_scl.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
             fig_scl.update_layout(
     legend=dict(
@@ -1057,8 +1057,8 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_icc.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_icc.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
+            fig_icc.update_layout( width=500,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
             fig_icc.update_layout(
     legend=dict(
