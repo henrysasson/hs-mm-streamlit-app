@@ -1247,15 +1247,7 @@ if selected == 'Macro Indicators':
         height=600,
         # Altura do gráfico
     )
-            fig_inf.update_layout(
-        legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.02,
-            xanchor="right",
-            x=1
-        )
-    )
+    
             fig_inf.update_layout( width=600,  # Largura do gráfico
         height=600  # Altura do gráfico
     )
