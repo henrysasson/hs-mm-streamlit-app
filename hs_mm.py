@@ -601,7 +601,7 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_fci_comp)
 
 
-         col6, col7 = st.columns(2)
+        col6, col7 = st.columns(2)
         
         with col6:
             
