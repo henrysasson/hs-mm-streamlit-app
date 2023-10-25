@@ -1386,16 +1386,16 @@ if selected == 'Relative Rotation Graph':
     #     fig.add_annotation(text="Improving", x=97, y=103, showarrow=False, font=dict(size=12, color="black"))
         
         # Adicionando as legendas dos quadrantes nas pontas
-        fig.add_annotation(text="Leading", x=104.5, y=104.5, showarrow=False, font=dict(size=12, color="black"))
-        fig.add_annotation(text="Weakening", x=104.5, y=95.5, showarrow=False, font=dict(size=12, color="black"))
-        fig.add_annotation(text="Lagging", x=95.5, y=95.5, showarrow=False, font=dict(size=12, color="black"))
-        fig.add_annotation(text="Improving", x=95.5, y=104.5, showarrow=False, font=dict(size=12, color="black"))
+        fig.add_annotation(text="Leading", x=104.5, y=104.5, showarrow=False, font=dict(size=12, color="white"))
+        fig.add_annotation(text="Weakening", x=104.5, y=95.5, showarrow=False, font=dict(size=12, color="white"))
+        fig.add_annotation(text="Lagging", x=95.5, y=95.5, showarrow=False, font=dict(size=12, color="white"))
+        fig.add_annotation(text="Improving", x=95.5, y=104.5, showarrow=False, font=dict(size=12, color="white"))
     
         fig.update_layout(yaxis_tickformat = '.2f')
         fig.update_layout(xaxis_tickformat = '.2f')
     
         # Exibindo o gráfico
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True, height=5000)
 
     create_rrg_graph()
 
