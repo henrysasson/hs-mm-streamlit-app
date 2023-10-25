@@ -516,7 +516,7 @@ if selected == 'Macro Indicators':
 
         st.subheader('Liquidity')
 
-        col4, col5, col6, col7 = st.columns(4)
+        col4, col5 = st.columns(2)
 
         with col4:
 
@@ -554,8 +554,7 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_fci.update_yaxes(tickformat=".2f")
 
-            fig_fci.update_layout( width=400,  # Largura do gráfico
-        height=500  # Altura do gráfico
+            fig_fci.update_layout(height=500  # Altura do gráfico
     )
                 
             st.plotly_chart(fig_fci)
@@ -586,8 +585,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_fci_comp.update_yaxes(tickformat=".2f")
             
-            fig_fci_comp.update_layout( width=400,  # Largura do gráfico
-        height=500  # Altura do gráfico
+            fig_fci_comp.update_layout(height=500  # Altura do gráfico
     )
 
             fig_fci_comp.update_layout(
@@ -649,6 +647,8 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_fed_liq)
 
 
+        col7, col8 = st.columns(2)
+
         with col7:
 
             # ## United States M2
@@ -679,8 +679,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_m2_us.update_yaxes(tickformat=".2%")
 
-            fig_m2_us.update_layout( width=400,  # Largura do gráfico
-        height=500  # Altura do gráfico
+            fig_m2_us.update_layout(height=500  # Altura do gráfico
     )
                 
             st.plotly_chart(fig_m2_us)
@@ -721,8 +720,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_nfpr.update_yaxes(tickformat='.2%')
 
-            fig_nfpr.update_layout( width=500,  # Largura do gráfico
-        height=500  # Altura do gráfico
+            fig_nfpr.update_layout(height=500  # Altura do gráfico
     )
 
             fig_nfpr.update_layout(
