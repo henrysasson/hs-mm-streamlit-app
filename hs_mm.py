@@ -1335,70 +1335,62 @@ if selected == 'Relative Rotation Graph':
     # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
     rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
     
-    for i in range(len(tickers)):
-        rs_tickers.append(100 * (tickers_data[tickers[i]] / benchmark_data[i]))
-        rsr_tickers.append((100 + (rs_tickers[i] - rs_tickers[i].rolling(window=window).mean()) / rs_tickers[i].rolling(window=window).std(ddof=0)).dropna())
-        rsr_roc_tickers.append(100 * ((rsr_tickers[i] / rsr_tickers[i][1]) - 1))
-        rsm_tickers.append((101 + ((rsr_roc_tickers[i] - rsr_roc_tickers[i].rolling(window=window).mean()) / rsr_roc_tickers[i].rolling(window=window).std(ddof=0))).dropna())
-        rsr_tickers[i] = rsr_tickers[i][rsr_tickers[i].index.isin(rsm_tickers[i].index)]
-        rsm_tickers[i] = rsm_tickers[i][rsm_tickers[i].index.isin(rsr_tickers[i].index)]
+    # Calculating the values of RS, RSR, RSR ROC and RSM for each ticker
+    rs_tickers, rsr_tickers, rsm_tickers = [], [], []
     
+    for ticker in tickers:
+        rs = tickers_data[ticker] / benchmark_data
+        ema_10 = rs.ewm(span=10, adjust=False).mean()
+        ema_30 = rs.ewm(span=30, adjust=False).mean()
+        rsr = (ema_10/ema_30)*100
+        mom = rsr.diff(5)*100
+        min_val = mom.min()
+        max_val = mom.max()
+        
+        # Normalize the momentum values to 90-110 range
+        mom = 20 * (mom - min_val) / (max_val - min_val) + 90
+        
+        
+        rsr_tickers.append(rsr)  # Multiplicando por 100 para normalizar
+        rsm_tickers.append(mom)
+        
     # Criando o gráfico RRG
     def create_rrg_graph():
+        
         fig = go.Figure()
     
-        # Adicionando cada ticker ao gráfico
+        # Adding each ticker to the graph
         for i in range(len(tickers)):
-            
-            # Definindo os tamanhos dos marcadores
-            marker_size = [5 for _ in range(4)] + [10]  # 4 primeiros valores têm tamanho 5 e o último valor tem tamanho 10
+            marker_size = [5 for _ in range(11)] + [10]
             
             fig.add_trace(
                 go.Scatter(
-                    x=rsr_tickers[i].tail(5).values,
-                    y=rsm_tickers[i].tail(5).values,
+                    x=rsr_tickers[i].tail(12).values,
+                    y=rsm_tickers[i].tail(12).values,
                     mode='lines+markers',
                     name=tickers[i],
                     marker=dict(size=marker_size)
                 )
             )
     
-        # Configuração do layout do gráfico
+        # Graph layout configuration
         fig.update_layout(
             title='RRG Indicator',
-            xaxis_title='JdK RS Ratio',
-            yaxis_title='JdK RS Momentum',
-            xaxis=dict(showgrid=True, zeroline=False),
-            yaxis=dict(showgrid=True, zeroline=False),
+            xaxis_title='JdK RS-Ratio',
+            yaxis_title='JdK RS-Momentum',
+            xaxis=dict(showgrid=True, zeroline=True, zerolinewidth=2, zerolinecolor='Black'),
+            yaxis=dict(showgrid=True, zeroline=True, zerolinewidth=2, zerolinecolor='Black'),
             shapes=[
-                dict(type='line', x0=100, y0=95, x1=100, y1=105, line=dict(color='White', width=2)),
-                dict(type='line', x0=95, y0=100, x1=105, y1=100, line=dict(color='White', width=2)),
-                
-                # Quadrantes coloridos
-                dict(type='rect', x0=95, x1=100, y0=100, y1=105, fillcolor='red', opacity=0.2),
-                dict(type='rect', x0=100, x1=105, y0=100, y1=105, fillcolor='green', opacity=0.2),
-                dict(type='rect', x0=95, x1=100, y0=95, y1=100, fillcolor='yellow', opacity=0.2),
-                dict(type='rect', x0=100, x1=105, y0=95, y1=100, fillcolor='blue', opacity=0.2)
+                dict(type='rect', x0=88, x1=100, y0=100, y1=115, fillcolor='red', opacity=0.2),
+                dict(type='rect', x0=100, x1=115, y0=100, y1=115, fillcolor='green', opacity=0.2),
+                dict(type='rect', x0=88, x1=100, y0=88, y1=100, fillcolor='yellow', opacity=0.2),
+                dict(type='rect', x0=100, x1=115, y0=88, y1=100, fillcolor='blue', opacity=0.2)
             ]
         )
-        
-        
-        # Adicionando as legendas dos quadrantes
-    #     fig.add_annotation(text="Leading", x=102, y=103, showarrow=False, font=dict(size=12, color="white"))
-    #     fig.add_annotation(text="Weakening", x=102, y=97, showarrow=False, font=dict(size=12, color="white"))
-    #     fig.add_annotation(text="Lagging", x=97, y=97, showarrow=False, font=dict(size=12, color="white"))
-    #     fig.add_annotation(text="Improving", x=97, y=103, showarrow=False, font=dict(size=12, color="white"))
-        
-        # Adicionando as legendas dos quadrantes nas pontas
-        fig.add_annotation(text="Leading", x=104.5, y=104.5, showarrow=False, font=dict(size=12, color="white"))
-        fig.add_annotation(text="Weakening", x=104.5, y=95.5, showarrow=False, font=dict(size=12, color="white"))
-        fig.add_annotation(text="Lagging", x=95.5, y=95.5, showarrow=False, font=dict(size=12, color="white"))
-        fig.add_annotation(text="Improving", x=95.5, y=104.5, showarrow=False, font=dict(size=12, color="white"))
+    
     
         fig.update_layout(yaxis_tickformat = '.2f')
         fig.update_layout(xaxis_tickformat = '.2f')
-    
-        # Exibindo o gráfico
         st.plotly_chart(fig, use_container_width=True, height=5000)
 
     create_rrg_graph()
