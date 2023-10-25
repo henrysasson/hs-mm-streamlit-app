@@ -853,7 +853,7 @@ if selected == 'Macro Indicators':
             )
 
 
-            fig_nhs.update_layout( width=500,  # Largura do gráfico
+            fig_nhs.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
             
@@ -884,7 +884,7 @@ if selected == 'Macro Indicators':
             )
             )
 
-            fig_hperm.update_layout( width=500,  # Largura do gráfico
+            fig_hperm.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
         
