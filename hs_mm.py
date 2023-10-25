@@ -1011,15 +1011,7 @@ if selected == 'Macro Indicators':
             fig_scl.update_layout( width=500,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
-            fig_scl.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
-)
+        
 
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
@@ -1062,15 +1054,7 @@ if selected == 'Macro Indicators':
             fig_icc.update_layout( width=500,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
-            fig_icc.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
-)
+            
                 
             st.plotly_chart(fig_icc)
 
