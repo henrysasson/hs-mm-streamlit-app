@@ -271,7 +271,7 @@ if selected == 'Relative Rotation Graph':
     rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
     
     for i in range(len(tickers)):
-        rs_tickers.append(100 * (tickers_data[tickers[i]] / benchmark_data))
+        rs_tickers.append(100 * (tickers_data[tickers[i]] / benchmark_data[i]))
         rsr_tickers.append((100 + (rs_tickers[i] - rs_tickers[i].rolling(window=window).mean()) / rs_tickers[i].rolling(window=window).std(ddof=0)).dropna())
         rsr_roc_tickers.append(100 * ((rsr_tickers[i] / rsr_tickers[i][1]) - 1))
         rsm_tickers.append((101 + ((rsr_roc_tickers[i] - rsr_roc_tickers[i].rolling(window=window).mean()) / rsr_roc_tickers[i].rolling(window=window).std(ddof=0))).dropna())
