@@ -1291,7 +1291,7 @@ if selected == 'Macro Indicators':
 
             pib['Date'] = pib.index
             
-            fig_pib = px.line(fig_pib , x='Date', y=['Investment','Services', 'Household Consumption','Goverment Cosnumption']  , title='GDP')
+            fig_pib = px.line(pib , x='Date', y=['Investment','Services', 'Household Consumption','Goverment Cosnumption']  , title='GDP')
             
             fig_pib.update_xaxes(
                 rangeslider_visible=True,
