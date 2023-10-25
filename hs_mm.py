@@ -1205,10 +1205,11 @@ if selected == 'Macro Indicators':
         
             st.plotly_chart(fig_inad)
 
+        st.subheader('Economic Activity')
+        
+        col7, col8, col9 = st.columns(2)
 
-        col5, col6 = st.columns(2)
-
-        with col5:
+        with col7:
             
             # ## Brazil 12-month Inflation Forecast
             # Instanciar a classe Expectativas
@@ -1262,36 +1263,60 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_inf)
 
         
-        with col6:
+        with col8:
 
-            ## Brazil M2
-            m2_br = sgs.get({'M2':27810}, start='2001-12-01')
-            # Convert to DataFrame for plotting
-            df_m2_br = pd.DataFrame({
-                    'Date': m2_br.index,
-                    '12-month change': m2_br['M2'].pct_change(12).values,  
-                }).dropna()
-            # Plot both 'Value' and '12M MA' on the same figure
-            fig_m2_br = px.line(df_m2_br, x='Date', y='12-month change', title='Brazil M2')
-                
-            fig_m2_br.update_xaxes(
+           ibc = sgs.get({'IBC-Br': 24363}).dropna()
+
+            ibc['Date'] = ibc.index
+            
+            fig_ibc = px.line(ibc , x='Date', y='IBC-Br', title='IBC-Br')
+            
+            fig_ibc.update_xaxes(
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
                         dict(count=3, label="3y", step="year", stepmode="backward"),
                         dict(count=5, label="5y", step="year", stepmode="backward"),
-                        dict(count=10, label="10y", step="year", stepmode="backward"),   
+                        dict(count=10, label="10y", step="year", stepmode="backward"),
                         dict(step="all")
                     ])
                 )
             )
-            # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
-            # Adicionar o símbolo de % ao eixo y
-            fig_m2_br.update_yaxes(tickformat=".2%")
-            fig_m2_br.update_layout( width=600,  # Largura do gráfico
-        height=600  # Altura do gráfico
-    )
-            st.plotly_chart(fig_m2_br)
+            
+            fig_ibc.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+            )
+            
+            st.plotly_chart(fig_ibc)
+
+
+        with col9:
+
+            fbcf = sgs.get({'Investment/PIB': 24363}).dropna()
+
+            fbcf['Date'] = ibc.index
+            
+            fig_fbcf = px.line(fbcf , x='Date', y='Investment/PIB', title='Investment/PIB')
+            
+            fig_fbcf.update_xaxes(
+                rangeslider_visible=True,
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=3, label="3y", step="year", stepmode="backward"),
+                        dict(count=5, label="5y", step="year", stepmode="backward"),
+                        dict(count=10, label="10y", step="year", stepmode="backward"),
+                        dict(step="all")
+                    ])
+                )
+            )
+            
+            fig_fbcf.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+            )
+
+            fig_fbcf.update_yaxes(ticksuffix="%")
+            
+            st.plotly_chart(fig_fbcf)
 
 
 
