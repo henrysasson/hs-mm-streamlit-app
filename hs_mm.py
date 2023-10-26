@@ -1320,7 +1320,6 @@ if selected == 'Macro Indicators':
 
 if selected == 'Relative Rotation Graph':
     st.title('Relative Rotation Graph')
-    st.markdown('##')
     
    
     # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
