@@ -1389,10 +1389,10 @@ if selected == 'Relative Rotation Graph':
                 range=[min_y, max_y]
             ),
             shapes=[
-                dict(type='rect', x0=88, x1=100, y0=100, y1=115, fillcolor='red', opacity=0.2),
+                dict(type='rect', x0=88, x1=100, y0=100, y1=115, fillcolor='blue', opacity=0.2),
                 dict(type='rect', x0=100, x1=115, y0=100, y1=115, fillcolor='green', opacity=0.2),
-                dict(type='rect', x0=88, x1=100, y0=88, y1=100, fillcolor='yellow', opacity=0.2),
-                dict(type='rect', x0=100, x1=115, y0=88, y1=100, fillcolor='blue', opacity=0.2)
+                dict(type='rect', x0=88, x1=100, y0=88, y1=100, fillcolor='red', opacity=0.2),
+                dict(type='rect', x0=100, x1=115, y0=88, y1=100, fillcolor='yellow', opacity=0.2)
             ],
             annotations=[
                 dict(
