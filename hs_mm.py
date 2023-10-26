@@ -1371,7 +1371,6 @@ if selected == 'Relative Rotation Graph':
     
         # Graph layout configuration
         fig.update_layout(
-            title='RRG Indicator',
             xaxis_title='JdK RS-Ratio',
             yaxis_title='JdK RS-Momentum',
             xaxis=dict(
