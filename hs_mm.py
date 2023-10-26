@@ -1353,10 +1353,6 @@ if selected == 'Relative Rotation Graph':
                 if attempts == max_attempts:
                     print(f"Erro ao processar o ticker {ticker} após {max_attempts} tentativas: {e}")
         
-        
-        rsr_tickers.append(rsr)  # Multiplicando por 100 para normalizar
-        rsm_tickers.append(mom)
-        
     # Criando o gráfico RRG
     def create_rrg_graph():
         fig = go.Figure()
