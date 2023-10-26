@@ -1330,7 +1330,7 @@ if selected == 'Relative Rotation Graph':
         tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close']
         benchmark_data = yf.download(benchmark, period="1y", interval="1d")['Adj Close']
 
-    if market == 'Brazil:
+    if market == 'Brazil':
 
         tickers = ['ICON.SA', '^IEE', 'IFNC.SA', 'IMAT.SA', 'IMOB.SA']
         benchmark = '^BVSP'
