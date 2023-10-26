@@ -1033,7 +1033,7 @@ if selected == 'Macro Indicators':
 
             icc.dropna(inplace=True)
 
-            fig_icc = px.line(icc, x='Date', y=['Total', 'Households', 'Non-financial corporations'], title='ICC Spread')
+            fig_icc = px.line(icc, x='Date', y=['Total', 'Households', 'Non-financial corporations'], title='CCI Spread')
 
             fig_icc.update_xaxes(
                 rangeslider_visible=True,
@@ -1317,12 +1317,11 @@ if selected == 'Relative Rotation Graph':
     st.title('Relative Rotation Graph')
     st.markdown('##')
 
-    #lookback = st.number_input(label="Choose the lookback period (weekly basis)", value=12)
+    lookback = st.number_input(label="Choose the lookback period", value=20)
     
     period = '3y'
     tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
     benchmark = '^GSPC'
-    #window = lookback
 
     # Baixando os dados
     tickers_data = yf.download(tickers, period=period, interval="1d")['Adj Close']
@@ -1355,19 +1354,19 @@ if selected == 'Relative Rotation Graph':
         fig = go.Figure()
     
         # Encontrar os valores máximos e mínimos para os eixos x e y
-        max_x = max([max(rsr_tickers[i].tail(20).values) for i in range(len(tickers))])
-        min_x = min([min(rsr_tickers[i].tail(20).values) for i in range(len(tickers))])
-        max_y = max([max(rsm_tickers[i].tail(20).values) for i in range(len(tickers))])
-        min_y = min([min(rsm_tickers[i].tail(20).values) for i in range(len(tickers))])
+        max_x = max([max(rsr_tickers[i].tail(lookback).values) for i in range(len(tickers))])
+        min_x = min([min(rsr_tickers[i].tail(lookback).values) for i in range(len(tickers))])
+        max_y = max([max(rsm_tickers[i].tail(lookback).values) for i in range(len(tickers))])
+        min_y = min([min(rsm_tickers[i].tail(lookback).values) for i in range(len(tickers))])
     
         # Adding each ticker to the graph
         for i in range(len(tickers)):
-            marker_size = [5 for _ in range(19)] + [10]
+            marker_size = [5 for _ in range(lookback-1)] + [10]
     
             fig.add_trace(
                 go.Scatter(
-                    x=rsr_tickers[i].tail(20).values,
-                    y=rsm_tickers[i].tail(20).values,
+                    x=rsr_tickers[i].tail(lookback).values,
+                    y=rsm_tickers[i].tail(lookback).values,
                     mode='lines+markers',
                     name=tickers[i],
                     marker=dict(size=marker_size)
