@@ -1327,8 +1327,8 @@ if selected == 'Relative Rotation Graph':
         benchmark = '^GSPC'
 
         # Baixando os dados
-        tickers_data = yf.download(tickers, period=1y, interval="1d")['Adj Close']
-        benchmark_data = yf.download(benchmark, period=1y, interval="1d")['Adj Close']
+        tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close']
+        benchmark_data = yf.download(benchmark, period="1y", interval="1d")['Adj Close']
 
     if market == 'Brazil:
 
