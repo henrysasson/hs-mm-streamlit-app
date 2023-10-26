@@ -72,7 +72,7 @@ all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], 
 
 # Índices RRG
 tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XHB', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
-tickers_data = yf.download(tickers, period="2y", interval="1wk")['Adj Close'].fillna(method='ffill')
+tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
 benchmark_data = df_acoes['SPX']
 
 
@@ -1335,10 +1335,10 @@ if selected == 'Relative Rotation Graph':
         while attempts < max_attempts:
             try:
                 rs = tickers_data[ticker] / benchmark_data
-                ema_fast = rs.ewm(span=10, adjust=False).mean()
-                ema_slow = rs.ewm(span=30, adjust=False).mean()
+                ema_fast = rs.ewm(span=50, adjust=False).mean()
+                ema_slow = rs.ewm(span=150, adjust=False).mean()
                 rsr = (ema_fast/ema_slow)*100
-                mom = rsr.diff(5)*100
+                mom = rsr.diff(20)*100
                 min_val = mom.min()
                 max_val = mom.max()
     
