@@ -1327,16 +1327,16 @@ if selected == 'Relative Rotation Graph':
         benchmark = '^GSPC'
 
         # Baixando os dados
-        tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close']
-        benchmark_data = yf.download(benchmark, period="1y", interval="1d")['Adj Close']
+        tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
+        benchmark_data = yf.download(benchmark, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
 
     if market == 'Brazil':
 
         tickers = ['ICON.SA', '^IEE', 'IFNC.SA', 'IMAT.SA', 'IMOB.SA']
         benchmark = '^BVSP'
         # Baixando os dados
-        tickers_data = yf.download(tickers, period='1y', interval="1d")['Adj Close']
-        benchmark_data = yf.download(benchmark, period='1y', interval="1d")['Adj Close']
+        tickers_data = yf.download(tickers, period='1y', interval="1d")['Adj Close'].fillna(method='ffill')
+        benchmark_data = yf.download(benchmark, period='1y', interval="1d")['Adj Close'].fillna(method='ffill')
         
         names_indices = ['ICON', 'IEE', 'IFNC', 'IMAT', 'IMOB']
         column_mapping = dict(zip(tickers, names_indices))
