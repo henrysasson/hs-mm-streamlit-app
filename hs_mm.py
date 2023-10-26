@@ -76,7 +76,7 @@ tickers_data = yf.download(tickers, period="1y", interval="1wk")['Adj Close'].fi
 benchmark_data = df_acoes['SPX']
 
 
-options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Relative Rotation Graph', 'Positioning']
+options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning']
 selected = st.sidebar.selectbox('Main Menu', options)
 
 
@@ -1316,134 +1316,6 @@ if selected == 'Macro Indicators':
             )
             
             st.plotly_chart(fig_pib)
-
-
-if selected == 'Relative Rotation Graph':
-    st.title('Relative Rotation Graph')
-    
-   
-    # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
-    rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
-    
-    # Calculating the values of RS, RSR, RSR ROC and RSM for each ticker
-    rs_tickers, rsr_tickers, rsm_tickers = [], [], []
-    
-    max_attempts = 3
-
-    for ticker in tickers:
-        attempts = 0
-        while attempts < max_attempts:
-            try:
-                rs = tickers_data[ticker] / benchmark_data
-                ema_fast = rs.ewm(span=10, adjust=False).mean()
-                ema_slow = rs.ewm(span=30, adjust=False).mean()
-                rsr = (ema_fast/ema_slow)*100
-                mom = rsr.diff(5)*100
-                min_val = mom.min()
-                max_val = mom.max()
-    
-                # Normalize the momentum values to 90-110 range
-                mom = 20 * (mom - min_val) / (max_val - min_val) + 90
-    
-                rsr_tickers.append(rsr)  # Multiplicando por 100 para normalizar
-                rsm_tickers.append(mom)
-                break
-            except Exception as e:
-                attempts += 1
-                if attempts == max_attempts:
-                    print(f"Erro ao processar o ticker {ticker} após {max_attempts} tentativas: {e}")
-        
-    # Criando o gráfico RRG
-    def create_rrg_graph():
-        fig = go.Figure()
-    
-        # Encontrar os valores máximos e mínimos para os eixos x e y
-        max_x = max([max(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
-        min_x = min([min(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
-        max_y = max([max(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
-        min_y = min([min(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
-    
-        # Adding each ticker to the graph
-        for i in range(len(tickers)):
-            num_points = len(rsr_tickers[i].tail(12).values)
-            marker_size = [5 for _ in range(11)] + [10]
-    
-            fig.add_trace(
-                go.Scatter(
-                    x=rsr_tickers[i].tail(12).values,
-                    y=rsm_tickers[i].tail(12).values,
-                    mode='lines+markers',
-                    name=tickers[i],
-                    marker=dict(size=marker_size)
-                )
-            )
-    
-        # Graph layout configuration
-        fig.update_layout(
-            xaxis_title='RS-Ratio',
-            yaxis_title='RS-Momentum',
-            xaxis=dict(
-                showgrid=True,
-                zeroline=True,
-                zerolinewidth=2,
-                zerolinecolor='White',
-                range=[min_x, max_x]
-            ),
-            yaxis=dict(
-                showgrid=True,
-                zeroline=True,
-                zerolinewidth=2,
-                zerolinecolor='White',
-                range=[min_y, max_y]
-            ),
-            shapes=[
-                dict(type='rect', x0=88, x1=100, y0=100, y1=115, fillcolor='blue', opacity=0.2),
-                dict(type='rect', x0=100, x1=115, y0=100, y1=115, fillcolor='green', opacity=0.2),
-                dict(type='rect', x0=88, x1=100, y0=88, y1=100, fillcolor='red', opacity=0.2),
-                dict(type='rect', x0=100, x1=115, y0=88, y1=100, fillcolor='yellow', opacity=0.2)
-            ],
-            annotations=[
-                dict(
-                    x=(max_x - min_x) * 0.25 + min_x,
-                    y=(max_y - min_y) * 0.75 + min_y,
-                    xref="x",
-                    yref="y",
-                    text="Improving",
-                    showarrow=False
-                ),
-                dict(
-                    x=(max_x - min_x) * 0.75 + min_x,
-                    y=(max_y - min_y) * 0.75 + min_y,
-                    xref="x",
-                    yref="y",
-                    text="Leading",
-                    showarrow=False
-                ),
-                dict(
-                    x=(max_x - min_x) * 0.75 + min_x,
-                    y=(max_y - min_y) * 0.25 + min_y,
-                    xref="x",
-                    yref="y",
-                    text="Weakening",
-                    showarrow=False
-                ),
-                dict(
-                    x=(max_x - min_x) * 0.25 + min_x,
-                    y=(max_y - min_y) * 0.25 + min_y,
-                    xref="x",
-                    yref="y",
-                    text="Lagging",
-                    showarrow=False
-                )
-            ]
-        )
-    
-        fig.update_layout(yaxis_tickformat = '.2f')
-        fig.update_layout(xaxis_tickformat = '.2f')
-        st.plotly_chart(fig, use_container_width=True, height=5000)
-    
-    create_rrg_graph()
-        
 
 
 
