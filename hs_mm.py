@@ -1328,7 +1328,7 @@ if selected == 'Relative Rotation Graph':
     # Calculating the values of RS, RSR, RSR ROC and RSM for each ticker
     rs_tickers, rsr_tickers, rsm_tickers = [], [], []
     
-    max_attempts = 2
+    max_attempts = 3
 
     for ticker in tickers:
         attempts = 0
