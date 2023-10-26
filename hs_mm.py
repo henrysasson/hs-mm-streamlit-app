@@ -1322,7 +1322,7 @@ if selected == 'Relative Rotation Graph':
     period = '3y'
     tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
     benchmark = '^GSPC'
-    window = lookback
+    #window = lookback
 
     # Baixando os dados
     tickers_data = yf.download(tickers, period=period, interval="1wk")['Adj Close']
