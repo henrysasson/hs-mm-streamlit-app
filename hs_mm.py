@@ -1369,8 +1369,8 @@ if selected == 'Relative Rotation Graph':
     
             fig.add_trace(
                 go.Scatter(
-                    x=rsr_tickers[i].tail(20).values,
-                    y=rsm_tickers[i].tail(20).values,
+                    x=rsr_tickers[i].tail(12).values,
+                    y=rsm_tickers[i].tail(12).values,
                     mode='lines+markers',
                     name=tickers[i],
                     marker=dict(size=marker_size)
