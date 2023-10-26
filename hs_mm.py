@@ -31,6 +31,14 @@ def get_data(tickers):
     data = yf.download(tickers, period='3y')['Adj Close']
     return data
 
+# Índices RRG
+tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
+benchmark = '^GSPC'
+
+# Baixando os dados
+tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
+benchmark_data = yf.download(benchmark, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
+
 # Ações
 tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI']
 df_acoes = get_data(tickers_acoes).fillna(method='ffill')
@@ -1317,14 +1325,7 @@ if selected == 'Relative Rotation Graph':
     st.title('Relative Rotation Graph')
     st.markdown('##')
     
-    tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
-    benchmark = '^GSPC'
-
-    # Baixando os dados
-    tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
-    benchmark_data = yf.download(benchmark, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
-
-    
+   
     # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
     rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
     
