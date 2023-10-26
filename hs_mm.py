@@ -1317,7 +1317,7 @@ if selected == 'Relative Rotation Graph':
     st.title('Relative Rotation Graph')
     st.markdown('##')
 
-    lookback = st.number_input(label="Choose the lookback period (weekly basis)", value=5)
+    lookback = st.number_input(label="Choose the lookback period (weekly basis)", value=12)
     
     period = '5y'
     tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
@@ -1339,7 +1339,7 @@ if selected == 'Relative Rotation Graph':
         ema_10 = rs.ewm(span=10, adjust=False).mean()
         ema_30 = rs.ewm(span=30, adjust=False).mean()
         rsr = (ema_10/ema_30)*100
-        mom = rsr.diff(window)*100
+        mom = rsr.diff(5)*100
         min_val = mom.min()
         max_val = mom.max()
         
@@ -1357,7 +1357,7 @@ if selected == 'Relative Rotation Graph':
     
         # Adding each ticker to the graph
         for i in range(len(tickers)):
-            marker_size = [5 for _ in range(11)] + [10]
+            marker_size = [5 for _ in range(window)] + [10]
             
             fig.add_trace(
                 go.Scatter(
