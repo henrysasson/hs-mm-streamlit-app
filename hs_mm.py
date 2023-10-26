@@ -1328,17 +1328,30 @@ if selected == 'Relative Rotation Graph':
     # Calculating the values of RS, RSR, RSR ROC and RSM for each ticker
     rs_tickers, rsr_tickers, rsm_tickers = [], [], []
     
+    max_attempts = 2
+
     for ticker in tickers:
-        rs = tickers_data[ticker] / benchmark_data
-        ema_fast = rs.ewm(span=50, adjust=False).mean()
-        ema_slow = rs.ewm(span=150, adjust=False).mean()
-        rsr = (ema_fast/ema_slow)*100
-        mom = rsr.diff(20)*100
-        min_val = mom.min()
-        max_val = mom.max()
-        
-        # Normalize the momentum values to 90-110 range
-        mom = 20 * (mom - min_val) / (max_val - min_val) + 90
+        attempts = 0
+        while attempts < max_attempts:
+            try:
+                rs = tickers_data[ticker] / benchmark_data
+                ema_fast = rs.ewm(span=50, adjust=False).mean()
+                ema_slow = rs.ewm(span=150, adjust=False).mean()
+                rsr = (ema_fast/ema_slow)*100
+                mom = rsr.diff(20)*100
+                min_val = mom.min()
+                max_val = mom.max()
+    
+                # Normalize the momentum values to 90-110 range
+                mom = 20 * (mom - min_val) / (max_val - min_val) + 90
+    
+                rsr_tickers.append(rsr)  # Multiplicando por 100 para normalizar
+                rsm_tickers.append(mom)
+                break
+            except Exception as e:
+                attempts += 1
+                if attempts == max_attempts:
+                    print(f"Erro ao processar o ticker {ticker} após {max_attempts} tentativas: {e}")
         
         
         rsr_tickers.append(rsr)  # Multiplicando por 100 para normalizar
