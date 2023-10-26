@@ -1365,6 +1365,7 @@ if selected == 'Relative Rotation Graph':
     
         # Adding each ticker to the graph
         for i in range(len(tickers)):
+            num_points = len(rsr_tickers[i].tail(12).values)
             marker_size = [5 for _ in range(11)] + [10]
     
             fig.add_trace(
