@@ -1338,7 +1338,7 @@ if selected == 'Relative Rotation Graph':
                 ema_fast = rs.ewm(span=50, adjust=False).mean()
                 ema_slow = rs.ewm(span=150, adjust=False).mean()
                 rsr = (ema_fast/ema_slow)*100
-                mom = rsr.diff(20)*100
+                mom = rsr.diff(5)*100
                 min_val = mom.min()
                 max_val = mom.max()
     
@@ -1358,14 +1358,14 @@ if selected == 'Relative Rotation Graph':
         fig = go.Figure()
     
         # Encontrar os valores máximos e mínimos para os eixos x e y
-        max_x = max([max(rsr_tickers[i].tail(20).values) for i in range(len(tickers))])
-        min_x = min([min(rsr_tickers[i].tail(20).values) for i in range(len(tickers))])
-        max_y = max([max(rsm_tickers[i].tail(20).values) for i in range(len(tickers))])
-        min_y = min([min(rsm_tickers[i].tail(20).values) for i in range(len(tickers))])
+        max_x = max([max(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
+        min_x = min([min(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
+        max_y = max([max(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
+        min_y = min([min(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
     
         # Adding each ticker to the graph
         for i in range(len(tickers)):
-            marker_size = [5 for _ in range(19)] + [10]
+            marker_size = [5 for _ in range(11)] + [10]
     
             fig.add_trace(
                 go.Scatter(
