@@ -71,7 +71,7 @@ df_crypto.rename(columns=column_mapping, inplace=True)
 all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).fillna(method='ffill')
 
 # Índices RRG
-tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
+tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XHB', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
 tickers_data = yf.download(tickers, period="1y", interval="1d")['Adj Close'].fillna(method='ffill')
 benchmark_data = df_acoes['SPX']
 
