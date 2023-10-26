@@ -1317,13 +1317,31 @@ if selected == 'Relative Rotation Graph':
     st.title('Relative Rotation Graph')
     st.markdown('##')
     
-    period = '1y'
-    tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
-    benchmark = '^GSPC'
+    market = st.radio(
+    "Choose the market:",
+    ["United States", "Brazil"])
 
-    # Baixando os dados
-    tickers_data = yf.download(tickers, period=period, interval="1d")['Adj Close']
-    benchmark_data = yf.download(benchmark, period=period, interval="1d")['Adj Close']
+    if market == 'United States':
+    
+        tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
+        benchmark = '^GSPC'
+
+        # Baixando os dados
+        tickers_data = yf.download(tickers, period=1y, interval="1d")['Adj Close']
+        benchmark_data = yf.download(benchmark, period=1y, interval="1d")['Adj Close']
+
+    if market == 'Brazil:
+
+        tickers = ['ICON.SA', '^IEE', 'IFNC.SA', 'IMAT.SA', 'IMOB.SA']
+        benchmark = '^BVSP'
+        # Baixando os dados
+        tickers_data = yf.download(tickers, period='1y', interval="1d")['Adj Close']
+        benchmark_data = yf.download(benchmark, period='1y', interval="1d")['Adj Close']
+        
+        names_indices = ['ICON', 'IEE', 'IFNC', 'IMAT', 'IMOB']
+        column_mapping = dict(zip(tickers, names_indices))
+        tickers_data.rename(columns=column_mapping, inplace=True)
+
     
     # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
     rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
