@@ -1325,8 +1325,8 @@ if selected == 'Relative Rotation Graph':
     #window = lookback
 
     # Baixando os dados
-    tickers_data = yf.download(tickers, period=period, interval="1wk")['Adj Close']
-    benchmark_data = yf.download(benchmark, period=period, interval="1wk")['Adj Close']
+    tickers_data = yf.download(tickers, period=period, interval="1d")['Adj Close']
+    benchmark_data = yf.download(benchmark, period=period, interval="1d")['Adj Close']
     
     # Calculando os valores de RS, RSR, RSR ROC e RSM para cada ticker
     rs_tickers, rsr_tickers, rsr_roc_tickers, rsm_tickers = [], [], [], []
@@ -1336,10 +1336,10 @@ if selected == 'Relative Rotation Graph':
     
     for ticker in tickers:
         rs = tickers_data[ticker] / benchmark_data
-        ema_10 = rs.ewm(span=10, adjust=False).mean()
-        ema_30 = rs.ewm(span=30, adjust=False).mean()
+        ema_10 = rs.ewm(span=50, adjust=False).mean()
+        ema_30 = rs.ewm(span=150, adjust=False).mean()
         rsr = (ema_10/ema_30)*100
-        mom = rsr.diff(5)*100
+        mom = rsr.diff(20)*100
         min_val = mom.min()
         max_val = mom.max()
         
@@ -1383,14 +1383,14 @@ if selected == 'Relative Rotation Graph':
                 showgrid=True,
                 zeroline=True,
                 zerolinewidth=2,
-                zerolinecolor='Black',
+                zerolinecolor='White',
                 range=[min_x, max_x]
             ),
             yaxis=dict(
                 showgrid=True,
                 zeroline=True,
                 zerolinewidth=2,
-                zerolinecolor='Black',
+                zerolinecolor='White',
                 range=[min_y, max_y]
             ),
             shapes=[
