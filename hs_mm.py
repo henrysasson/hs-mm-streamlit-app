@@ -1355,19 +1355,19 @@ if selected == 'Relative Rotation Graph':
         fig = go.Figure()
     
         # Encontrar os valores máximos e mínimos para os eixos x e y
-        max_x = max([max(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
-        min_x = min([min(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
-        max_y = max([max(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
-        min_y = min([min(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
+        max_x = max([max(rsr_tickers[i].tail(20).values) for i in range(len(tickers))])
+        min_x = min([min(rsr_tickers[i].tail(20).values) for i in range(len(tickers))])
+        max_y = max([max(rsm_tickers[i].tail(20).values) for i in range(len(tickers))])
+        min_y = min([min(rsm_tickers[i].tail(20).values) for i in range(len(tickers))])
     
         # Adding each ticker to the graph
         for i in range(len(tickers)):
-            marker_size = [5 for _ in range(11)] + [10]
+            marker_size = [5 for _ in range(19)] + [10]
     
             fig.add_trace(
                 go.Scatter(
-                    x=rsr_tickers[i].tail(12).values,
-                    y=rsm_tickers[i].tail(12).values,
+                    x=rsr_tickers[i].tail(20).values,
+                    y=rsm_tickers[i].tail(20).values,
                     mode='lines+markers',
                     name=tickers[i],
                     marker=dict(size=marker_size)
