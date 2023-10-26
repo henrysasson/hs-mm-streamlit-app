@@ -1317,14 +1317,14 @@ if selected == 'Relative Rotation Graph':
     st.title('Relative Rotation Graph')
     st.markdown('##')
 
-    lookback = st.number_input(label="Choose the lookback period (weekly basis)", value=12)
+    #lookback = st.number_input(label="Choose the lookback period (weekly basis)", value=12)
     
-    period = '5y'
+    period = '3y'
     tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
     benchmark = '^GSPC'
     window = lookback
 
-# Baixando os dados
+    # Baixando os dados
     tickers_data = yf.download(tickers, period=period, interval="1wk")['Adj Close']
     benchmark_data = yf.download(benchmark, period=period, interval="1wk")['Adj Close']
     
@@ -1352,13 +1352,18 @@ if selected == 'Relative Rotation Graph':
         
     # Criando o gráfico RRG
     def create_rrg_graph():
-        
         fig = go.Figure()
+    
+        # Encontrar os valores máximos e mínimos para os eixos x e y
+        max_x = max([max(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
+        min_x = min([min(rsr_tickers[i].tail(12).values) for i in range(len(tickers))])
+        max_y = max([max(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
+        min_y = min([min(rsm_tickers[i].tail(12).values) for i in range(len(tickers))])
     
         # Adding each ticker to the graph
         for i in range(len(tickers)):
-            marker_size = [5 for _ in range(window)] + [10]
-            
+            marker_size = [5 for _ in range(11)] + [10]
+    
             fig.add_trace(
                 go.Scatter(
                     x=rsr_tickers[i].tail(12).values,
@@ -1374,25 +1379,68 @@ if selected == 'Relative Rotation Graph':
             title='RRG Indicator',
             xaxis_title='JdK RS-Ratio',
             yaxis_title='JdK RS-Momentum',
-            xaxis=dict(showgrid=True, zeroline=True, zerolinewidth=2, zerolinecolor='Black'),
-            yaxis=dict(showgrid=True, zeroline=True, zerolinewidth=2, zerolinecolor='Black'),
+            xaxis=dict(
+                showgrid=True,
+                zeroline=True,
+                zerolinewidth=2,
+                zerolinecolor='Black',
+                range=[min_x, max_x]
+            ),
+            yaxis=dict(
+                showgrid=True,
+                zeroline=True,
+                zerolinewidth=2,
+                zerolinecolor='Black',
+                range=[min_y, max_y]
+            ),
             shapes=[
                 dict(type='rect', x0=88, x1=100, y0=100, y1=115, fillcolor='red', opacity=0.2),
                 dict(type='rect', x0=100, x1=115, y0=100, y1=115, fillcolor='green', opacity=0.2),
                 dict(type='rect', x0=88, x1=100, y0=88, y1=100, fillcolor='yellow', opacity=0.2),
                 dict(type='rect', x0=100, x1=115, y0=88, y1=100, fillcolor='blue', opacity=0.2)
+            ],
+            annotations=[
+                dict(
+                    x=(max_x - min_x) * 0.25 + min_x,
+                    y=(max_y - min_y) * 0.75 + min_y,
+                    xref="x",
+                    yref="y",
+                    text="Improving",
+                    showarrow=False
+                ),
+                dict(
+                    x=(max_x - min_x) * 0.75 + min_x,
+                    y=(max_y - min_y) * 0.75 + min_y,
+                    xref="x",
+                    yref="y",
+                    text="Leading",
+                    showarrow=False
+                ),
+                dict(
+                    x=(max_x - min_x) * 0.75 + min_x,
+                    y=(max_y - min_y) * 0.25 + min_y,
+                    xref="x",
+                    yref="y",
+                    text="Weakening",
+                    showarrow=False
+                ),
+                dict(
+                    x=(max_x - min_x) * 0.25 + min_x,
+                    y=(max_y - min_y) * 0.25 + min_y,
+                    xref="x",
+                    yref="y",
+                    text="Lagging",
+                    showarrow=False
+                )
             ]
         )
-    
     
         fig.update_layout(yaxis_tickformat = '.2f')
         fig.update_layout(xaxis_tickformat = '.2f')
         st.plotly_chart(fig, use_container_width=True, height=5000)
-
+    
     create_rrg_graph()
-
-
-
+        
 
 
 
