@@ -787,89 +787,89 @@ if selected == 'Macro Indicators':
 
     col10, col11 = st.columns(2)
         
-        with col10:
+    with col10:
 
-            gea = fred.get_series('IGREA').dropna()
+        gea = fred.get_series('IGREA').dropna()
 
-            # Convert to DataFrame for plotting
-            gea = pd.DataFrame({'Date': gea.index,
-                                'Index of Global Real Economic Activity':gea.values})
-            
-            
-            # Plot both 'Value' and '12M MA' on the same figure
-            fig_gea = px.line(gea, x='Date', y='Index of Global Real Economic Activity', title='Index of Global Real Economic Activity')
-            
-            fig_gea.update_xaxes(
-            rangeslider_visible=True,
-            rangeselector=dict(
-                buttons=list([
-                    dict(count=3, label="3y", step="year", stepmode="backward"),
-                    dict(count=5, label="5y", step="year", stepmode="backward"),
-                    dict(count=10, label="10y", step="year", stepmode="backward"),
-                    dict(count=20, label="20y", step="year", stepmode="backward"),
-                    dict(step="all")
-                ])
-            )
-            )
+        # Convert to DataFrame for plotting
+        gea = pd.DataFrame({'Date': gea.index,
+                            'Index of Global Real Economic Activity':gea.values})
+        
+        
+        # Plot both 'Value' and '12M MA' on the same figure
+        fig_gea = px.line(gea, x='Date', y='Index of Global Real Economic Activity', title='Index of Global Real Economic Activity')
+        
+        fig_gea.update_xaxes(
+        rangeslider_visible=True,
+        rangeselector=dict(
+            buttons=list([
+                dict(count=3, label="3y", step="year", stepmode="backward"),
+                dict(count=5, label="5y", step="year", stepmode="backward"),
+                dict(count=10, label="10y", step="year", stepmode="backward"),
+                dict(count=20, label="20y", step="year", stepmode="backward"),
+                dict(step="all")
+            ])
+        )
+        )
 
-            fig_gea.update_layout( width=600,  # Largura do gráfico
-        height=500  # Altura do gráfico
-    )
-
-            fig_gea.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
+        fig_gea.update_layout( width=600,  # Largura do gráfico
+    height=500  # Altura do gráfico
 )
-            st.plotly_chart(fig_gea)
+
+        fig_gea.update_layout(
+legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+)
+)
+        st.plotly_chart(fig_gea)
 
 
-        with col11:
+    with col11:
 
-            tax = fred.get_series('W006RC1Q027SBEA').dropna()
-            wilshare = fred.get_series('WILL5000PR').dropna()
+        tax = fred.get_series('W006RC1Q027SBEA').dropna()
+        wilshare = fred.get_series('WILL5000PR').dropna()
 
-            df = pd.concat([tax, wilshire], axis=1 ).dropna()
-            df.columns = ['Federal government current tax receipts', 'Wilshire 5000']
-            df['Date'] = df.index
+        df = pd.concat([tax, wilshire], axis=1 ).dropna()
+        df.columns = ['Federal government current tax receipts', 'Wilshire 5000']
+        df['Date'] = df.index
 
-            
-            # Create a subplot with dual Y-axes
-            fig = make_subplots(specs=[[{"secondary_y": True}]])
-            
-            # Plot data
-            fig.add_trace(go.Scatter(x=df.index, y=df['Federal government current tax receipts'], name="Tax Receipts"), secondary_y=False)
-            fig.add_trace(go.Scatter(x=df.index, y=df['Wilshire 5000'], name="Wilshire 5000"), secondary_y=True)
-            
-            # Titles and labels
-            fig.update_layout(title_text="Federal government current tax receipts vs. Wilshire 5000")
-            fig.update_xaxes(title_text="Date")
-            fig.update_yaxes(title_text="Tax Receipts", secondary_y=False)
-            fig.update_yaxes(title_text="Wilshire 5000 Index", secondary_y=True)
-            
-            # Add range slider
-            fig.update_layout(
-                xaxis=dict(
-                    rangeslider=dict(visible=True),
-                    rangeselector=dict(
-                        buttons=list([
-                            dict(count=5, label="5y", step="year", stepmode="backward"),
-                            dict(count=10, label="10y", step="year", stepmode="backward"),
-                            dict(count=20, label="20y", step="year", stepmode="todate"),
-                            dict(step="all")
-                        ])
-                    )
+        
+        # Create a subplot with dual Y-axes
+        fig = make_subplots(specs=[[{"secondary_y": True}]])
+        
+        # Plot data
+        fig.add_trace(go.Scatter(x=df.index, y=df['Federal government current tax receipts'], name="Tax Receipts"), secondary_y=False)
+        fig.add_trace(go.Scatter(x=df.index, y=df['Wilshire 5000'], name="Wilshire 5000"), secondary_y=True)
+        
+        # Titles and labels
+        fig.update_layout(title_text="Federal government current tax receipts")
+        fig.update_xaxes(title_text="Date")
+        fig.update_yaxes(title_text="Tax Receipts", secondary_y=False)
+        fig.update_yaxes(title_text="Wilshire 5000 Index", secondary_y=True)
+        
+        # Add range slider
+        fig.update_layout(
+            xaxis=dict(
+                rangeslider=dict(visible=True),
+                rangeselector=dict(
+                    buttons=list([
+                        dict(count=5, label="5y", step="year", stepmode="backward"),
+                        dict(count=10, label="10y", step="year", stepmode="backward"),
+                        dict(count=20, label="20y", step="year", stepmode="todate"),
+                        dict(step="all")
+                    ])
                 )
             )
-            
-            # Set width and height
-            fig.update_layout(width=600, height=500)
-            
-            st.plotly_chart(fig)
+        )
+        
+        # Set width and height
+        fig.update_layout(width=600, height=500)
+        
+        st.plotly_chart(fig)
         
         
 
