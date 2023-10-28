@@ -8,6 +8,7 @@ import streamlit as st
 import yfinance as yf
 import pandas as pd
 import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 from fredapi import Fred
 fred = Fred(api_key='0c2c8c3b572a356851d65eaa399a554e')
 import plotly.express as px
