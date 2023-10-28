@@ -729,7 +729,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_nfpr.update_yaxes(tickformat='.2%')
 
-            fig_nfpr.update_layout(height=500  # Altura do gráfico
+            fig_nfpr.update_layout(height=600  # Altura do gráfico
     )
 
             fig_nfpr.update_layout(
@@ -769,7 +769,7 @@ if selected == 'Macro Indicators':
             )
             )
 
-            fig_oh.update_layout( width=500,  # Largura do gráfico
+            fig_oh.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
@@ -812,7 +812,7 @@ if selected == 'Macro Indicators':
             )
             )
 
-            fig_gea.update_layout( width=500,  # Largura do gráfico
+            fig_gea.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
@@ -825,7 +825,6 @@ if selected == 'Macro Indicators':
         x=1
     )
 )
-        
             st.plotly_chart(fig_gea)
 
 
@@ -876,9 +875,9 @@ if selected == 'Macro Indicators':
 
         st.subheader('Housing')
         
-        col11, col12 = st.columns(2)
+        col12, col13 = st.columns(2)
 
-        with col11:
+        with col12:
 
             nhs = fred.get_series('HSN1F').dropna()
             
@@ -910,7 +909,7 @@ if selected == 'Macro Indicators':
             
             st.plotly_chart(fig_nhs)
 
-        with col12:
+        with col13:
 
             hperm = fred.get_series('PERMIT').dropna()
 
@@ -945,9 +944,9 @@ if selected == 'Macro Indicators':
 
         st.subheader('Sentiment')
 
-        col13, col14 = st.columns(2)
+        col14, col15 = st.columns(2)
         
-        with col13:
+        with col14:
 
             non_fin_corp = fred.get_series('NCBEILQ027S')/1000
             fin_corp = fred.get_series('FBCELLQ027S')/1000
@@ -993,7 +992,7 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_aiae)
 
         
-        with col14:
+        with col15:
 
             cons = fred.get_series('UMCSENT').dropna()
 
