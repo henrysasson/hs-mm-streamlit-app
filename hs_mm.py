@@ -830,12 +830,12 @@ legend=dict(
 
     with col11:
 
+        # Sample data fetch (you can use your own methods)
         tax = fred.get_series('W006RC1Q027SBEA').dropna()
-        wilshare = fred.get_series('WILL5000PR').dropna()
-
-        df = pd.concat([tax, wilshire], axis=1 ).dropna()
+        wilshire = fred.get_series('WILL5000PR').dropna()
+        
+        df = pd.concat([tax, wilshire], axis=1).dropna()
         df.columns = ['Federal government current tax receipts', 'Wilshire 5000']
-        df['Date'] = df.index
 
         
         # Create a subplot with dual Y-axes
