@@ -1476,7 +1476,7 @@ if selected == 'Positioning':
     categoria_ativo = cot_data['Category'][posicao_ativo]
 
 
-    if categoria_ativo in ['CRYPTO CURRENCIES', 'EQUITIES', 'CURRENCIES', 'EQUITIES - OTHER']:
+    if categoria_ativo in ['CRYPTO CURRENCIES', 'EQUITIES', 'CURRENCIES', 'EQUITIES - OTHER', 'FIXED INCOME', 'FIXED INCOME - OTHER']]:
 
         # Para Commercials
         commercials_long = data['Dealer Longs']
@@ -1487,6 +1487,12 @@ if selected == 'Positioning':
         large_specs_long = data['Asset Manager Longs'] + data['Leveraged Funds Longs']
         large_specs_short = data['Asset Manager Shorts'] + data['Leveraged Funds Shorts']
         net_large_specs = large_specs_long - large_specs_short
+
+         # Ajustando o sinal de net_large_specs para ser oposto ao de net_commercials
+        if net_commercials.sum() > 0:
+            net_large_specs = -abs(net_large_specs)
+        else:
+            net_large_specs = abs(net_large_specs)
 
         # Para Small Speculators
         # Primeiro, deduzimos os totais reportáveis do interesse aberto para obter o valor bruto
