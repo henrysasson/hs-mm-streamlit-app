@@ -1476,7 +1476,7 @@ if selected == 'Positioning':
     categoria_ativo = cot_data['Category'][posicao_ativo]
 
 
-    if categoria_ativo in ['CRYPTO CURRENCIES', 'EQUITIES', 'CURRENCIES', 'EQUITIES - OTHER', 'FIXED INCOME', 'FIXED INCOME - OTHER']:
+    if categoria_ativo in ['CRYPTO CURRENCIES', 'EQUITIES', 'CURRENCIES', 'EQUITIES - OTHER']:
 
         # Para Commercials
         commercials_long = data['Dealer Longs']
