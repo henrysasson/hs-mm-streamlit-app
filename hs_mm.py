@@ -1990,10 +1990,10 @@ if selected == 'Technical Analysis':
     last_value_rhl = rhl.iloc[-1]
     
     def last_20_80(value):
-        if value <= 0.2:
+        if value <= 20:
             reading = 'Bull'
         
-        if value >= 0.8:
+        if value >= 80:
             reading = 'Bear'
         
         else:
@@ -2005,10 +2005,10 @@ if selected == 'Technical Analysis':
     lat_value_nhnl =  "{:.2f}%".format(daily_highs_lows['High-Low Index'].iloc[-1])
 
     def last_nhnl(value):
-        if value <= -0.5:
+        if value <= -50:
             reading = 'Bull'
         
-        if value >= 0.5:
+        if value >= 50:
             reading = 'Bear'
     
         else:
@@ -2020,10 +2020,10 @@ if selected == 'Technical Analysis':
     last_value_vr = "{:.2f}%".format(v_r.iloc[-1])
 
     def last_vr(value):
-        if value < 0.5:
+        if value < 50:
             reading = 'Bear'
         
-        if value > 0.5:
+        if value > 50:
             reading = 'Bull'
         
         return reading
