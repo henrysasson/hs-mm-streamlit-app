@@ -167,7 +167,7 @@ if selected == 'Correlation Matrix':
     st.markdown('##')
    
     def corr_matrix(df, janela, classe):
-        matriz = df.ffill().pct_change()[-janela:].corr()
+        matriz = df.pct_change()[-janela:].corr()
         
         if classe == str('Multi Asset'):
             
