@@ -1762,7 +1762,7 @@ if selected == 'Technical Analysis':
     "NKE", "PFE", "PG", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "WBA"
 ]
 
-    tickers_euro_stoxx = = [
+    tickers_euro_stoxx = [
     "ADS.DE", "ADYEN.AS", "AIR.PA", "AI.PA", "ALV.DE", "ABI.BR", "ASML.AS",
     "CS.PA", "BBVA.MC", "SAN.MC", "BAS.DE", "BAYN.DE", "BMW.DE", "BNP.PA",
     "CRH", "BN.PA", "DBK.DE", "DB1.DE", "DHL.DE", "DTE.DE", "ENEL.MI", "ENI.MI",
