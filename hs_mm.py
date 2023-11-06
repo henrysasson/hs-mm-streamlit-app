@@ -1801,12 +1801,20 @@ if selected == 'Technical Analysis':
     "LNK.AX", "GOZ.AX", "CMW.AX", "UMG.AX", "NCM.AX", "PBH.AX"
 ]
 
+    tickers_dax = [
+    "SAP.DE", "SIE.DE", "ALV.DE", "AIR.PA", "DTE.DE", "MUV2.DE", "MBG.DE", "BAYN.DE",
+    "BAS.DE", "IFX.DE", "DHL.DE", "DB1.DE", "ADS.DE", "BMW.DE", "RWE.DE", "EOAN.DE",
+    "VOW3.DE", "DBK.DE", "MRK.DE", "VNA.DE", "DTG.DE", "SHL.DE", "HNR1.DE", "BEI.DE",
+    "SY1.DE", "RHM.DE", "HEN3.DE", "CBK.DE", "FRE.DE", "P911.DE", "MTX.DE", "BNR.DE",
+    "HEI.DE", "1COV.DE", "QIA.DE", "PAH3.DE", "CON.DE", "SRT3.DE", "ZAL.DE", "ENR.DE",
+    "GXZ3.DE"
+]
 
 
 
     market = st.selectbox(
         'Choose the market index:',
-        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'Ibovespa', 'S&P/BMV IPC', 'S&P/ASX']))
+        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'DAX', 'Ibovespa', 'S&P/BMV IPC', 'S&P/ASX']))
 
     if market == 'S&P 500':
         list_of_stocks = tickers_sp500
@@ -1822,6 +1830,9 @@ if selected == 'Technical Analysis':
 
     if market == 'Euro Stoxx':
         list_of_stocks = tickers_euro_stoxx
+
+    if market == 'DAX':
+        list_of_stocks = tickers_dax
         
     if market == 'Ibovespa':
         list_of_stocks = tickers_ibov
@@ -1853,6 +1864,9 @@ if selected == 'Technical Analysis':
 
     if market == 'Euro Stoxx':
         ticker = '^STOXX50E'
+
+    if market == 'DAX':
+        ticker = '^GDAXI'
         
     if market == 'Ibovespa':
         ticker = '^BVSP'
