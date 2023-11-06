@@ -316,7 +316,7 @@ if selected == 'Correlation Matrix':
     
     fig.update_layout(title=asset + " Correlation (Multi-Timeframe)", height=1600, annotations=annotations)
                 
-    st.plotly_chart(fig)
+    st.plotly_chart(fig,use_container_width=True)
 
 
 # # Directional Indicator
