@@ -1806,8 +1806,7 @@ if selected == 'Technical Analysis':
     "BAS.DE", "IFX.DE", "DHL.DE", "DB1.DE", "ADS.DE", "BMW.DE", "RWE.DE", "EOAN.DE",
     "VOW3.DE", "DBK.DE", "MRK.DE", "VNA.DE", "DTG.DE", "SHL.DE", "HNR1.DE", "BEI.DE",
     "SY1.DE", "RHM.DE", "HEN3.DE", "CBK.DE", "FRE.DE", "P911.DE", "MTX.DE", "BNR.DE",
-    "HEI.DE", "1COV.DE", "QIA.DE", "PAH3.DE", "CON.DE", "SRT3.DE", "ZAL.DE", "ENR.DE",
-    "GXZ3.DE"
+    "HEI.DE", "1COV.DE", "QIA.DE", "PAH3.DE", "CON.DE", "SRT3.DE", "ZAL.DE", "ENR.DE"
 ]
 
 
