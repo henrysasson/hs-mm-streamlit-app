@@ -2261,7 +2261,7 @@ if selected == 'Technical Analysis':
                         )
                     )
         
-         fig.update_yaxes(tickformat=".2f", ticksuffix="%")
+        fig.update_yaxes(tickformat=".2f", ticksuffix="%")
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=50, line_dash="dash", line_color="gray")
