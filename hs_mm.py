@@ -1675,7 +1675,7 @@ if selected == 'Technical Analysis':
 
 
     if market == 'S&P 500':
-    ticker = '^GSPC'
+        ticker = '^GSPC'
     
     if market == 'Nasdaq':
         ticker = '^IXIC'
