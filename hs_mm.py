@@ -7,7 +7,6 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-import pandas_ta
 from yahoo_fin import stock_info as si
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -1743,10 +1742,12 @@ if selected == 'Technical Analysis':
 
     
     df['50_sma'] = df.groupby(level=1)['Adj Close']\
-                     .transform(lambda x: pandas_ta.sma(close=x, length=50))
-    
+                  .rolling(window=50, min_periods=1).mean()\
+                  .reset_index(level=0, drop=True)
+
     df['200_sma'] = df.groupby(level=1)['Adj Close']\
-                  .transform(lambda x: pandas_ta.sma(close=x, length=200))
+                  .rolling(window=200, min_periods=1).mean()\
+                  .reset_index(level=0, drop=True)
 
     df['above_50_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['50_sma'])
                                           else 0, axis=1)
