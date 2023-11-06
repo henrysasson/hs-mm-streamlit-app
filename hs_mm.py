@@ -1903,14 +1903,14 @@ if selected == 'Technical Analysis':
     ################## Range High_Low #################
 
     # Definir a janela de rolagem
-    window = 20
+    window = 200
     
-    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+    # Identificar novas máximas e mínimas com base em uma janela móvel de 200 dias
     df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
     
     df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
     
-    dist_low = (df['Adj Close'] - df['Rolling Low'])
+    dist_low = (df['Close'] - df['Rolling Low'])
     
     dist_low[dist_low < 0] = 0
     
