@@ -1952,7 +1952,8 @@ if selected == 'Technical Analysis':
     # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
     v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
 
-
+    v_r = v_r*100
+    
     ################# McClellan Oscillator #######################
     
     # Calcule a mudança diária no preço de fechamento
@@ -2243,7 +2244,7 @@ if selected == 'Technical Analysis':
     
     with col5:
     
-        v_r_10 = pd.DataFrame({'Percentile':v_r*100,
+        v_r_10 = pd.DataFrame({'Percentile':v_r,
                           'Date':v_r.index})
     
         fig = px.line(v_r_10, x='Date', y='Percentile', title='S&D Volume')
@@ -2260,7 +2261,7 @@ if selected == 'Technical Analysis':
                         )
                     )
         
-        fig.update_yaxes(ticksuffix="%")
+         fig.update_yaxes(tickformat=".2f", ticksuffix="%")
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=50, line_dash="dash", line_color="gray")
