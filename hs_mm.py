@@ -257,9 +257,14 @@ if selected == 'Correlation Matrix':
 
     corr_matrix(all_assets, lookback, 'Multi Asset')
 
+    all_assets_list = all_assets.columns.tolist()
+    
+    all_assets_list.remove('SPX')
+    all_assets_list.insert(0, 'SPX')
+
     asset = st.selectbox(
         'Choose the asset:',
-        (all_assets.columns.tolist(), index = 'SPX')
+        (all_assets_list))
 
     d_5 = all_assets.pct_change()[-5:].corr()[asset]
     d_10 = all_assets.pct_change()[-10:].corr()[asset]
