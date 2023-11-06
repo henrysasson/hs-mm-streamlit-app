@@ -2051,63 +2051,63 @@ if selected == 'Technical Analysis':
         
         st.plotly_chart(fig)
     
-        with col6:
-    
-            # Calcule a mudança diária no preço de fechamento
-            df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
-            
-            # Identifique as emissões avançadas e em declínio
-            df['Advancing'] = df['Close Change'] > 0
-            df['Declining'] = df['Close Change'] < 0
-            
-            # Substituindo True e False por 1 e 0, respectivamente
-            df['Advancing'] = df['Advancing'].astype(int)
-            df['Declining'] = df['Declining'].astype(int)
-            
-            # Calcular a diferença diária entre avanços e declínios
-            # Primeiro, somamos as emissões avançadas e em declínio para cada dia
-            daily_advances = df.groupby(level=0)['Advancing'].sum()
-            daily_declines = df.groupby(level=0)['Declining'].sum()
-            
-            # Depois calculamos a diferença para cada dia
-            net_advances = daily_advances - daily_declines
-            
-            # Calcular a EMA de 19 dias para Net Advances
-            mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
-            
-            # Calcular a EMA de 39 dias para Net Advances
-            mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
-            
-            # Calcular o McClellan Oscillator
-            mco = mco_19ema - mco_39ema
-    
-            mco_plot = pd.DataFrame({'Value':mco,
-                          'Date':mco.index})
-    
-            fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
-            
-            fig.update_xaxes(
-                            rangeslider_visible=True,
-                            rangeselector=dict(
-                                buttons=list([
-                                    dict(count=1, label="YTD", step="year", stepmode="todate"),
-                                    dict(count=1, label="1y", step="year", stepmode="backward"),
-                                    dict(count=3, label="3y", step="year", stepmode="backward"),
-                                    dict(step="all")
-                                ])
-                            )
-                        )
-            
-            fig.update_yaxes(tickformat=".2f")
-            
-            # Adicionando a linha pontilhada cinza no y=0
-            fig.add_hline(y=0, line_dash="dash", line_color="gray")
-    
-            fig.update_layout( width=500,  # Largura do gráfico
-                height=500  # Altura do gráfico
-            )
+    with col6:
+
+        # Calcule a mudança diária no preço de fechamento
+        df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
         
-            st.plotly_chart(fig)
+        # Identifique as emissões avançadas e em declínio
+        df['Advancing'] = df['Close Change'] > 0
+        df['Declining'] = df['Close Change'] < 0
+        
+        # Substituindo True e False por 1 e 0, respectivamente
+        df['Advancing'] = df['Advancing'].astype(int)
+        df['Declining'] = df['Declining'].astype(int)
+        
+        # Calcular a diferença diária entre avanços e declínios
+        # Primeiro, somamos as emissões avançadas e em declínio para cada dia
+        daily_advances = df.groupby(level=0)['Advancing'].sum()
+        daily_declines = df.groupby(level=0)['Declining'].sum()
+        
+        # Depois calculamos a diferença para cada dia
+        net_advances = daily_advances - daily_declines
+        
+        # Calcular a EMA de 19 dias para Net Advances
+        mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
+        
+        # Calcular a EMA de 39 dias para Net Advances
+        mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
+        
+        # Calcular o McClellan Oscillator
+        mco = mco_19ema - mco_39ema
+
+        mco_plot = pd.DataFrame({'Value':mco,
+                      'Date':mco.index})
+
+        fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
+        
+        fig.update_xaxes(
+                        rangeslider_visible=True,
+                        rangeselector=dict(
+                            buttons=list([
+                                dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                dict(count=1, label="1y", step="year", stepmode="backward"),
+                                dict(count=3, label="3y", step="year", stepmode="backward"),
+                                dict(step="all")
+                            ])
+                        )
+                    )
+        
+        fig.update_yaxes(tickformat=".2f")
+        
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=0, line_dash="dash", line_color="gray")
+
+        fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+        st.plotly_chart(fig)
         
     
     
