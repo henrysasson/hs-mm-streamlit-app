@@ -2017,10 +2017,10 @@ if selected == 'Technical Analysis':
             reading = 'Neutral'
 
         if 20 <= value < 40:
-            reading = 'Bull'
+            reading = 'Bear'
         
         if value >= 40:
-            reading = 'Bear'
+            reading = 'Strong Bear'
         
         return reading
 
