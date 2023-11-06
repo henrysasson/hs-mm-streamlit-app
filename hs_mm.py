@@ -297,9 +297,6 @@ if selected == 'Correlation Matrix':
     
     
     fig.update_layout(title=str(asset+" Correlation (Multi-Timeframe)" ))
-    
-    fig.update_layout(title=classe, height=800  # Altura do gráfico
-    )
                 
     st.plotly_chart(fig, use_container_width=True, height=800  # Altura do gráfico
     )
