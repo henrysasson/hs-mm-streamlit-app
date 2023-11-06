@@ -1890,7 +1890,7 @@ if selected == 'Technical Analysis':
     ################## Range High_Low #################
 
     # Definir a janela de rolagem
-    window = 200
+    window = 20
     
     # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
     df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
@@ -2187,7 +2187,7 @@ if selected == 'Technical Analysis':
         df_rhl = pd.DataFrame({'Range High-Low':rhl,
                        'Date': rhl.index})
     
-        fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-week Range High-Low')
+        fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-day Range High-Low')
         
         fig.update_xaxes(
                     rangeslider_visible=True,
