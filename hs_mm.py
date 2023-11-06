@@ -1988,10 +1988,16 @@ if selected == 'Technical Analysis':
        
     def last_20_80(value):
         if value <= 20:
+            reading = 'Strong Bull'
+
+        if 20 <= value <= 40:
             reading = 'Bull'
         
-        if value >= 80:
+        if 60 <= value < 80:
             reading = 'Bear'
+
+        if value >= 80:
+            reading = 'Strong Bear'
         
         else:
             reading = 'Neutral'
@@ -2001,6 +2007,12 @@ if selected == 'Technical Analysis':
 
     def last_nhnl(value):
         if value <= -50:
+            reading = 'Strong Bull'
+
+        if -50 < value <= -30:
+            reading = 'Bull'
+
+        if 30 <= value < 50:
             reading = 'Bull'
         
         if value >= 50:
@@ -2114,7 +2126,7 @@ if selected == 'Technical Analysis':
         
         fig.update_yaxes(ticksuffix="%")
     
-        fig.update_layout( width=500,  # Largura do gráfico
+        fig.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
         )
 
@@ -2148,7 +2160,7 @@ if selected == 'Technical Analysis':
         
         fig.update_yaxes(ticksuffix="%")
 
-        fig.update_layout( width=500,  # Largura do gráfico
+        fig.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
         )
 
@@ -2191,7 +2203,7 @@ if selected == 'Technical Analysis':
         fig.add_hline(y=80, line_dash="dash", line_color="gray")
     
     
-        fig.update_layout( width=500,  # Largura do gráfico
+        fig.update_layout( width=600,  # Largura do gráfico
                 height=500  # Altura do gráfico
             )
         
@@ -2221,7 +2233,7 @@ if selected == 'Technical Analysis':
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=-40, line_dash="dash", line_color="gray")
     
-        fig.update_layout( width=500,  # Largura do gráfico
+        fig.update_layout( width=600,  # Largura do gráfico
                 height=500  # Altura do gráfico
             )
         
@@ -2253,7 +2265,7 @@ if selected == 'Technical Analysis':
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=50, line_dash="dash", line_color="gray")
     
-        fig.update_layout( width=500,  # Largura do gráfico
+        fig.update_layout( width=600,  # Largura do gráfico
                 height=500  # Altura do gráfico
             )
         
@@ -2283,7 +2295,7 @@ if selected == 'Technical Analysis':
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=0, line_dash="dash", line_color="gray")
 
-        fig.update_layout( width=500,  # Largura do gráfico
+        fig.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
         )
     
