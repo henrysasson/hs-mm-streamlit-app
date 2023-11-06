@@ -4,10 +4,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import os
+os.system('pip install yahoo_fin==0.8.9.1')
+from yahoo_fin import stock_info as si
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-import yahoo_fin
 from yahoo_fin import stock_info as si
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
