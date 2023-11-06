@@ -1696,7 +1696,7 @@ if selected == 'Technical Analysis':
     "AOS", "ALLE", "TECH", "AIZ", "WYNN", "JNPR", "CZR", "PNW", "QRVO", "MKTX", "MTCH", "CPB",
     "RHI", "NWSA", "HSIC", "PAYC", "FOXA", "UHS", "BXP", "BWA", "ETSY", "AAL", "BBWI", "FMC",
     "FRT", "BEN", "TPR", "GNRC", "IVZ", "XRAY", "CTLT", "HAS", "BIO", "WHR", "PARA", "CMA",
-    "NCLH", "ZION", "VFC", "SEE", "RL", "MHK", "DVA", "SEDG", "ALK", "FOX", "NWS", ... (and so on for the remaining symbols)
+    "NCLH", "ZION", "VFC", "SEE", "RL", "MHK", "DVA", "SEDG", "ALK", "FOX", "NWS"
 ]
     tickers_dow = [
     "MMM", "AXP", "AAPL", "BA", "CAT", "CVX", "CSCO", "KO", "DIS", "DWDP", 
