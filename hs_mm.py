@@ -1791,7 +1791,7 @@ if selected == 'Technical Analysis':
     if market == 'S&P/BMV IPC':
         list_of_stocks = tickers_bmv
 
-    df = yf.download(tickers=list_of_stocks, start='2020-01-01', end=date.today())
+    df = yf.download(tickers=list_of_stocks, period = '4y')
 
     df = df.stack()
 
