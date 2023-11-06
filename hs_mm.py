@@ -1707,7 +1707,7 @@ if selected == 'Technical Analysis':
 
     market = st.selectbox(
         'Choose the market index:',
-        (['S&P 500', 'Nasdaq', 'Dow Jones', 'FTSE', 'Ibovespa', 'S&P/BMV IPC']))
+        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Ibovespa', 'S&P/BMV IPC']))
 
     if market == 'S&P 500':
         list_of_stocks = tickers_sp500
