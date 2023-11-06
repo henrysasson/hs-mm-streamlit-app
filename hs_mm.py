@@ -7,7 +7,6 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
-from yahoo_fin import stock_info as si
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from fredapi import Fred
@@ -1644,20 +1643,80 @@ if selected == 'Technical Analysis':
     "BT-A.L", "BRBY.L", "BP.L", "BNZL.L", "BME.L", "BKG.L", "BEZ.L", "BDEV.L", "BATS.L",
     "BARC.L", "BA.L", "AZN.L", "AV.L", "AUTO.L", "ANTO.L", "AHT.L", "ADM.L", "ABF.L",
     "AAL.L", "AAF.L"
-]  
+] 
+    tickers_nasdaq = [
+    "AAPL", "MSFT", "AMZN", "NVDA", "META", "AVGO", "GOOGL", "GOOG", "TSLA", "COST",
+    "ADBE", "PEP", "CSCO", "NFLX", "CMCSA", "TMUS", "AMD", "INTC", "INTU", "AMGN",
+    "TXN", "HON", "QCOM", "AMAT", "SBUX", "BKNG", "GILD", "VRTX", "ISRG", "MDLZ",
+    "ADP", "REGN", "ADI", "LRCX", "PANW", "MU", "SNPS", "PDD", "CDNS", "KLAC",
+    "MELI", "CHTR", "CSX", "PYPL", "MAR", "ORLY", "MNST", "ASML", "CTAS", "ABNB",
+    "LULU", "FTNT", "NXPI", "WDAY", "PCAR", "KDP", "ADSK", "CPRT", "ODFL", "MRVL",
+    "PAYX", "CRWD", "SGEN", "ROST", "AEP", "MCHP", "EXC", "KHC", "AZN", "CEG",
+    "BKR", "DXCM", "BIIB", "EA", "FAST", "IDXX", "VRSK", "XEL", "CTSH", "TTD",
+    "GEHC", "CSGP", "MRNA", "FANG", "TEAM", "GFS", "ON", "DLTR", "DDOG", "WBD",
+    "ANSS", "ZS", "EBAY", "WBA", "ILMN", "SIRI", "ZM", "ALGN", "JD", "ENPH", "LCID"
+]
+    tickers_sp500 = [
+    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "META", "GOOG", "BRK.B", "TSLA", "UNH", "LLY",
+    "XOM", "JPM", "V", "JNJ", "AVGO", "PG", "MA", "HD", "CVX", "MRK", "ADBE", "ABBV", "COST",
+    "WMT", "PEP", "KO", "CSCO", "CRM", "MCD", "ACN", "BAC", "LIN", "NFLX", "CMCSA", "AMD",
+    "TMO", "PFE", "ORCL", "ABT", "INTC", "DIS", "VZ", "WFC", "COP", "AMGN", "PM", "INTU", "IBM",
+    "TXN", "QCOM", "UNP", "NKE", "DHR", "HON", "SPGI", "NOW", "CAT", "NEE", "RTX", "GE", "AMAT",
+    "SBUX", "LOW", "T", "BA", "BMY", "ELV", "GS", "TJX", "UPS", "LMT", "DE", "BKNG", "GILD",
+    "ISRG", "VRTX", "PLD", "MDT", "MMC", "CI", "SYK", "MS", "PGR", "MDLZ", "BLK", "ADP", "CB",
+    "CVS", "AXP", "REGN", "ETN", "AMT", "LRCX", "ADI", "SCHW", "SLB", "C", "MU", "BSX", "PANW",
+    "CME", "SO", "TMUS", "EOG", "BDX", "ZTS", "SNPS", "MO", "FI", "EQIX", "BX", "DUK", "NOC",
+    "KLAC", "CDNS", "AON", "APD", "ITW", "MPC", "CL", "WM", "CSX", "ICE", "PYPL", "MCK", "HUM",
+    "SHW", "PXD", "ORLY", "FDX", "CMG", "GD", "USB", "ANET", "PSX", "ROP", "EMR", "AJG", "PH",
+    "MCO", "TGT", "MMM", "FCX", "APH", "ABNB", "TT", "TDG", "PNC", "MSI", "MAR", "LULU", "AZO",
+    "HCA", "AIG", "NXPI", "WELL", "VLO", "SRE", "CTAS", "AFL", "PCAR", "NSC", "WMB", "ECL",
+    "ADSK", "CCI", "CHTR", "OXY", "CARR", "KMB", "HES", "AEP", "EXC", "ROST", "MCHP", "F",
+    "HLT", "COF", "EW", "TFC", "GM", "DLR", "PSA", "CPRT", "MNST", "TEL", "ADM", "OKE", "GIS",
+    "TRV", "MSCI", "STZ", "SPG", "MET", "CEG", "NUE", "FTNT", "CNC", "HAL", "DXCM", "PAYX",
+    "O", "BKR", "CTVA", "PCG", "BIIB", "IQV", "ODFL", "IDXX", "YUM", "DHI", "LHX", "JCI", "DOW",
+    "BK", "ALL", "D", "FAST", "AMP", "GWW", "XEL", "VRSK", "PRU", "KVUE", "SYY", "AME", "KMI",
+    "OTIS", "CTSH", "COR", "ACGL", "PEG", "EA", "DD", "ED", "RSG", "KDP", "A", "CMI", "FIS",
+    "DVN", "NEM", "CSGP", "ROK", "KR", "URI", "PPG", "LEN", "FANG", "GPN", "ON", "VICI", "HSY",
+    "CDW", "VMC", "MLM", "GEHC", "IT", "IR", "KHC", "EL", "WEC", "DG", "PWR", "WTW", "WBD",
+    "EIX", "WST", "AWK", "CAH", "DLTR", "ANSS", "MRNA", "SBAC", "AVB", "LYB", "HPQ", "ZBH",
+    "FTV", "MPWR", "HIG", "XYL", "CHD", "FICO", "EXR", "CBRE", "WY", "RMD", "KEYS", "APTV",
+    "EFX", "TTWO", "MTD", "CTRA", "DFS", "STT", "TSCO", "TROW", "BR", "STE", "ETR", "GLW",
+    "RCL", "EBAY", "DAL", "DTE", "AEE", "TRGP", "HPE", "MTB", "WAB", "MOH", "ES", "ULTA", "HWM",
+    "FE", "DOV", "RJF", "NVR", "EQR", "PPL", "GPC", "LH", "VRSN", "INVH", "DRI", "IFF", "ILMN",
+    "VTR", "GRMN", "PHM", "TDY", "FLT", "PTC", "STLD", "CNP", "BAX", "IRM", "CBOE", "FITB",
+    "MRO", "FDS", "TYL", "J", "NDAQ", "BRO", "EXPD", "ATO", "EG", "HOLX", "MKC", "CMS", "COO",
+    "EQT", "AKAM", "LVS", "BG", "FSLR", "NTAP", "PFG", "CINF", "CF", "WBA", "VLTO", "TXT",
+    "BALL", "ARE", "CLX", "OMC", "HUBB", "AXON", "HBAN", "ALB", "DGX", "IEX", "NTRS", "WAT",
+    "RF", "SWKS", "AVY", "JBHT", "SNA", "LDOS", "PKG", "MAA", "STX", "WRB", "LUV", "ALGN", "K",
+    "TSN", "ESS", "WDC", "LW", "SWK", "EPAM", "TER", "CAG", "EXPE", "AMCR", "BBY", "POOL", "LNT",
+    "APA", "DPZ", "SYF", "MAS", "L", "CCL", "IP", "CFG", "EVRG", "UAL", "NDSN", "HST", "LYV",
+    "SJM", "LKQ", "CE", "KIM", "IPG", "MOS", "TAP", "ENPH", "VTRS", "ZBRA", "ROL", "BF.B", "RVTY",
+    "NI", "TRMB", "AES", "JKHY", "NRG", "KEY", "CDAY", "REG", "MGM", "GL", "KMX", "INCY", "UDR",
+    "PNR", "TFX", "PODD", "GEN", "HRL", "CHRW", "WRK", "CPT", "HII", "PEAK", "FFIV", "EMN", "CRL",
+    "AOS", "ALLE", "TECH", "AIZ", "WYNN", "JNPR", "CZR", "PNW", "QRVO", "MKTX", "MTCH", "CPB",
+    "RHI", "NWSA", "HSIC", "PAYC", "FOXA", "UHS", "BXP", "BWA", "ETSY", "AAL", "BBWI", "FMC",
+    "FRT", "BEN", "TPR", "GNRC", "IVZ", "XRAY", "CTLT", "HAS", "BIO", "WHR", "PARA", "CMA",
+    "NCLH", "ZION", "VFC", "SEE", "RL", "MHK", "DVA", "SEDG", "ALK", "FOX", "NWS", ... (and so on for the remaining symbols)
+]
+    tickers_dow = [
+    "MMM", "AXP", "AAPL", "BA", "CAT", "CVX", "CSCO", "KO", "DIS", "DWDP", 
+    "XOM", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "MCD", "MEK", "MSFT", 
+    "NKE", "PFE", "PG", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "WBA"
+]
+
 
     market = st.selectbox(
         'Choose the market index:',
         (['S&P 500', 'Nasdaq', 'Dow Jones', 'FTSE', 'Ibovespa', 'S&P/BMV IPC']))
 
     if market == 'S&P 500':
-        list_of_stocks = si.tickers_sp500()
+        list_of_stocks = tickers_sp500
 
     if market == 'Nasdaq':
-        list_of_stocks = si.tickers_nasdaq()
+        list_of_stocks = tickers_nasdaq
         
     if market == 'Dow Jones':
-        list_of_stocks = si.tickers_dow()
+        list_of_stocks = tickers_dow
     
     if market == 'FTSE':
         list_of_stocks = tickers_ftse
