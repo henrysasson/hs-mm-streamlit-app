@@ -281,6 +281,20 @@ if selected == 'Correlation Matrix':
     asset_matrix.columns = ['5 D', '10 D', '21 D', '63 D', '126 D', '252 D', '504 D', '756 D', '1260 D']
     
     asset_matrix.drop(index = asset, inplace=True)
+
+    annotations = []
+    for y, row in enumerate(asset_matrix.values):
+        for x, val in enumerate(row):
+            annotations.append({
+                "x": asset_matrix.columns[x],
+                "y": asset_matrix.index[y],
+                "font": {"color": "black"},
+                "text": f"{val:.2f}",
+                "xref": "x1",
+                "yref": "y1",
+                "showarrow": False
+            })
+
     
     fig = go.Figure(data=go.Heatmap(
                     z=asset_matrix.values,
@@ -296,10 +310,9 @@ if selected == 'Correlation Matrix':
     ))
     
     
-    fig.update_layout(title=str(asset+" Correlation (Multi-Timeframe)" ))
+    fig.update_layout(title=asset + " Correlation (Multi-Timeframe)", height=1600, annotations=annotations)
                 
-    st.plotly_chart(fig, use_container_width=True)
-
+    st.plotly_chart(fig)
 
 
 # # Directional Indicator
