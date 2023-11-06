@@ -76,12 +76,6 @@ df_crypto.rename(columns=column_mapping, inplace=True)
 # Todos os Ativos
 all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).fillna(method='ffill')
 
-# Índices RRG
-tickers = ['XLB', 'XLC', 'XLE', 'XLF', 'XHB', 'XLI', 'XLK', 'XLP', 'XLRE', 'XLU', 'XLV', 'XLY']
-tickers_data = yf.download(tickers, period="1y", interval="1wk")['Adj Close'].fillna(method='ffill')
-benchmark_data = df_acoes['SPX']
-
-
 options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis']
 selected = st.sidebar.selectbox('Main Menu', options)
 
@@ -1768,10 +1762,21 @@ if selected == 'Technical Analysis':
     "NKE", "PFE", "PG", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "WBA"
 ]
 
+    tickers_euro_stoxx = = [
+    "ADS.DE", "ADYEN.AS", "AIR.PA", "AI.PA", "ALV.DE", "ABI.BR", "ASML.AS",
+    "CS.PA", "BBVA.MC", "SAN.MC", "BAS.DE", "BAYN.DE", "BMW.DE", "BNP.PA",
+    "CRH", "BN.PA", "DBK.DE", "DB1.DE", "DHL.DE", "DTE.DE", "ENEL.MI", "ENI.MI",
+    "EL.PA", "FLTR.IR", "RMS.PA", "IBE.MC", "ITX.MC", "IFX.DE", "INGA.AS",
+    "ISP.MI", "KER.PA", "OR.PA", "MC.PA", "MBG.DE", "MUV2.DE", "NOKIA.HE",
+    "NDA-FI.HE", "RI.PA", "PRX.AS", "SAF.PA", "SAN.PA", "SAP.DE", "SU.PA",
+    "SIE.DE", "GLE.PA", "STLA", "TTE.PA", "UNA.AS", "DG.PA", "VOW.DE", "VNA.DE"
+]
+
+
 
     market = st.selectbox(
         'Choose the market index:',
-        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Ibovespa', 'S&P/BMV IPC']))
+        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'Ibovespa', 'S&P/BMV IPC']))
 
     if market == 'S&P 500':
         list_of_stocks = tickers_sp500
@@ -1784,6 +1789,9 @@ if selected == 'Technical Analysis':
     
     if market == 'FTSE':
         list_of_stocks = tickers_ftse
+
+    if market == 'Euro Stoxx':
+        list_of_stocks = tickers_euro_stoxx
         
     if market == 'Ibovespa':
         list_of_stocks = tickers_ibov
@@ -1807,6 +1815,9 @@ if selected == 'Technical Analysis':
         
     if market == 'FTSE':
         ticker = '^FTSE'
+
+    if market == 'Euro Stoxx':
+        ticker = '^TOXX50E'
         
     if market == 'Ibovespa':
         ticker = '^BVSP'
