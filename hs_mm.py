@@ -2036,11 +2036,17 @@ if selected == 'Technical Analysis':
 
 
     def last_mco(value):
-        if value < 0:
+        if np.percentile(mco, 10) > value:
+            reading = 'Bull'
+        
+        if np.percentile(mco, 10) < value < 0:
             reading = 'Bear'
         
-        if value > 0:
+        if 0 < value < np.percentile(mco, 90):
             reading = 'Bull'
+
+        if value > np.percentile(mco, 90):
+            reading = 'Bear'
         
         return reading
 
@@ -2296,9 +2302,9 @@ if selected == 'Technical Analysis':
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=0, line_dash="dash", line_color="gray")
 
-        fig.add_hline(y=np.percentile(mco, 80), line_color="gray")
+        fig.add_hline(y=np.percentile(mco, 90), line_dash="dash", line_color="gray")
 
-        fig.add_hline(y=np.percentile(mco, 20), line_color="gray")
+        fig.add_hline(y=np.percentile(mco, 10), line_dash="dash", line_color="gray")
 
         fig.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
