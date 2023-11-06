@@ -1801,9 +1801,9 @@ if selected == 'Technical Analysis':
 
     df = yf.download(tickers=list_of_stocks, period = '4y')
 
-    df = df.stack()
-
     df.fillna(method='ffill', inplace = True)
+
+    df = df.stack()
 
 
     if market == 'S&P 500':
