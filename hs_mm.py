@@ -1819,7 +1819,7 @@ if selected == 'Technical Analysis':
         ticker = '^FTSE'
 
     if market == 'Euro Stoxx':
-        ticker = '^TOXX50E'
+        ticker = '^STOXX50E'
         
     if market == 'Ibovespa':
         ticker = '^BVSP'
