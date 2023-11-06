@@ -257,6 +257,48 @@ if selected == 'Correlation Matrix':
 
     corr_matrix(all_assets, lookback, 'Multi Asset')
 
+    asset = st.selectbox(
+        'Choose the asset:',
+        (all_assets.columns.tolist(), index = 'SPX')
+
+    d_5 = all_assets.pct_change()[-5:].corr()[asset]
+    d_10 = all_assets.pct_change()[-10:].corr()[asset]
+    d_21 = all_assets.pct_change()[-21:].corr()[asset]
+    d_63 = all_assets.pct_change()[-63:].corr()[asset]
+    d_126 = all_assets.pct_change()[-126:].corr()[asset]
+    d_252 = all_assets.pct_change()[-252:].corr()[asset]
+    d_504 = all_assets.pct_change()[-504:].corr()[asset]
+    d_756 = all_assets.pct_change()[-756:].corr()[asset]
+    d_1260 = all_assets.pct_change()[-1260:].corr()[asset]
+    
+    asset_matrix = pd.concat([d_5, d_10, d_21, d_63, d_126, d_252, d_504, d_756, d_1260], axis=1)
+    
+    asset_matrix.columns = ['5 D', '10 D', '21 D', '63 D', '126 D', '252 D', '504 D', '756 D', '1260 D']
+    
+    asset_matrix.drop(index = asset, inplace=True)
+    
+    fig = go.Figure(data=go.Heatmap(
+                    z=asset_matrix.values,
+                    x=asset_matrix.columns.tolist(),
+                    y=asset_matrix.index.tolist(),
+                    colorscale='RdYlGn',
+                    zmin=asset_matrix.values.min(), zmax=asset_matrix.values.max(),  # para garantir que o 0 seja neutro em termos de cor
+                    hoverongaps = False,
+        text=asset_matrix.applymap(lambda x: f"{x:.2f}"),
+        hoverinfo='y+x+text',
+        showscale=True,
+        colorbar_tickformat='.2f'
+    ))
+    
+    
+    fig.update_layout(title=str(asset+" Correlation (Multi-Timeframe)" ))
+    
+    fig.update_layout(title=classe, height=800  # Altura do gráfico
+    )
+                
+    st.plotly_chart(fig, use_container_width=True, height=800  # Altura do gráfico
+    )
+
 
 
 # # Directional Indicator
