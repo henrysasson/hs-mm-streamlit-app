@@ -50,8 +50,12 @@ column_mapping = dict(zip(tickers_moedas, names_moedas))
 df_moedas.rename(columns=column_mapping, inplace=True)
 
 # Commodities
-tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'BDRY']
+tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY']
 df_commodities = get_data(tickers_commodities).fillna(method='ffill')
+names_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY']
+column_mapping = dict(zip(tickers_commodities, names_commodities))
+# Renomeie as colunas
+df_commodities.rename(columns=column_mapping, inplace=True)
 
 # Renda Fixa
 tickers_rf = ['BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA']
