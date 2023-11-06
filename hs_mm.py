@@ -1803,6 +1803,8 @@ if selected == 'Technical Analysis':
 
     df = df.stack()
 
+    df.fillna(method='ffill', inplace = True)
+
 
     if market == 'S&P 500':
         ticker = '^GSPC'
