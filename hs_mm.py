@@ -1989,7 +1989,7 @@ if selected == 'Technical Analysis':
     # Calcular a média móvel simples de 10 dias do Record High Percent
     daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
 
-    daily_highs_lows['High-Low Index'].ffill(axis=0, inplace = True)
+    daily_highs_lows['High-Low Index'] = daily_highs_lows['High-Low Index'].ffill(axis=0)
     daily_highs_lows['Date']= daily_highs_lows.index
 
     ################# S&D Volume #######################
@@ -2013,7 +2013,7 @@ if selected == 'Technical Analysis':
 
     v_r = v_r*100
 
-    v_r = v_r.ffill(axis=0, inplace = True)
+    v_r = v_r.ffill(axis=0)
     
     ################# McClellan Oscillator #######################
     
