@@ -7,6 +7,7 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
+import yahoo_fin
 from yahoo_fin import stock_info as si
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
