@@ -1863,6 +1863,7 @@ if selected == 'Technical Analysis':
     
     st.plotly_chart(fig, use_container_width=True, height=5000)
 
+    ################## Stocks abova MA (50 and 200) #################
     
     df['50_sma'] = df.groupby(level=1)['Adj Close']\
                   .rolling(window=50, min_periods=1).mean()\
@@ -1886,6 +1887,206 @@ if selected == 'Technical Analysis':
     
     above_200 = above_200[above_200>0]
 
+    ################## Range High_Low #################
+
+    # Definir a janela de rolagem
+    window = 200
+    
+    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+    
+    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+    
+    dist_low = (df['Adj Close'] - df['Rolling Low'])
+    
+    dist_low[dist_low < 0] = 0
+    
+    df['RHL'] = dist_low/(df['Rolling High'] - df['Rolling Low'])
+    
+    rhl = df['RHL'].groupby(level='Date').mean()
+
+    ################# New-High New-Low #################
+
+    # Definir a janela de rolagem
+    window = 20
+    
+    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+    df['New High'] = df['High'] == df['Rolling High']
+    
+    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+    df['New Low'] = df['Low'] == df['Rolling Low']
+    
+    
+    # Calcular o número de novas máximas e mínimas por data
+    daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
+    
+    # Calcular o Record High Percent
+    daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
+    
+    daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
+    
+    
+    # Calcular a média móvel simples de 10 dias do Record High Percent
+    daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
+
+    daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
+    daily_highs_lows['Date']= daily_highs_lows.index
+
+    ################# S&D Volume #######################
+    
+    df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
+        
+    # Identifique as emissões avançadas e em declínio
+    df['Advancing'] = df['Close Change'] > 0.015
+    df['Declining'] = df['Close Change'] < -0.015
+    
+    # Calcule o volume diário para emissões avançadas e em declínio
+    df['Advancing Volume'] = df['Volume'] * df['Advancing']
+    df['Declining Volume'] = df['Volume'] * df['Declining']
+    
+    # Faça a soma de 10 dias dos volumes
+    rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+    rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+    
+    # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
+    v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
+
+
+    ################# McClellan Oscillator #######################
+    
+    # Calcule a mudança diária no preço de fechamento
+    df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
+    
+    # Identifique as emissões avançadas e em declínio
+    df['Advancing'] = df['Close Change'] > 0
+    df['Declining'] = df['Close Change'] < 0
+    
+    # Substituindo True e False por 1 e 0, respectivamente
+    df['Advancing'] = df['Advancing'].astype(int)
+    df['Declining'] = df['Declining'].astype(int)
+    
+    # Calcular a diferença diária entre avanços e declínios
+    # Primeiro, somamos as emissões avançadas e em declínio para cada dia
+    daily_advances = df.groupby(level=0)['Advancing'].sum()
+    daily_declines = df.groupby(level=0)['Declining'].sum()
+    
+    # Depois calculamos a diferença para cada dia
+    net_advances = daily_advances - daily_declines
+    
+    # Calcular a EMA de 19 dias para Net Advances
+    mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
+    
+    # Calcular a EMA de 39 dias para Net Advances
+    mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
+    
+    # Calcular o McClellan Oscillator
+    mco = mco_19ema - mco_39ema
+    
+    
+    ###############################################################################
+    last_value_ma50 = "{:.2f}%".format(above_50.iloc[-1])
+    last_value_ma200 = "{:.2f}%".format(above_200.iloc[-1])
+    last_value_rhl = rhl.iloc[-1]
+    
+    def last_20_80(value):
+        if value <= 0.2:
+            reading = 'Bull'
+        
+        if value >= 0.8:
+            reading = 'Bear'
+        
+        else:
+            reading = 'Neutral'
+        
+        return reading
+
+
+    lat_value_nhnl =  "{:.2f}%".format(daily_highs_lows['High-Low Index'].iloc[-1])
+
+    def last_nhnl(value):
+        if value <= -0.5:
+            reading = 'Bull'
+        
+        if value >= 0.5:
+            reading = 'Bear'
+    
+        else:
+            reading = 'Neutral'
+        
+        return reading
+
+    
+    last_value_vr = "{:.2f}%".format(v_r.iloc[-1])
+
+    def last_vr(value):
+        if value < 0.5:
+            reading = 'Bear'
+        
+        if value > 0.5:
+            reading = 'Bull'
+        
+        return reading
+
+    last_value_mco = "{:.2f}".format(mco.iloc[-1])
+
+    def last_mco(value):
+        if value < 0:
+            reading = 'Bear'
+        
+        if value > 0:
+            reading = 'Bull'
+        
+        return reading
+
+    
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
+
+    with col1:
+        
+        last_signal = last_20_80(last_value_ma50)
+        
+        st.metric("Stocks aboba 50 SMA", last_value_ma50)
+        st.text(last_signal)
+
+    with col2:
+        
+        last_signal = last_20_80(last_value_ma200)
+        
+        st.metric("Stocks aboba 200 SMA", last_value_ma200)
+        st.text(last_signal)
+
+    with col3:
+        
+        last_signal = last_20_80(last_value_rhl)
+        
+        st.metric("Range High-Low", last_value_rhl)
+        st.text(last_signal)
+
+    with col4:
+        
+        last_signal = last_nhnl(last_value_nhnl)
+        
+        st.metric("New Highs - New Lows Index", last_value_nhnl)
+        st.text(last_signal)
+
+    with col5:
+        
+        last_signal = last_vr(last_value_vr)
+        
+        st.metric("S&D Volume", last_value_vr)
+        st.text(last_signal)
+
+    with col6:
+        
+        last_signal = last_mco(last_value_mco)
+        
+        st.metric("S&D Volume", last_value_mco)
+        st.text(last_signal)
+    
+
+    
+    ################################################################################
     col1, col2 = st.columns(2)
 
     with col1:
@@ -1958,24 +2159,7 @@ if selected == 'Technical Analysis':
 
     col3, col4 = st.columns(2)
 
-    with col3:
-    
-        # Definir a janela de rolagem
-        window = 200
-        
-        # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
-        df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
-        
-        df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
-        
-        dist_low = (df['Adj Close'] - df['Rolling Low'])
-        
-        dist_low[dist_low < 0] = 0
-        
-        df['RHL'] = dist_low/(df['Rolling High'] - df['Rolling Low'])
-        
-        rhl = df['RHL'].groupby(level='Date').mean()
-        
+    with col3:       
         
         df_rhl = pd.DataFrame({'Range High-Low':rhl*100,
                        'Date': rhl.index})
@@ -2009,34 +2193,7 @@ if selected == 'Technical Analysis':
         
         st.plotly_chart(fig)
     
-    with col4:
-    
-        # Definir a janela de rolagem
-        window = 20
-        
-        # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
-        df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
-        df['New High'] = df['High'] == df['Rolling High']
-        
-        df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
-        df['New Low'] = df['Low'] == df['Rolling Low']
-        
-        
-        # Calcular o número de novas máximas e mínimas por data
-        daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
-        
-        # Calcular o Record High Percent
-        daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
-        
-        daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
-        
-        
-        # Calcular a média móvel simples de 10 dias do Record High Percent
-        daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
-    
-        daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
-        daily_highs_lows['Date']= daily_highs_lows.index
-        
+    with col4:        
         
         fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows Index')
         
@@ -2069,23 +2226,6 @@ if selected == 'Technical Analysis':
     col5, col6 = st.columns(2)
     
     with col5:
-            # Calcule a mudança diária no preço de fechamento
-        df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
-        
-        # Identifique as emissões avançadas e em declínio
-        df['Advancing'] = df['Close Change'] > 0.015
-        df['Declining'] = df['Close Change'] < -0.015
-        
-        # Calcule o volume diário para emissões avançadas e em declínio
-        df['Advancing Volume'] = df['Volume'] * df['Advancing']
-        df['Declining Volume'] = df['Volume'] * df['Declining']
-        
-        # Faça a soma de 10 dias dos volumes
-        rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
-        rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
-        
-        # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
-        v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
     
         v_r_10 = pd.DataFrame({'Percentile':v_r*100,
                           'Date':v_r.index})
@@ -2116,34 +2256,6 @@ if selected == 'Technical Analysis':
         st.plotly_chart(fig)
     
     with col6:
-
-        # Calcule a mudança diária no preço de fechamento
-        df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
-        
-        # Identifique as emissões avançadas e em declínio
-        df['Advancing'] = df['Close Change'] > 0
-        df['Declining'] = df['Close Change'] < 0
-        
-        # Substituindo True e False por 1 e 0, respectivamente
-        df['Advancing'] = df['Advancing'].astype(int)
-        df['Declining'] = df['Declining'].astype(int)
-        
-        # Calcular a diferença diária entre avanços e declínios
-        # Primeiro, somamos as emissões avançadas e em declínio para cada dia
-        daily_advances = df.groupby(level=0)['Advancing'].sum()
-        daily_declines = df.groupby(level=0)['Declining'].sum()
-        
-        # Depois calculamos a diferença para cada dia
-        net_advances = daily_advances - daily_declines
-        
-        # Calcular a EMA de 19 dias para Net Advances
-        mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
-        
-        # Calcular a EMA de 39 dias para Net Advances
-        mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
-        
-        # Calcular o McClellan Oscillator
-        mco = mco_19ema - mco_39ema
 
         mco_plot = pd.DataFrame({'Value':mco,
                       'Date':mco.index})
