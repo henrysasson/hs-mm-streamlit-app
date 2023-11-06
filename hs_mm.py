@@ -1998,7 +1998,7 @@ with col4:
 
 col5, col6 = st.columns(2)
 
-with col6:
+with col5:
         # Calcule a mudança diária no preço de fechamento
     df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
     
