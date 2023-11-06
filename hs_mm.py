@@ -2004,6 +2004,24 @@ if selected == 'Technical Analysis':
             reading = 'Strong Bear'
             
         return reading
+
+    def last_30_70(value):
+        if value <= 30:
+            reading = 'Strong Bull'
+        
+        if 30 <= value <= 40:
+            reading = 'Bull'
+        
+        if 40 < value <= 60:
+            reading = 'Neutral'
+        
+        if 60 <= value < 70:
+            reading = 'Bear'
+        
+        if value >= 70:
+            reading = 'Strong Bear'
+            
+        return reading
     
 
     def last_nhnl(value):
@@ -2204,10 +2222,10 @@ if selected == 'Technical Analysis':
         fig.update_yaxes(tickformat=".2f", ticksuffix="%")
         
         # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=20, line_dash="dash", line_color="gray")
+        fig.add_hline(y=30, line_dash="dash", line_color="gray")
         
         # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=80, line_dash="dash", line_color="gray")
+        fig.add_hline(y=70, line_dash="dash", line_color="gray")
     
     
         fig.update_layout( width=600,  # Largura do gráfico
