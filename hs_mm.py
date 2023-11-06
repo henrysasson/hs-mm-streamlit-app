@@ -1985,10 +1985,7 @@ if selected == 'Technical Analysis':
     
     
     ###############################################################################
-    last_value_ma50 = "{:.2f}%".format(above_50.iloc[-1])
-    last_value_ma200 = "{:.2f}%".format(above_200.iloc[-1])
-    last_value_rhl = rhl.iloc[-1]
-    
+       
     def last_20_80(value):
         if value <= 20:
             reading = 'Bull'
@@ -2000,9 +1997,7 @@ if selected == 'Technical Analysis':
             reading = 'Neutral'
         
         return reading
-
-
-    lat_value_nhnl =  "{:.2f}%".format(daily_highs_lows['High-Low Index'].iloc[-1])
+    
 
     def last_nhnl(value):
         if value <= -50:
@@ -2016,8 +2011,6 @@ if selected == 'Technical Analysis':
         
         return reading
 
-    
-    last_value_vr = "{:.2f}%".format(v_r.iloc[-1])
 
     def last_vr(value):
         if value < 50:
@@ -2028,7 +2021,6 @@ if selected == 'Technical Analysis':
         
         return reading
 
-    last_value_mco = "{:.2f}".format(mco.iloc[-1])
 
     def last_mco(value):
         if value < 0:
@@ -2043,45 +2035,57 @@ if selected == 'Technical Analysis':
     col1, col2, col3, col4, col5, col6 = st.columns(6)
 
     with col1:
+    
+        last_value_ma50 = "{:.2f}%".format(above_50.iloc[-1])
         
-        last_signal = last_20_80(last_value_ma50)
+        last_signal = last_20_80(above_50.iloc[-1])
         
         st.metric("Stocks aboba 50 SMA", last_value_ma50)
         st.text(last_signal)
 
     with col2:
+
+        last_value_ma200 = "{:.2f}%".format(above_200.iloc[-1])
         
-        last_signal = last_20_80(last_value_ma200)
+        last_signal = last_20_80(above_200.iloc[-1])
         
         st.metric("Stocks aboba 200 SMA", last_value_ma200)
         st.text(last_signal)
 
     with col3:
+
+        last_value_rhl = "{:.2f}%".format(rhl.iloc[-1])
         
-        last_signal = last_20_80(last_value_rhl)
+        last_signal = last_20_80(rhl.iloc[-1])
         
         st.metric("Range High-Low", last_value_rhl)
         st.text(last_signal)
 
     with col4:
+
+        lat_value_nhnl =  "{:.2f}%".format(daily_highs_lows['High-Low Index'].iloc[-1])
         
-        last_signal = last_nhnl(last_value_nhnl)
+        last_signal = last_nhnl(daily_highs_lows['High-Low Index'].iloc[-1])
         
         st.metric("New Highs - New Lows Index", last_value_nhnl)
         st.text(last_signal)
 
     with col5:
+
+        last_value_vr = "{:.2f}%".format(v_r.iloc[-1])
         
-        last_signal = last_vr(last_value_vr)
+        last_signal = last_vr(v_r.iloc[-1])
         
         st.metric("S&D Volume", last_value_vr)
         st.text(last_signal)
 
     with col6:
+
+        last_value_mco = "{:.2f}".format(mco.iloc[-1])        
         
-        last_signal = last_mco(last_value_mco)
+        last_signal = last_mco(mco.iloc[-1])
         
-        st.metric("S&D Volume", last_value_mco)
+        st.metric("McClellan Oscillator", last_value_mco)
         st.text(last_signal)
     
 
