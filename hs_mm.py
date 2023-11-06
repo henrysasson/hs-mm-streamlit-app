@@ -280,6 +280,8 @@ if selected == 'Correlation Matrix':
     
     asset_matrix.drop(index = asset, inplace=True)
 
+    asset_matrix = asset_matrix.iloc[::-1]
+
     annotations = []
     for y, row in enumerate(asset_matrix.values):
         for x, val in enumerate(row):
