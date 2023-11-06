@@ -1772,11 +1772,41 @@ if selected == 'Technical Analysis':
     "SIE.DE", "GLE.PA", "STLA", "TTE.PA", "UNA.AS", "DG.PA", "VOW.DE", "VNA.DE"
 ]
 
+    tickers_asx = [
+    "BHP.AX", "CBA.AX", "CSL.AX", "NAB.AX", "ANZ.AX", "WBC.AX", "WDS.AX", "WES.AX",
+    "MQG.AX", "RIO.AX", "TLS.AX", "WOW.AX", "FMG.AX", "TCL.AX", "GMG.AX", "ALL.AX",
+    "STO.AX", "QBE.AX", "NEM.AX", "COL.AX", "BXB.AX", "JHX.AX", "SUN.AX", "COH.AX",
+    "XRO.AX", "S32.AX", "ORG.AX", "CPU.AX", "IAG.AX", "SHL.AX", "SCG.AX", "NST.AX",
+    "ASX.AX", "WTC.AX", "CAR.AX", "MIN.AX", "APA.AX", "PLS.AX", "TLC.AX", "MPL.AX",
+    "RHC.AX", "RMD.AX", "QAN.AX", "SGP.AX", "BSL.AX", "SOL.AX", "AMC.AX", "REA.AX",
+    "TWE.AX", "ALD.AX", "SEK.AX", "MGR.AX", "GPT.AX", "DXS.AX", "VCX.AX", "EDV.AX",
+    "ORI.AX", "LYC.AX", "IGO.AX", "AZJ.AX", "IEL.AX", "EVN.AX", "NXT.AX", "AGL.AX",
+    "ALX.AX", "WOR.AX", "WHC.AX", "SDF.AX", "AKE.AX", "IPL.AX", "CWY.AX", "ALQ.AX",
+    "BEN.AX", "QUB.AX", "JBH.AX", "ALU.AX", "CHC.AX", "SVW.AX", "TNE.AX", "LLC.AX",
+    "PME.AX", "REH.AX", "MTS.AX", "BOQ.AX", "VUK.AX", "NHF.AX", "LTR.AX",
+    "DMP.AX", "FLT.AX", "ORA.AX", "FPH.AX", "ILU.AX", "VEA.AX", "CIA.AX", "PDN.AX",
+    "CNU.AX", "RWC.AX", "AMP.AX", "A2M.AX", "SFR.AX", "NHC.AX", "ANN.AX", "CSR.AX",
+    "AUB.AX", "NEC.AX", "CGF.AX", "HUB.AX", "NSR.AX", "DOW.AX", "TLX.AX", "BPT.AX",
+    "ARB.AX", "WEB.AX", "PMV.AX", "RGN.AX", "HVN.AX", "SQ2.AX", "PRU.AX", "PPT.AX",
+    "APE.AX", "TPG.AX", "BRG.AX", "CTD.AX", "BKW.AX", "CLW.AX", "SUL.AX", "VNT.AX",
+    "NIC.AX", "DRR.AX", "HDN.AX", "SGM.AX", "GOR.AX", "BAP.AX", "AWC.AX", "TAH.AX",
+    "RMS.AX", "DEG.AX", "NUF.AX", "AIA.AX", "BWP.AX", "CMM.AX", "CQR.AX", "LIC.AX",
+    "GNC.AX", "MP1.AX", "NEU.AX", "NWL.AX", "IPH.AX", "360.AX", "GUD.AX", "CIP.AX",
+    "INA.AX", "BGL.AX", "WPR.AX", "PXA.AX", "CRN.AX", "IFL.AX", "KAR.AX", "JLG.AX",
+    "KLS.AX", "BLD.AX", "GMD.AX", "IVC.AX", "ING.AX", "MND.AX", "LNW.AX", "PNI.AX",
+    "RRL.AX", "EMR.AX", "CGC.AX", "ARF.AX", "SGR.AX", "LOV.AX", "EVT.AX", "NWH.AX",
+    "MFG.AX", "DTL.AX", "HMC.AX", "NAN.AX", "HLS.AX", "AVZ.AX", "CKF.AX", "NWS.AX",
+    "SPK.AX", "CNI.AX", "FBU.AX", "SLR.AX", "ELD.AX", "IRE.AX", "DHG.AX", "PNV.AX",
+    "CCP.AX", "CQE.AX", "WAF.AX", "SYA.AX", "BGA.AX", "WBT.AX", "CXO.AX", "CHN.AX",
+    "LNK.AX", "GOZ.AX", "CMW.AX", "UMG.AX", "NCM.AX", "PBH.AX"
+]
+
+
 
 
     market = st.selectbox(
         'Choose the market index:',
-        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'Ibovespa', 'S&P/BMV IPC']))
+        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'Ibovespa', 'S&P/BMV IPC', 'S&P/ASX']))
 
     if market == 'S&P 500':
         list_of_stocks = tickers_sp500
@@ -1798,6 +1828,9 @@ if selected == 'Technical Analysis':
         
     if market == 'S&P/BMV IPC':
         list_of_stocks = tickers_bmv
+
+    if market == 'S&P/ASX':
+        list_of_stocks = tickers_asx
 
     df = yf.download(tickers=list_of_stocks, period = '4y')
 
@@ -1826,6 +1859,9 @@ if selected == 'Technical Analysis':
     
     if market == 'S&P/BMV IPC':
         ticker = '^MXX'
+
+    if market == 'S&P/ASX':
+        ticker = '^AXJO'
         
         
     df_index =  yf.download(ticker, period='4y')
