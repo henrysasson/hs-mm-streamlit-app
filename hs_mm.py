@@ -36,14 +36,14 @@ def get_data(tickers):
 
 # Ações
 tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI']
-df_acoes = get_data(tickers_acoes).fillna(method='ffill')
+df_acoes = get_data(tickers_acoes).ffill(axis=0, inplace = True)
 names_acoes = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE']
 column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
 # Moedas
 tickers_moedas = ['EURUSD=X', 'JPY=X', 'GBPUSD=X', 'BRL=X', 'AUDUSD=X', 'MXN=X']
-df_moedas = get_data(tickers_moedas).fillna(method='ffill')
+df_moedas = get_data(tickers_moedas).ffill(axis=0, inplace = True)
 names_moedas = ['EURUSD', 'USDJPY', 'GBPUSD', 'USDBRL', 'AUDUSD', 'MXNUSD']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
 # Renomeie as colunas
@@ -51,7 +51,7 @@ df_moedas.rename(columns=column_mapping, inplace=True)
 
 # Commodities
 tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY']
-df_commodities = get_data(tickers_commodities).fillna(method='ffill')
+df_commodities = get_data(tickers_commodities).ffill(axis=0, inplace = True)
 names_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY']
 column_mapping = dict(zip(tickers_commodities, names_commodities))
 # Renomeie as colunas
@@ -59,7 +59,7 @@ df_commodities.rename(columns=column_mapping, inplace=True)
 
 # Renda Fixa
 tickers_rf = ['BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA']
-df_rf = get_data(tickers_rf).fillna(method='ffill')
+df_rf = get_data(tickers_rf).ffill(axis=0, inplace = True)
 names_rf = ['BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB']
 column_mapping = dict(zip(tickers_rf, names_rf))
 # Renomeie as colunas
@@ -67,7 +67,7 @@ df_rf.rename(columns=column_mapping, inplace=True)
 
 # Crypto
 tickers_crypto = ['BTC-USD', 'ETH-USD']
-df_crypto = get_data(tickers_crypto).fillna(method='ffill')
+df_crypto = get_data(tickers_crypto).ffill(axis=0, inplace = True)
 names_crypto = ['BTCUSD', 'ETHUSD']
 column_mapping = dict(zip(tickers_crypto, names_crypto))
 # Renomeie as colunas
@@ -1843,7 +1843,7 @@ if selected == 'Technical Analysis':
     if market == 'S&P/ASX':
         list_of_stocks = tickers_asx
 
-    df = yf.download(tickers=list_of_stocks, period = '4y').fillna(method='ffill')
+    df = yf.download(tickers=list_of_stocks, period = '4y').ffill(axis=0, inplace = True)
 
     df = df.stack()
 
@@ -1876,7 +1876,7 @@ if selected == 'Technical Analysis':
         ticker = '^AXJO'
         
         
-    df_index =  yf.download(ticker, period='4y')
+    df_index =  yf.download(ticker, period='4y').ffill(axis=0, inplace = True)
     
     df_index['50-day SMA'] = df_index['Adj Close'].rolling(50, min_periods=1).mean()
     df_index['200-day SMA'] = df_index['Adj Close'].rolling(200, min_periods=1).mean()
@@ -1989,7 +1989,7 @@ if selected == 'Technical Analysis':
     # Calcular a média móvel simples de 10 dias do Record High Percent
     daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
 
-    daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
+    daily_highs_lows['High-Low Index'].ffill(axis=0, inplace = True)
     daily_highs_lows['Date']= daily_highs_lows.index
 
     ################# S&D Volume #######################
@@ -2012,6 +2012,8 @@ if selected == 'Technical Analysis':
     v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
 
     v_r = v_r*100
+
+    v_r = v_r.ffill(axis=0, inplace = True)
     
     ################# McClellan Oscillator #######################
     
