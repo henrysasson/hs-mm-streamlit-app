@@ -2218,7 +2218,7 @@ if selected == 'Technical Analysis':
         df_rhl = pd.DataFrame({'Range High-Low':rhl,
                        'Date': rhl.index})
     
-        fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-day Range High-Low')
+        fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-week Range High-Low')
         
         fig.update_xaxes(
                     rangeslider_visible=True,
