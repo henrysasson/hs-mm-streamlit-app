@@ -1652,7 +1652,7 @@ if selected == 'Technical Analysis':
         (['S&P 500', 'Nasdaq', 'Dow Jones', 'FTSE', 'Ibovespa', 'S&P/BMV IPC']))
 
     if market == 'S&P 500':
-    list_of_stocks = si.tickers_sp500()
+        list_of_stocks = si.tickers_sp500()
 
     if market == 'Nasdaq':
         list_of_stocks = si.tickers_nasdaq()
