@@ -2331,7 +2331,7 @@ if selected == 'Technical Analysis':
         v_r_10 = pd.DataFrame({'Percentile':v_r,
                           'Date':v_r.index})
     
-        fig = px.line(v_r_10, x='Date', y='Percentile', title='S&D Volume')
+        fig = px.line(v_r_10, x='Date', y='Percentile', title='10-day Supply and Demand Volume')
         
         fig.update_xaxes(
                         rangeslider_visible=True,
