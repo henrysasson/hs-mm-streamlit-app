@@ -2007,19 +2007,19 @@ if selected == 'Technical Analysis':
     
 
     def last_nhnl(value):
-        if value <= -50:
+        if value <= -40:
             reading = 'Strong Bull'
 
-        if -50 < value <= -30:
+        if -40 < value <= -20:
             reading = 'Bull'
 
-        if -30 < value <= 30:
+        if -20 < value <= 20:
             reading = 'Neutral'
 
-        if 30 <= value < 50:
+        if 20 <= value < 40:
             reading = 'Bull'
         
-        if value >= 50:
+        if value >= 40:
             reading = 'Bear'
         
         return reading
