@@ -2052,7 +2052,7 @@ if selected == 'Technical Analysis':
         
         last_signal = last_20_80(above_50.iloc[-1])
         
-        st.metric("Stocks aboba 50 SMA", last_value_ma50)
+        st.metric("Stocks above 50 SMA", last_value_ma50)
         st.text(last_signal)
 
     with col2:
@@ -2061,7 +2061,7 @@ if selected == 'Technical Analysis':
         
         last_signal = last_20_80(above_200.iloc[-1])
         
-        st.metric("Stocks aboba 200 SMA", last_value_ma200)
+        st.metric("Stocks above 200 SMA", last_value_ma200)
         st.text(last_signal)
 
     with col3:
