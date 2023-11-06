@@ -2067,7 +2067,7 @@ if selected == 'Technical Analysis':
         
         last_signal = last_nhnl(daily_highs_lows['High-Low Index'].iloc[-1])
         
-        st.metric("New Highs - New Lows Index", last_value_nhnl)
+        st.metric("New Highs - New Lows Index", lat_value_nhnl)
         st.text(last_signal)
 
     with col5:
