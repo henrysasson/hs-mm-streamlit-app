@@ -1903,7 +1903,7 @@ if selected == 'Technical Analysis':
     
     df['RHL'] = dist_low/(df['Rolling High'] - df['Rolling Low'])
     
-    rhl = df['RHL'].groupby(level='Date').mean()
+    rhl = df['RHL'].groupby(level='Date').mean() * 100
 
     ################# New-High New-Low #################
 
@@ -2177,7 +2177,7 @@ if selected == 'Technical Analysis':
 
     with col3:       
         
-        df_rhl = pd.DataFrame({'Range High-Low':rhl*100,
+        df_rhl = pd.DataFrame({'Range High-Low':rhl,
                        'Date': rhl.index})
     
         fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-week Range High-Low')
