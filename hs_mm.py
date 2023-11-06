@@ -36,7 +36,7 @@ def get_data(tickers):
 
 # Ações
 tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI']
-df_acoes = get_data(tickers_acoes).fillna(method='ffill', inplace = True)
+df_acoes = get_data(tickers_acoes).fillna(method='ffill')
 names_acoes = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE']
 column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
