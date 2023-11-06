@@ -1848,6 +1848,12 @@ if selected == 'Technical Analysis':
         fig.update_layout( width=500,  # Largura do gráfico
             height=500  # Altura do gráfico
         )
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=20, line_dash="dash", line_color="gray")
+        
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=80, line_dash="dash", line_color="gray")
     
         st.plotly_chart(fig)
 
@@ -1876,44 +1882,43 @@ if selected == 'Technical Analysis':
         fig.update_layout( width=500,  # Largura do gráfico
             height=500  # Altura do gráfico
         )
+
+            # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=20, line_dash="dash", line_color="gray")
+        
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=80, line_dash="dash", line_color="gray")
     
         st.plotly_chart(fig)
 
 
     col3, col4 = st.columns(2)
 
-with col3:
-
-    # Definir a janela de rolagem
-    window = 260
+    with col3:
     
-    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
-    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
-    df['New High'] = df['High'] == df['Rolling High']
+        # Definir a janela de rolagem
+        window = 200
+        
+        # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+        df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+        
+        df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+        
+        dist_low = (df['Adj Close'] - df['Rolling Low'])
+        
+        dist_low[dist_low < 0] = 0
+        
+        df['RHL'] = dist_low/(df['Rolling High'] - df['Rolling Low'])
+        
+        rhl = df['RHL'].groupby(level='Date').mean()
+        
+        
+        df_rhl = pd.DataFrame({'Range High-Low':rhl*100,
+                       'Date': rhl.index})
     
-    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
-    df['New Low'] = df['Low'] == df['Rolling Low']
-    
-    
-    # Calcular o número de novas máximas e mínimas por data
-    daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
-    
-    # Calcular o Record High Percent
-    daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
-    
-    daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
-    
-    
-    # Calcular a média móvel simples de 10 dias do Record High Percent
-    daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
-
-    daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
-    daily_highs_lows['Date']= daily_highs_lows.index
-    
-    
-    fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='52-week New Highs - New Lows Index')
-    
-    fig.update_xaxes(
+        fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-week Range High-Low')
+        
+        fig.update_xaxes(
                     rangeslider_visible=True,
                     rangeselector=dict(
                         buttons=list([
@@ -1924,161 +1929,52 @@ with col3:
                         ])
                     )
                 )
-    
-    fig.update_yaxes(tickformat=".2f", ticksuffix="%")
-    
-    # Adicionando a linha pontilhada cinza no y=0
-    fig.add_hline(y=35, line_dash="dash", line_color="gray")
-    
-    # Adicionando a linha pontilhada cinza no y=0
-    fig.add_hline(y=-35, line_dash="dash", line_color="gray")
-
-    fig.update_layout( width=500,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
-    
-    st.plotly_chart(fig)
-
-with col4:
-
-    # Definir a janela de rolagem
-    window = 20
-    
-    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
-    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
-    df['New High'] = df['High'] == df['Rolling High']
-    
-    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
-    df['New Low'] = df['Low'] == df['Rolling Low']
-    
-    
-    # Calcular o número de novas máximas e mínimas por data
-    daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
-    
-    # Calcular o Record High Percent
-    daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
-    
-    daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
-    
-    
-    # Calcular a média móvel simples de 10 dias do Record High Percent
-    daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
-
-    daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
-    daily_highs_lows['Date']= daily_highs_lows.index
-    
-    
-    fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows Index')
-    
-    fig.update_xaxes(
-                    rangeslider_visible=True,
-                    rangeselector=dict(
-                        buttons=list([
-                            dict(count=1, label="YTD", step="year", stepmode="todate"),
-                            dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(count=3, label="3y", step="year", stepmode="backward"),
-                            dict(step="all")
-                        ])
-                    )
-                )
-    
-    fig.update_yaxes(tickformat=".2f", ticksuffix="%")
-    
-    # Adicionando a linha pontilhada cinza no y=0
-    fig.add_hline(y=40, line_dash="dash", line_color="gray")
-    
-    # Adicionando a linha pontilhada cinza no y=0
-    fig.add_hline(y=-40, line_dash="dash", line_color="gray")
-
-    fig.update_layout( width=500,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
-    
-    st.plotly_chart(fig)
-
-col5, col6 = st.columns(2)
-
-with col5:
-        # Calcule a mudança diária no preço de fechamento
-    df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
-    
-    # Identifique as emissões avançadas e em declínio
-    df['Advancing'] = df['Close Change'] > 0.015
-    df['Declining'] = df['Close Change'] < -0.015
-    
-    # Calcule o volume diário para emissões avançadas e em declínio
-    df['Advancing Volume'] = df['Volume'] * df['Advancing']
-    df['Declining Volume'] = df['Volume'] * df['Declining']
-    
-    # Faça a soma de 10 dias dos volumes
-    rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
-    rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
-    
-    # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
-    v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
-
-    v_r_10 = pd.DataFrame({'Percentile':v_r*100,
-                      'Date':v_r.index})
-
-    fig = px.line(v_r_10, x='Date', y='Percentile', title='S&D Volume')
-    
-    fig.update_xaxes(
-                    rangeslider_visible=True,
-                    rangeselector=dict(
-                        buttons=list([
-                            dict(count=1, label="YTD", step="year", stepmode="todate"),
-                            dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(count=3, label="3y", step="year", stepmode="backward"),
-                            dict(step="all")
-                        ])
-                    )
-                )
-    
-    fig.update_yaxes(ticksuffix="%")
-    
-    # Adicionando a linha pontilhada cinza no y=0
-    fig.add_hline(y=50, line_dash="dash", line_color="gray")
-
-    fig.update_layout( width=500,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
-    
-    st.plotly_chart(fig)
-
-    with col6:
-
-        # Calcule a mudança diária no preço de fechamento
-        df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
         
-        # Identifique as emissões avançadas e em declínio
-        df['Advancing'] = df['Close Change'] > 0
-        df['Declining'] = df['Close Change'] < 0
+        fig.update_yaxes(tickformat=".2f", ticksuffix="%")
         
-        # Substituindo True e False por 1 e 0, respectivamente
-        df['Advancing'] = df['Advancing'].astype(int)
-        df['Declining'] = df['Declining'].astype(int)
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=20, line_dash="dash", line_color="gray")
         
-        # Calcular a diferença diária entre avanços e declínios
-        # Primeiro, somamos as emissões avançadas e em declínio para cada dia
-        daily_advances = df.groupby(level=0)['Advancing'].sum()
-        daily_declines = df.groupby(level=0)['Declining'].sum()
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=80, line_dash="dash", line_color="gray")
+    
+    
+        fig.update_layout( width=500,  # Largura do gráfico
+                height=500  # Altura do gráfico
+            )
         
-        # Depois calculamos a diferença para cada dia
-        net_advances = daily_advances - daily_declines
+        st.plotly_chart(fig)
+    
+    with col4:
+    
+        # Definir a janela de rolagem
+        window = 20
         
-        # Calcular a EMA de 19 dias para Net Advances
-        mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
+        # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+        df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+        df['New High'] = df['High'] == df['Rolling High']
         
-        # Calcular a EMA de 39 dias para Net Advances
-        mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
+        df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+        df['New Low'] = df['Low'] == df['Rolling Low']
         
-        # Calcular o McClellan Oscillator
-        mco = mco_19ema - mco_39ema
-
-        mco_plot = pd.DataFrame({'Value':mco,
-                      'Date':mco.index})
-
-        fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
+        
+        # Calcular o número de novas máximas e mínimas por data
+        daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
+        
+        # Calcular o Record High Percent
+        daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
+        
+        daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
+        
+        
+        # Calcular a média móvel simples de 10 dias do Record High Percent
+        daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
+    
+        daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
+        daily_highs_lows['Date']= daily_highs_lows.index
+        
+        
+        fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows Index')
         
         fig.update_xaxes(
                         rangeslider_visible=True,
@@ -2092,17 +1988,127 @@ with col5:
                         )
                     )
         
-        fig.update_yaxes(tickformat=".2f")
+        fig.update_yaxes(tickformat=".2f", ticksuffix="%")
         
         # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=0, line_dash="dash", line_color="gray")
-
-        fig.update_layout( width=500,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
+        fig.add_hline(y=40, line_dash="dash", line_color="gray")
+        
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=-40, line_dash="dash", line_color="gray")
     
+        fig.update_layout( width=500,  # Largura do gráfico
+                height=500  # Altura do gráfico
+            )
+        
+        st.plotly_chart(fig)
+
+    col5, col6 = st.columns(2)
+    
+    with col5:
+            # Calcule a mudança diária no preço de fechamento
+        df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
+        
+        # Identifique as emissões avançadas e em declínio
+        df['Advancing'] = df['Close Change'] > 0.015
+        df['Declining'] = df['Close Change'] < -0.015
+        
+        # Calcule o volume diário para emissões avançadas e em declínio
+        df['Advancing Volume'] = df['Volume'] * df['Advancing']
+        df['Declining Volume'] = df['Volume'] * df['Declining']
+        
+        # Faça a soma de 10 dias dos volumes
+        rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+        rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+        
+        # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
+        v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
+    
+        v_r_10 = pd.DataFrame({'Percentile':v_r*100,
+                          'Date':v_r.index})
+    
+        fig = px.line(v_r_10, x='Date', y='Percentile', title='S&D Volume')
+        
+        fig.update_xaxes(
+                        rangeslider_visible=True,
+                        rangeselector=dict(
+                            buttons=list([
+                                dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                dict(count=1, label="1y", step="year", stepmode="backward"),
+                                dict(count=3, label="3y", step="year", stepmode="backward"),
+                                dict(step="all")
+                            ])
+                        )
+                    )
+        
+        fig.update_yaxes(ticksuffix="%")
+        
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=50, line_dash="dash", line_color="gray")
+    
+        fig.update_layout( width=500,  # Largura do gráfico
+                height=500  # Altura do gráfico
+            )
+        
         st.plotly_chart(fig)
     
+        with col6:
+    
+            # Calcule a mudança diária no preço de fechamento
+            df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
+            
+            # Identifique as emissões avançadas e em declínio
+            df['Advancing'] = df['Close Change'] > 0
+            df['Declining'] = df['Close Change'] < 0
+            
+            # Substituindo True e False por 1 e 0, respectivamente
+            df['Advancing'] = df['Advancing'].astype(int)
+            df['Declining'] = df['Declining'].astype(int)
+            
+            # Calcular a diferença diária entre avanços e declínios
+            # Primeiro, somamos as emissões avançadas e em declínio para cada dia
+            daily_advances = df.groupby(level=0)['Advancing'].sum()
+            daily_declines = df.groupby(level=0)['Declining'].sum()
+            
+            # Depois calculamos a diferença para cada dia
+            net_advances = daily_advances - daily_declines
+            
+            # Calcular a EMA de 19 dias para Net Advances
+            mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
+            
+            # Calcular a EMA de 39 dias para Net Advances
+            mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
+            
+            # Calcular o McClellan Oscillator
+            mco = mco_19ema - mco_39ema
+    
+            mco_plot = pd.DataFrame({'Value':mco,
+                          'Date':mco.index})
+    
+            fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
+            
+            fig.update_xaxes(
+                            rangeslider_visible=True,
+                            rangeselector=dict(
+                                buttons=list([
+                                    dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                                    dict(step="all")
+                                ])
+                            )
+                        )
+            
+            fig.update_yaxes(tickformat=".2f")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=0, line_dash="dash", line_color="gray")
+    
+            fig.update_layout( width=500,  # Largura do gráfico
+                height=500  # Altura do gráfico
+            )
+        
+            st.plotly_chart(fig)
+        
     
     
 
