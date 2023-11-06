@@ -1815,12 +1815,12 @@ if selected == 'Technical Analysis':
         ticker = '^MXX'
         
         
-    df_index =  yf.download(ticker, start='2019-01-01', end=date.today())
+    df_index =  yf.download(ticker, period='4y')
     
-    df_index['50-day SMA'] = df_index['Adj Close'].rolling(50).mean()
-    df_index['200-day SMA'] = df_index['Adj Close'].rolling(200).mean()
+    df_index['50-day SMA'] = df_index['Adj Close'].rolling(50, min_periods=1).mean()
+    df_index['200-day SMA'] = df_index['Adj Close'].rolling(200, min_periods=1).mean()
     
-    df_index = df_index.loc[df_index.index>='2020-01-01']
+    #df_index = df_index.loc[df_index.index>='2020-01-01']
     
     df_index['Date'] = df_index.index
     
