@@ -1986,7 +1986,7 @@ if selected == 'Technical Analysis':
     
     ###############################################################################
        
-     def last_20_80(value):
+    def last_20_80(value):
         if value <= 20:
             reading = 'Strong Bull'
         
@@ -2002,7 +2002,6 @@ if selected == 'Technical Analysis':
         if value >= 80:
             reading = 'Strong Bear'
             
-        
         return reading
     
 
