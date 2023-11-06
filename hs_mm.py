@@ -7,6 +7,8 @@
 import streamlit as st
 import yfinance as yf
 import pandas as pd
+import pandas_ta
+from yahoo_fin import stock_info as si
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from fredapi import Fred
@@ -16,6 +18,7 @@ import bcb
 from bcb import Expectativas
 from bcb import sgs
 import datetime
+from datetime import date
 import warnings
 import numpy as np
 import nasdaqdatalink
@@ -77,7 +80,7 @@ tickers_data = yf.download(tickers, period="1y", interval="1wk")['Adj Close'].fi
 benchmark_data = df_acoes['SPX']
 
 
-options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning']
+options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis']
 selected = st.sidebar.selectbox('Main Menu', options)
 
 
@@ -1600,5 +1603,446 @@ with col3:
         pass
 
 
+if selected == 'Technical Analysis':
+    st.title('Technical Analysis')
+    st.markdown('##')
 
+    tickers_ibov = [
+    "RRRP3.SA", "ALOS3.SA", "ALPA4.SA", "ABEV3.SA", "ARZZ3.SA", "ASAI3.SA", "AZUL4.SA",
+    "B3SA3.SA", "BBSE3.SA", "BBDC3.SA", "BBDC4.SA", "BRAP4.SA", "BBAS3.SA", "BRKM5.SA",
+    "BRFS3.SA", "BPAC11.SA", "CRFB3.SA", "BHIA3.SA", "CCRO3.SA", "CMIG4.SA", "CIEL3.SA",
+    "COGN3.SA", "CPLE6.SA", "CSAN3.SA", "CPFE3.SA", "CMIN3.SA", "CVCB3.SA", "CYRE3.SA",
+    "DXCO3.SA", "ELET3.SA", "ELET6.SA", "EMBR3.SA", "ENGI11.SA", "ENEV3.SA", "EGIE3.SA",
+    "EQTL3.SA", "EZTC3.SA", "FLRY3.SA", "GGBR4.SA", "GOAU4.SA", "GOLL4.SA", "NTCO3.SA",
+    "SOMA3.SA", "HAPV3.SA", "HYPE3.SA", "IGTI11.SA", "IRBR3.SA", "ITSA4.SA", "ITUB4.SA",
+    "JBSS3.SA", "KLBN11.SA", "RENT3.SA", "LWSA3.SA", "LREN3.SA", "MGLU3.SA", "MRFG3.SA",
+    "BEEF3.SA", "MRVE3.SA", "MULT3.SA", "PCAR3.SA", "PETR3.SA", "PETR4.SA", "RECV3.SA",
+    "PRIO3.SA", "PETZ3.SA", "RADL3.SA", "RAIZ4.SA", "RDOR3.SA", "RAIL3.SA", "SBSP3.SA",
+    "SANB11.SA", "SMTO3.SA", "CSNA3.SA", "SLCE3.SA", "SUZB3.SA", "TAEE11.SA", "VIVT3.SA",
+    "TIMS3.SA", "TOTS3.SA", "UGPA3.SA", "USIM5.SA", "VALE3.SA", "VAMO3.SA", "VBBR3.SA",
+    "WEGE3.SA", "YDUQ3.SA"
+]
+
+    tickers_bmv = [
+    "MEGACPO.MX", "AC.MX", "ASURB.MX", "FEMSAUBD.MX", "CUERVO.MX", "KIMBERA.MX",
+    "GRUMAB.MX", "GMEXICOB.MX", "GCC.MX", "BOLSAA.MX", "OMAB.MX", "GFNORTEO.MX",
+    "BIMBOA.MX", "ALSEA.MX", "LABB.MX", "GAPB.MX", "GENTERA.MX", "TLEVISACPO.MX",
+    "GCARSOA1.MX", "ALPEKA.MX", "LIVEPOLC-1.MX",
+    "BBAJIOO.MX", "CEMEXCPO.MX", "AMXB.MX", "PINFRA.MX", "SITES1A-1.MX", "WALMEX.MX", "ORBIA.MX",
+    "Q.MX", "RA.MX", "PE&OLES.MX", "CHDRAUIB.MX", "ELEKTRA.MX", "KOFUBL.MX"
+]
+  
+    tickers_ftse = [
+    "WTB.L", "WPP.L", "WEIR.L", "VOD.L", "UU.L", "UTG.L", "ULVR.L", "TW.L", "TSCO.L",
+    "SVT.L", "STJ.L", "STAN.L", "SSE.L", "SPX.L", "SN.L", "SMT.L", "SMIN.L", "SMDS.L",
+    "SKG.L", "SHEL.L", "SGRO.L", "SGE.L", "SDR.L", "SBRY.L", "RTO.L", "RS1.L", "RR.L",
+    "RMV.L", "RKT.L", "RIO.L", "REL.L", "PSON.L", "PSH.L", "PRU.L", "PHNX.L", "OCDO.L",
+    "NXT.L", "NWG.L", "NG.L", "MRO.L", "MNG.L", "MNDI.L", "MKS.L", "LSEG.L", "LLOY.L",
+    "LGEN.L", "LAND.L", "KGF.L", "JD.L", "ITRK.L", "INF.L", "IMI.L", "IMB.L", "III.L",
+    "IHG.L", "IAG.L", "HWDN.L", "HSBA.L", "HLN.L", "HLMA.L", "HL.L", "HIK.L", "GSK.L",
+    "GLEN.L", "FRES.L", "FRAS.L", "FLTR.L", "FCIT.L", "EXPN.L", "ENT.L", "EDV.L",
+    "DPLM.L", "DPH.L", "DGE.L", "DCC.L", "CTEC.L", "CRDA.L", "CPG.L", "CNA.L", "CCH.L",
+    "BT-A.L", "BRBY.L", "BP.L", "BNZL.L", "BME.L", "BKG.L", "BEZ.L", "BDEV.L", "BATS.L",
+    "BARC.L", "BA.L", "AZN.L", "AV.L", "AUTO.L", "ANTO.L", "AHT.L", "ADM.L", "ABF.L",
+    "AAL.L", "AAF.L"
+]  
+
+    market = st.selectbox(
+        'Choose the market index:',
+        (['S&P 500', 'Nasdaq', 'Dow Jones', 'FTSE', 'Ibovespa', 'S&P/BMV IPC']))
+
+    if market == 'S&P 500':
+    list_of_stocks = si.tickers_sp500()
+
+    if market == 'Nasdaq':
+        list_of_stocks = si.tickers_nasdaq()
+        
+    if market == 'Dow Jones':
+        list_of_stocks = si.tickers_dow()
+    
+    if market == 'FTSE':
+        list_of_stocks = tickers_ftse
+        
+    if market == 'Ibovespa':
+        list_of_stocks = tickers_ibov
+        
+    if market == 'S&P/BMV IPC':
+        list_of_stocks = tickers_bmv
+
+    df = yf.download(tickers=list_of_stocks, start='2020-01-01', end=date.today())
+
+    df = df.stack()
+
+
+    if market == 'S&P 500':
+    ticker = '^GSPC'
+    
+    if market == 'Nasdaq':
+        ticker = '^IXIC'
+        
+    if market == 'Dow Jones':
+        ticker = '^DJI'
+        
+    if market == 'FTSE':
+        ticker = '^FTSE'
+        
+    if market == 'Ibovespa':
+        ticker = '^BVSP'
+    
+    if market == 'S&P/BMV IPC':
+        ticker = '^MXX'
+        
+        
+    df_index =  yf.download(ticker, start='2019-01-01', end=date.today())
+    
+    df_index['50-day SMA'] = df_index['Adj Close'].rolling(200).mean()
+    df_index['200-day SMA'] = df_index['Adj Close'].rolling(50).mean()
+    
+    df_index = df_index.loc[df_index.index>='2020-01-01']
+    
+    df_index['Date'] = df_index.index
+    
+    hovertext = []
+    for i in range(len(df_index)):
+        hovertext.append('Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
+            df_index['Date'][i].strftime('%Y-%m-%d'), df_index['Open'][i], df_index['High'][i], df_index['Low'][i], df_index['Adj Close'][i]))
+    
+    fig = go.Figure(data=[go.Ohlc(x=df_index['Date'],
+                                 open=df_index['Open'],
+                                 high=df_index['High'],
+                                 low=df_index['Low'],
+                                 close=df_index['Adj Close'],
+                                 hovertext=hovertext,
+                                 hoverinfo='text',
+                                 name=market)])
+    
+    
+    # Adicionar a média móvel de 200 dias como uma linha trace ao gráfico
+    fig.add_trace(go.Scatter(x=df_index['Date'], y=df_index['200-day SMA'], mode='lines', name='200-day SMA'))
+    
+    # Adicionar a média móvel de 50 dias como uma linha trace ao gráfico
+    fig.add_trace(go.Scatter(x=df_index['Date'], y=df_index['50-day SMA'], mode='lines', name='50-day SMA'))
+    
+    fig.update_xaxes(
+                    rangeslider_visible=True,
+                    rangeselector=dict(
+                        buttons=list([
+                            dict(count=1, label="YTD", step="year", stepmode="todate"),
+                            dict(count=1, label="1y", step="year", stepmode="backward"),
+                            dict(count=3, label="3y", step="year", stepmode="backward"),
+                            dict(step="all")
+                        ])
+                    )
+                )
+    
+    fig.update_yaxes(tickformat='.2f')
+    
+    fig.update_layout(title=market)
+    
+    st.plotly_chart(fig, use_container_width=True, height=5000)
+
+    
+    df['50_sma'] = df.groupby(level=1)['Adj Close']\
+                     .transform(lambda x: pandas_ta.sma(close=x, length=50))
+    
+    df['200_sma'] = df.groupby(level=1)['Adj Close']\
+                  .transform(lambda x: pandas_ta.sma(close=x, length=200))
+
+    df['above_50_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['50_sma'])
+                                          else 0, axis=1)
+
+    df['above_200_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['200_sma'])
+                                           else 0, axis=1)
+
+    above_50 = round(((df.groupby(level=0)['above_50_sma'].sum()/len(list_of_stocks))*100),2)
+
+    above_50 = above_50[above_50>0]
+    
+    above_200 = round(((df.groupby(level=0)['above_200_sma'].sum()/len(list_of_stocks))*100),2)
+    
+    above_200 = above_200[above_200>0]
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        mkt_50 = pd.DataFrame({'Percentile':above_50,
+                              'Date':above_50.index})
+        
+        fig = px.line(mkt_50, x='Date', y='Percentile', title='Stocks Above 50-Day SMA')
+        
+        fig.update_xaxes(
+                        rangeslider_visible=True,
+                        rangeselector=dict(
+                            buttons=list([
+                                dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                dict(count=1, label="1y", step="year", stepmode="backward"),
+                                dict(count=3, label="3y", step="year", stepmode="backward"),
+                                dict(step="all")
+                            ])
+                        )
+                    )
+        
+        fig.update_yaxes(ticksuffix="%")
+    
+        fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+        st.plotly_chart(fig)
+
+
+    with col2:
+
+        mkt_200 = pd.DataFrame({'Percentile':above_200,
+                      'Date':above_200.index})
+
+        fig = px.line(mkt_200, x='Date', y='Percentile', title='Stocks Above 200-Day SMA')
+        
+        fig.update_xaxes(
+                        rangeslider_visible=True,
+                        rangeselector=dict(
+                            buttons=list([
+                                dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                dict(count=1, label="1y", step="year", stepmode="backward"),
+                                dict(count=3, label="3y", step="year", stepmode="backward"),
+                                dict(step="all")
+                            ])
+                        )
+                    )
+        
+        fig.update_yaxes(ticksuffix="%")
+
+        fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+        st.plotly_chart(fig)
+
+
+    col3, col4 = st.columns(2)
+
+with col3:
+
+    # Definir a janela de rolagem
+    window = 260
+    
+    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+    df['New High'] = df['High'] == df['Rolling High']
+    
+    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+    df['New Low'] = df['Low'] == df['Rolling Low']
+    
+    
+    # Calcular o número de novas máximas e mínimas por data
+    daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
+    
+    # Calcular o Record High Percent
+    daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
+    
+    daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
+    
+    
+    # Calcular a média móvel simples de 10 dias do Record High Percent
+    daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
+
+    daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
+    daily_highs_lows['Date']= daily_highs_lows.index
+    
+    
+    fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='52-week New Highs - New Lows Index')
+    
+    fig.update_xaxes(
+                    rangeslider_visible=True,
+                    rangeselector=dict(
+                        buttons=list([
+                            dict(count=1, label="YTD", step="year", stepmode="todate"),
+                            dict(count=1, label="1y", step="year", stepmode="backward"),
+                            dict(count=3, label="3y", step="year", stepmode="backward"),
+                            dict(step="all")
+                        ])
+                    )
+                )
+    
+    fig.update_yaxes(tickformat=".2f", ticksuffix="%")
+    
+    # Adicionando a linha pontilhada cinza no y=0
+    fig.add_hline(y=35, line_dash="dash", line_color="gray")
+    
+    # Adicionando a linha pontilhada cinza no y=0
+    fig.add_hline(y=-35, line_dash="dash", line_color="gray")
+
+    fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+    st.plotly_chart(fig)
+
+with col4:
+
+    # Definir a janela de rolagem
+    window = 20
+    
+    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+    df['New High'] = df['High'] == df['Rolling High']
+    
+    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+    df['New Low'] = df['Low'] == df['Rolling Low']
+    
+    
+    # Calcular o número de novas máximas e mínimas por data
+    daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
+    
+    # Calcular o Record High Percent
+    daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
+    
+    daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
+    
+    
+    # Calcular a média móvel simples de 10 dias do Record High Percent
+    daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
+
+    daily_highs_lows['High-Low Index'].fillna(method='ffill', inplace = True)
+    daily_highs_lows['Date']= daily_highs_lows.index
+    
+    
+    fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows Index')
+    
+    fig.update_xaxes(
+                    rangeslider_visible=True,
+                    rangeselector=dict(
+                        buttons=list([
+                            dict(count=1, label="YTD", step="year", stepmode="todate"),
+                            dict(count=1, label="1y", step="year", stepmode="backward"),
+                            dict(count=3, label="3y", step="year", stepmode="backward"),
+                            dict(step="all")
+                        ])
+                    )
+                )
+    
+    fig.update_yaxes(tickformat=".2f", ticksuffix="%")
+    
+    # Adicionando a linha pontilhada cinza no y=0
+    fig.add_hline(y=40, line_dash="dash", line_color="gray")
+    
+    # Adicionando a linha pontilhada cinza no y=0
+    fig.add_hline(y=-40, line_dash="dash", line_color="gray")
+
+    fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+    st.plotly_chart(fig)
+
+col5, col6 = st.columns(2)
+
+with col6:
+        # Calcule a mudança diária no preço de fechamento
+    df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
+    
+    # Identifique as emissões avançadas e em declínio
+    df['Advancing'] = df['Close Change'] > 0.015
+    df['Declining'] = df['Close Change'] < -0.015
+    
+    # Calcule o volume diário para emissões avançadas e em declínio
+    df['Advancing Volume'] = df['Volume'] * df['Advancing']
+    df['Declining Volume'] = df['Volume'] * df['Declining']
+    
+    # Faça a soma de 10 dias dos volumes
+    rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+    rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+    
+    # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
+    v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
+
+    v_r_10 = pd.DataFrame({'Percentile':v_r*100,
+                      'Date':v_r.index})
+
+    fig = px.line(v_r_10, x='Date', y='Percentile', title='S&D Volume')
+    
+    fig.update_xaxes(
+                    rangeslider_visible=True,
+                    rangeselector=dict(
+                        buttons=list([
+                            dict(count=1, label="YTD", step="year", stepmode="todate"),
+                            dict(count=1, label="1y", step="year", stepmode="backward"),
+                            dict(count=3, label="3y", step="year", stepmode="backward"),
+                            dict(step="all")
+                        ])
+                    )
+                )
+    
+    fig.update_yaxes(ticksuffix="%")
+    
+    # Adicionando a linha pontilhada cinza no y=0
+    fig.add_hline(y=50, line_dash="dash", line_color="gray")
+
+    fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+    st.plotly_chart(fig)
+
+    with col6:
+
+        # Calcule a mudança diária no preço de fechamento
+        df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
+        
+        # Identifique as emissões avançadas e em declínio
+        df['Advancing'] = df['Close Change'] > 0
+        df['Declining'] = df['Close Change'] < 0
+        
+        # Substituindo True e False por 1 e 0, respectivamente
+        df['Advancing'] = df['Advancing'].astype(int)
+        df['Declining'] = df['Declining'].astype(int)
+        
+        # Calcular a diferença diária entre avanços e declínios
+        # Primeiro, somamos as emissões avançadas e em declínio para cada dia
+        daily_advances = df.groupby(level=0)['Advancing'].sum()
+        daily_declines = df.groupby(level=0)['Declining'].sum()
+        
+        # Depois calculamos a diferença para cada dia
+        net_advances = daily_advances - daily_declines
+        
+        # Calcular a EMA de 19 dias para Net Advances
+        mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
+        
+        # Calcular a EMA de 39 dias para Net Advances
+        mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
+        
+        # Calcular o McClellan Oscillator
+        mco = mco_19ema - mco_39ema
+
+        mco_plot = pd.DataFrame({'Value':mco,
+                      'Date':mco.index})
+
+        fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
+        
+        fig.update_xaxes(
+                        rangeslider_visible=True,
+                        rangeselector=dict(
+                            buttons=list([
+                                dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                dict(count=1, label="1y", step="year", stepmode="backward"),
+                                dict(count=3, label="3y", step="year", stepmode="backward"),
+                                dict(step="all")
+                            ])
+                        )
+                    )
+        
+        fig.update_yaxes(tickformat=".2f")
+        
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=0, line_dash="dash", line_color="gray")
+
+        fig.update_layout( width=500,  # Largura do gráfico
+            height=500  # Altura do gráfico
+        )
+    
+        st.plotly_chart(fig)
+    
+    
+    
 
