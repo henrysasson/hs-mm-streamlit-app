@@ -308,7 +308,11 @@ if selected == 'Correlation Matrix':
         showscale=True,
         colorbar_tickformat='.2f'
     ))
-    
+
+    fig.update_layout(
+    xaxis=dict(
+        side='top'  # Move os rótulos das colunas para o topo
+    ))
     
     fig.update_layout(title=asset + " Correlation (Multi-Timeframe)", height=1600, annotations=annotations)
                 
