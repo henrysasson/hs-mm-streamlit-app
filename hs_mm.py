@@ -19,7 +19,7 @@ import datetime
 from datetime import date
 import warnings
 import numpy as np
-import nasdaqdatalink
+#import nasdaqdatalink
 import quandl
 quandl.ApiConfig.api_key = 'xhzW3vmVVALs4xStA47P'
 import requests
