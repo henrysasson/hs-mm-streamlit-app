@@ -36,14 +36,14 @@ def get_data(tickers):
 
 # Ações
 tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI']
-df_acoes = get_data(tickers_acoes).ffill(axis=0)
+df_acoes = get_data(tickers_acoes).fillna(method='ffill', axis=0)
 names_acoes = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE']
 column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
 # Moedas
 tickers_moedas = ['EURUSD=X', 'JPY=X', 'GBPUSD=X', 'BRL=X', 'AUDUSD=X', 'MXN=X']
-df_moedas = get_data(tickers_moedas).ffill(axis=0)
+df_moedas = get_data(tickers_moedas).fillna(method='ffill', axis=0)
 names_moedas = ['EURUSD', 'USDJPY', 'GBPUSD', 'USDBRL', 'AUDUSD', 'MXNUSD']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
 # Renomeie as colunas
@@ -51,7 +51,7 @@ df_moedas.rename(columns=column_mapping, inplace=True)
 
 # Commodities
 tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY']
-df_commodities = get_data(tickers_commodities).ffill(axis=0)
+df_commodities = get_data(tickers_commodities).fillna(method='ffill', axis=0)
 names_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY']
 column_mapping = dict(zip(tickers_commodities, names_commodities))
 # Renomeie as colunas
@@ -59,7 +59,7 @@ df_commodities.rename(columns=column_mapping, inplace=True)
 
 # Renda Fixa
 tickers_rf = ['BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA']
-df_rf = get_data(tickers_rf).ffill(axis=0)
+df_rf = get_data(tickers_rf).fillna(method='ffill', axis=0)
 names_rf = ['BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB']
 column_mapping = dict(zip(tickers_rf, names_rf))
 # Renomeie as colunas
@@ -67,7 +67,7 @@ df_rf.rename(columns=column_mapping, inplace=True)
 
 # Crypto
 tickers_crypto = ['BTC-USD', 'ETH-USD']
-df_crypto = get_data(tickers_crypto).ffill(axis=0)
+df_crypto = get_data(tickers_crypto).fillna(method='ffill', axis=0)
 names_crypto = ['BTCUSD', 'ETHUSD']
 column_mapping = dict(zip(tickers_crypto, names_crypto))
 # Renomeie as colunas
