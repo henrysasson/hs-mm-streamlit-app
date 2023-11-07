@@ -30,7 +30,7 @@ st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
 #@st.cache_data
 def get_data(tickers):
-    data = yf.download(tickers, period='3y')['Adj Close']
+    data = yf.download(tickers, period='4y')['Adj Close']
     return data
 
 
