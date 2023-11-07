@@ -2304,7 +2304,7 @@ if selected == 'Technical Analysis':
     
     with col4:        
         
-        fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows Index')
+        fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows')
         
         fig.update_xaxes(
                         rangeslider_visible=True,
