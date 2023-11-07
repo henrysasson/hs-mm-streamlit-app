@@ -363,7 +363,7 @@ if selected == 'Market Directionality':
         )
     )
 
-    
+        fig.update_yaxes(tickformat=".2f")
 
         if classe == 'Multi Asset':
             
