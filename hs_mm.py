@@ -20,6 +20,8 @@ from datetime import date
 import warnings
 import numpy as np
 import nasdaqdatalink
+import quandl
+quandl.ApiConfig.api_key = 'xhzW3vmVVALs4xStA47P'
 import requests
 
 
@@ -1430,77 +1432,72 @@ if selected == 'Positioning':
     st.markdown('Commitment of Traders')
     st.markdown('##')
 
-    def fetch_data(contract_code):
-        base_url = "https://data.nasdaq.com/api/v3/datasets/CFTC/{}.json"
-        params = {"api_key": "xhzW3vmVVALs4xStA47P"}  # Substitua pela sua chave
-    
-        response = requests.get(base_url.format(contract_code), params=params)
-        if response.status_code == 200:
-            data_json = response.json()
-            df = pd.DataFrame(data_json['dataset']['data'], columns=data_json['dataset']['column_names'])
-            return df
-        else:
-            st.error(f"Erro ao buscar os dados: {response.status_code}")
-            return pd.DataFrame()
-
     category = [
-        "CRYPTO CURRENCIES", "CRYPTO CURRENCIES", "CRYPTO CURRENCIES", "CRYPTO CURRENCIES",
-        "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES",
-        "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES",
-        "ENERGIES", "ENERGIES", "ENERGIES", "ENERGIES", "ENERGIES", "ENERGIES", "ENERGIES",
-        "ENERGIES", "ENERGIES",
-        "EQUITIES", "EQUITIES", "EQUITIES", "EQUITIES", "EQUITIES",
-        "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER",
-        "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER",
-        "EQUITIES - OTHER", "EQUITIES - OTHER",
-        "FIXED INCOME", "FIXED INCOME", "FIXED INCOME",
-        "FIXED INCOME - OTHER", "FIXED INCOME - OTHER", "FIXED INCOME - OTHER",
-        "FIXED INCOME - OTHER", "FIXED INCOME - OTHER", "FIXED INCOME - OTHER",
-        "GRAINS", "GRAINS", "GRAINS", "GRAINS", "GRAINS", "GRAINS", "GRAINS", "GRAINS",
-        "METALS", "METALS", "METALS", "METALS", "METALS", "METALS", "METALS",
-        "SOFTS", "SOFTS", "SOFTS", "SOFTS", "SOFTS", "SOFTS"
+    "CRYPTO CURRENCIES", "CRYPTO CURRENCIES", "CRYPTO CURRENCIES", "CRYPTO CURRENCIES",
+    "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES",
+    "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES", "CURRENCIES",
+    "ENERGIES", "ENERGIES", "ENERGIES", "ENERGIES",
+    "EQUITIES", "EQUITIES", "EQUITIES", "EQUITIES", "EQUITIES - OTHER",
+    "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER",
+    "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER", "EQUITIES - OTHER",
+    "EQUITIES - OTHER", "EQUITIES - OTHER",
+    "FIXED INCOME", "FIXED INCOME", "FIXED INCOME",
+    "FIXED INCOME - OTHER", "FIXED INCOME - OTHER", "FIXED INCOME - OTHER",
+    "FIXED INCOME - OTHER", "FIXED INCOME - OTHER", "FIXED INCOME - OTHER",
+    "GRAINS", "GRAINS", "GRAINS", "GRAINS", "GRAINS", "GRAINS",
+    "METALS", "METALS", "METALS", "METALS", "METALS", "METALS", "METALS",
+    "SOFTS", "SOFTS", "SOFTS", "SOFTS", "SOFTS", "SOFTS"
+]
+
+    symbols = [
+        "BTC", "MBT", "ETH", "MET", "6E", "DX", "6C", "6B", "6S", "6J", "6A",
+        "6N", "6L", "6M", "6Z", "BZ", "CL", "RB", "NG", "ES", "YM", "NQ",
+        "RTY", "NKD", "VX", "ES CON", "ES ENE", "ES FIN", "ES HCI", "ES UTI",
+        "ES MAT", "ES IND", "ES TEC", "MME", "ZT", "ZF", "ZN", "GE",
+        "SR1", "SR3", "ZQ", "TN", "UB", "ZW", "ZO", "ZC", 
+        "ZM", "ZS", "ZL", "GC", "SI", "PL", "PA", "HG", 
+        "AUP", "HRC", "CC", "KC", "CT", "LBS", "OJ", "SB"
     ]
-
-
+    
+    
     market = [
         "BITCOIN", "MICRO BITCOIN", "ETHEREUM", "MICRO ETHER", "EURO FX", "DX USD INDEX",
         "CANADIAN DOLLAR", "BRITISH POUND", "SWISS FRANC", "JAPANESE YEN", "AUSTRALIAN DOLLAR",
         "NEW ZEALAND DOLLAR", "BRAZILIAN REAL", "MEXICAN PESO", "SOUTH AFRICAN RAND",
-        "BRENT CRUDE OIL", "CRUDE OIL", "CRUDE OIL", "CRUDE OIL", "CRUDE OIL", "CRUDE OIL",
-        "CRUDE OIL", "GASOLINE RBOB", "NATURAL GAS", "S&P 500", "DOW JONES", "NASDAQ",
+        "BRENT CRUDE OIL", "CRUDE OIL", "GASOLINE RBOB", "NATURAL GAS", "S&P 500", "DOW JONES", "NASDAQ",
         "RUSSELL 2000", "NIKKEI", "VIX", "EMINI S&P CONSU STAPLES INDEX", "EMINI S&P ENERGY INDEX",
         "EMINI S&P FINANCIAL INDEX", "EMINI S&P HEALTH CARE INDEX", "EMINI S&P UTILITIES INDEX",
         "E-MINI S&P MATERIALS INDEX", "E-MINI S&P INDUSTRIAL INDEX", "E-MINI S&P TECHNOLOGY INDEX",
         "MSCI EM INDEX", "2-YEAR NOTES", "5-YEAR NOTES", "10-YEAR NOTES", "GE EURODOLLARS",
         "SR1 SECURED OVERNIGHT FINANCING RATE (1-MONTH)", "SR3 SECURED OVERNIGHT FINANCING RATE (3-MONTH)",
-        "ZQ FED FUNDS", "TN ULTRA 10-YEAR NOTES", "UB ULTRA 30-YEAR BONDS", "WHEAT", "WHEAT", "WHEAT",
+        "ZQ FED FUNDS", "TN ULTRA 10-YEAR NOTES", "UB ULTRA 30-YEAR BONDS", "WHEAT",
         "OATS", "CORN", "SOYBEAN MEAL", "SOYBEANS", "SOYBEAN OIL", "GOLD", "SILVER", "PLATINUM",
         "PALLADIUM", "COPPER", "ALUMINIUM", "STEEL", "SUGAR", "COCOA", "COFFEE", "ORANGE JUICE",
         "COTTON", "LUMBER"
     ]
-
-
-
+    
+    
+    
     contract_code = [
-        "133741_F_ALL", "133742_F_ALL", "146021_F_ALL", "146022_F_ALL", "099741_F_ALL", "098662_F_ALL",
-        "090741_F_ALL", "096742_F_ALL", "092741_F_ALL", "097741_F_ALL", "232741_F_ALL", "112741_F_ALL",
-        "102741_F_ALL", "095741_F_ALL", "122741_F_ALL", "06765T_F_ALL", "037021_F_ALL", "06739C_F_ALL",
-        "067411_F_ALL", "06742G_F_ALL", "06742T_F_ALL", "06765A_F_ALL", "111659_F_ALL", "0233AX_F_ALL",
-        "13874A_F_ALL", "124606_F_ALL", "209742_F_ALL", "239742_F_ALL", "240741_F_ALL", "1170E1_F_ALL",
-        "138748_F_ALL", "138749_F_ALL", "13874C_F_ALL", "13874E_F_ALL", "13874J_F_ALL", "13874H_F_ALL",
-        "13874F_F_ALL", "13874J_F_ALL", "244042_F_ALL", "042601_F_ALL", "044601_F_ALL", "043602_F_ALL",
-        "132741_F_ALL", "134742_F_ALL", "134741_F_ALL", "045601_F_ALL", "043607_F_ALL", "020604_F_ALL",
-        "001602_F_ALL", "001612_F_ALL", "001626_F_ALL", "004603_F_ALL", "002602_F_ALL", "026603_F_ALL",
-        "005602_F_ALL", "007601_F_ALL", "088691_F_ALL", "084691_F_ALL", "076651_F_ALL", "075651_F_ALL",
-        "085692_F_ALL", "191693_F_ALL", "192651_F_ALL", "080732_F_ALL", "073732_F_ALL", "083731_F_ALL",
-        "040701_F_ALL", "033661_F_ALL", "058644_F_ALL"
+        "133741", "133742", "146021", "146022", "099741", "098662",
+        "090741", "096742", "092741", "097741", "232741", "112741",
+        "102741", "095741", "122741", "06765T", "06765A", "111659", "0233AX",
+        "13874A", "124606", "209742", "239742", "240741", "1170E1",
+        "138748", "138749", "13874C", "13874E", "13874J", "13874H",
+        "13874F", "13874J", "244042", "042601", "044601", "043602",
+        "132741", "134742", "134741", "045601", "043607", "020604",
+        "001602", "004603", "002602", "026603",
+        "005602", "007601", "088691", "084691", "076651", "075651",
+        "085692", "191693", "192651", "080732", "073732", "083731",
+        "040701", "033661", "058644"
     ]
-
-
-
-
-    cot_data = pd.DataFrame({'Category':category, 
-                            'Market':market, 
+    
+    
+    
+    
+    cot_data = pd.DataFrame({'Category':category,
+                            'Market':market,
+                             'Symbols':symbols,                         
                             'Contract_Code':contract_code})
 
 
@@ -1509,100 +1506,43 @@ if selected == 'Positioning':
         'Choose the market:',
         (cot_data['Market'].unique().tolist()))
 
-    # Etapa 1: Filtrar todos os códigos de contrato associados ao mercado selecionado
-    contract_codes_for_selected_market = cot_data[cot_data['Market'] == ativo]['Contract_Code'].tolist()
-
-    all_dataframes = []
-
-    # Etapa 2: Para cada código de contrato, faça a chamada à API e obtenha os dados
-    for contract_code in contract_codes_for_selected_market:
-        temp_df = fetch_data(contract_code)
-        all_dataframes.append(temp_df)
-
-    # Asegurando que a coluna 'Dates' é uma data
-    for df in all_dataframes:
-        df['Date'] = pd.to_datetime(df['Date'])
-
-    # Etapa 3: Concatenar todos esses DataFrames individuais em um único DataFrame
-    data = pd.concat(all_dataframes, ignore_index=True).set_index('Date').groupby(level=0).sum()
-
-    dates = data.index
+    contract_code = cot_data[cot_data['Market'] == ativo]['Contract_Code']
 
     posicao_ativo = cot_data['Market'].tolist().index(ativo)
+    
+    nome_ativo =  str(cot_data['Market'][posicao_ativo]+' - '+cot_data['Symbols'][posicao_ativo])
 
-    codigo_ativo = str('CFTC/'+str(cot_data['Contract_Code'][posicao_ativo]))
-
-    nome_ativo =  cot_data['Market'][posicao_ativo]
-
-    categoria_ativo = cot_data['Category'][posicao_ativo]
-
-
-    if categoria_ativo in ['CRYPTO CURRENCIES', 'EQUITIES', 'CURRENCIES', 'EQUITIES - OTHER', 'FIXED INCOME', 'FIXED INCOME - OTHER']:
-
-        # Para Commercials
-        commercials_long = data['Dealer Longs']
-        commercials_short = data['Dealer Shorts']
-        net_commercials = commercials_long - commercials_short
-
-        # Para Large Speculators
-        large_specs_long = data['Asset Manager Longs'] + data['Leveraged Funds Longs']
-        large_specs_short = data['Asset Manager Shorts'] + data['Leveraged Funds Shorts']
-        net_large_specs = large_specs_long - large_specs_short
-
-         # Ajustando o sinal de net_large_specs para ser oposto ao de net_commercials
-        if net_commercials.sum() > 0:
-            net_large_specs = -abs(net_large_specs)
-        else:
-            net_large_specs = abs(net_large_specs)
-
-        # Para Small Speculators
-        # Primeiro, deduzimos os totais reportáveis do interesse aberto para obter o valor bruto
-        gross_small_specs_long = data['Open Interest'] - data['Total Reportable Longs']
-        gross_small_specs_short = data['Open Interest'] - data['Total Reportable Shorts']
-
-        # Em seguida, calculamos a posição líquida dos Small Speculators
-        net_small_specs = gross_small_specs_long - gross_small_specs_short
-        
-    else:
-        # Para Commercials
-        commercials_long = data['Producer/Merchant/Processor/User Longs']
-        commercials_short = data['Producer/Merchant/Processor/User Shorts']
-        net_commercials = commercials_long - commercials_short
-
-        # Para Large Speculators
-        large_specs_long = data['Money Manager Longs'] + data['Swap Dealer Longs']
-        large_specs_short = data['Money Manager Shorts'] + data['Swap Dealer Shorts']
-        net_large_specs = large_specs_long - large_specs_short
-        
-        # Ajustando o sinal de net_large_specs para ser oposto ao de net_commercials
-        if net_commercials.sum() > 0:
-            net_large_specs = -abs(net_large_specs)
-        else:
-            net_large_specs = abs(net_large_specs)
-
-        # Para Small Speculators
-        gross_small_specs_long = data['Open Interest'] - data['Total Reportable Longs']
-        gross_small_specs_short = data['Open Interest'] - data['Total Reportable Shorts']
-        net_small_specs = gross_small_specs_long - gross_small_specs_short
-
-
-
-
+    df_cot = quandl.get_table('QDL/LFON',contract_code=contract_code)
+    
+    data = df_cot.loc[df_cot['type']=='FO_L_OLD']
+    
+    # Para Commercials
+    net_commercials = data['commercial_longs'] - data['commercial_shorts']
+    
+    # Para Small Speculators
+    net_small_specs = (data['non_reportable_longs']-data['non_reportable_shorts'])
+    
+    # Para Large Speculators
+    net_large_specs = (data['non_commercial_longs']-data['non_commercial_shorts'])-net_small_specs
+    
+    
     df = pd.DataFrame({
-        'Date': dates,
-        'Sum of Small Speculators': net_small_specs,
-        'Sum of Large Speculators': net_large_specs,
-        'Sum of Commercials': net_commercials
-    })
-
+            'Date': pd.to_datetime(data['date']),
+            'Sum of Small Speculators': net_small_specs,
+            'Sum of Large Speculators': net_large_specs,
+            'Sum of Commercials': net_commercials
+        })
+    
+    
+    
     # Create the figure
     fig_cot = go.Figure()
-
+    
     # Add traces for each series with desired colors
     fig_cot.add_trace(go.Bar(x=df['Date'], y=df['Sum of Small Speculators'], name='Sum of Small Speculators', marker_color='yellow'))
     fig_cot.add_trace(go.Bar(x=df['Date'], y=df['Sum of Large Speculators'], name='Sum of Large Speculators', marker_color='blue'))
     fig_cot.add_trace(go.Bar(x=df['Date'], y=df['Sum of Commercials'], name='Sum of Commercials', marker_color='red'))
-
+    
     # Update the layout
     fig_cot.update_layout(
         barmode='group',  # Barras agrupadas
@@ -1625,8 +1565,8 @@ if selected == 'Positioning':
         ),
         template="plotly_white",  # White background template
     )
-
-    st.plotly_chart(fig_cot, use_container_width=True, height=5000)
+    
+    fig_cot.show()
 
     
 def rank(series):
