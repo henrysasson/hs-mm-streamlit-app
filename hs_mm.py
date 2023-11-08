@@ -1566,7 +1566,7 @@ if selected == 'Positioning':
         template="plotly_white",  # White background template
     )
     
-    st.plotly_chart(fig_cot, width_wide = True, height = 1600) 
+    st.plotly_chart(fig_cot, use_container_width = True, height = 1600) 
 
     
 def rank(series):
