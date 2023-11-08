@@ -5,4 +5,4 @@ python-bcb==0.1.8
 #Nasdaq-Data-Link==1.0.4
 fredapi==0.5.1
 plotly==5.17.0
-quandl==3.7.0
+Quandl==3.7.0
