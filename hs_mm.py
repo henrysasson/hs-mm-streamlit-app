@@ -171,7 +171,7 @@ if selected == 'Correlation Matrix':
     def corr_matrix(df, janela, classe):
         matriz = df.pct_change()[-janela:].corr()
         
-        if classe == str('Multi Asset'):
+        if classe == str('Multi-Asset'):
             
             fig = go.Figure(data=go.Heatmap(
                         z=matriz.values,
@@ -255,7 +255,7 @@ if selected == 'Correlation Matrix':
         corr_matrix(df_rf, lookback, 'Fixed Income')
 
 
-    corr_matrix(all_assets, lookback, 'Multi Asset')
+    corr_matrix(all_assets, lookback, 'Multi-Asset')
 
     all_assets_list = all_assets.columns.tolist()
     
@@ -367,7 +367,7 @@ if selected == 'Market Directionality':
 
         fig.update_yaxes(tickformat=".2f")
 
-        if classe == 'Multi Asset':
+        if classe == 'Multi-Asset':
             
             st.plotly_chart(fig, use_container_width=True)
     
@@ -403,7 +403,7 @@ if selected == 'Market Directionality':
 
 
 
-    directional_indicator(all_assets, lookback, 'Multi Asset')
+    directional_indicator(all_assets, lookback, 'Multi-Asset')
 
 
 # # Macro Indicators
