@@ -189,7 +189,7 @@ if selected == 'Correlation Matrix':
             fig.update_layout(title=classe, height=800  # Altura do gráfico
 )
             
-            st.plotly_chart(fig, use_container_width=True, height=800  # Altura do gráfico
+            st.plotly_chart(fig, use_container_width=True, height=1200  # Altura do gráfico
 )
 
         else:
