@@ -1570,8 +1570,9 @@ if selected == 'Positioning':
     st.plotly_chart(fig_cot, use_container_width = True, height = 1600) 
 
     
-def rank(series):
+def rank(series,n):
     # Calcula o percentil do último valor
+    series = series[-n:]
     percentile = (np.searchsorted(np.sort(series), series.iloc[-1]) + 1) / len(series) * 100
     return round(percentile)
 
@@ -1581,7 +1582,8 @@ with col1:
 
     # Large Specs
     try:
-        st.metric(label = 'Large Speculators Index', value = str(rank(df['Sum of Large Speculators'])))
+        st.metric(label = 'Large Speculators Index', value = str(rank(df['Sum of Large Speculators'], 156)))
+        st.text('3 Years')
     except:
         pass
 
@@ -1589,7 +1591,8 @@ with col2:
 
     # Small Specs
     try:
-        st.metric(label = 'Small Speculators Index', value = str(rank(df['Sum of Small Speculators'])))
+        st.metric(label = 'Small Speculators Index', value = str(rank(df['Sum of Small Speculators'], 156)))
+        st.text('3 Years')
     except:
         pass
 
@@ -1597,7 +1600,37 @@ with col3:
 
     # Commercials
     try:
-        st.metric(label = 'Commercials Index', value = str(rank(df['Sum of Commercials'])))
+        st.metric(label = 'Commercials Index', value = str(rank(df['Sum of Commercials'], 156)))
+        st.text('3 Years')
+    except:
+        pass
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+
+    # Large Specs
+    try:
+        st.metric(label = 'Large Speculators Index', value = str(rank(df['Sum of Large Speculators'], 260)))
+        st.text('5 Years')
+    except:
+        pass
+
+with col2:
+
+    # Small Specs
+    try:
+        st.metric(label = 'Small Speculators Index', value = str(rank(df['Sum of Small Speculators'], 260)))
+        st.text('5 Years')
+    except:
+        pass
+
+with col3:
+
+    # Commercials
+    try:
+        st.metric(label = 'Commercials Index', value = str(rank(df['Sum of Commercials'], 260)))
+        st.text('5 Years')
     except:
         pass
 
