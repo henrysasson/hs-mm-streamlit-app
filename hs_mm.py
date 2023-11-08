@@ -1572,7 +1572,7 @@ if selected == 'Positioning':
     
 def rank(series,n):
     # Calcula o percentil do último valor
-    series = series[-n:]
+    series = series[:n]
     percentile = (np.searchsorted(np.sort(series), series.iloc[-1]) + 1) / len(series) * 100
     return round(percentile)
 
