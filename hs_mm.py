@@ -2197,6 +2197,12 @@ if selected == 'Technical Analysis':
 
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=20, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=40, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=60, line_dash="dash", line_color="gray")
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=80, line_dash="dash", line_color="gray")
@@ -2233,6 +2239,12 @@ if selected == 'Technical Analysis':
 
             # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=20, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=40, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=60, line_dash="dash", line_color="gray")
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=80, line_dash="dash", line_color="gray")
@@ -2267,6 +2279,12 @@ if selected == 'Technical Analysis':
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=30, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=40, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=60, line_dash="dash", line_color="gray")
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=70, line_dash="dash", line_color="gray")
@@ -2300,6 +2318,12 @@ if selected == 'Technical Analysis':
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=40, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=20, line_dash="dash", line_color="gray")
+
+        # Adicionando a linha pontilhada cinza no y=0
+        fig.add_hline(y=-20, line_dash="dash", line_color="gray")
         
         # Adicionando a linha pontilhada cinza no y=0
         fig.add_hline(y=-40, line_dash="dash", line_color="gray")
