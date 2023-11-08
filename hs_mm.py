@@ -1550,6 +1550,7 @@ if selected == 'Positioning':
         xaxis_title="Date",
         yaxis_title="Number of Contracts",
         xaxis=dict(
+            rangeslider_visible=True,
             rangeselector=dict(
                 buttons=list([
                     dict(count=6, label="6m", step="month", stepmode="backward"),
