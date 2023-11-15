@@ -1854,7 +1854,7 @@ if selected == 'Technical Analysis':
         ticker = '^AXJO'
         
         
-    df1 = yf.download(ticker, period='3y')
+    df1 = yf.download(ticker, period='5y')
     df1['Returns'] = df1['Adj Close'].pct_change()
     df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
     df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
@@ -1897,6 +1897,8 @@ if selected == 'Technical Analysis':
 
     # Converter a coluna 'Date' para datetime se ainda não for
     df1['Date'] = df1['Dates']
+    df1.dropna(inplace=True)
+    
     # Criar o texto de hover com o formato correto
     hovertext = []
     for i in range(len(df1)):
@@ -1960,7 +1962,7 @@ if selected == 'Technical Analysis':
                             dict(count=6, label="6m", step="month", stepmode="backward"),
                             dict(count=1, label="YTD", step="year", stepmode="todate"),
                             dict(count=1, label="1y", step="year", stepmode="backward"),
-    
+                            dict(count=3, label="3y", step="year", stepmode="backward"),
                             dict(step="all")
                         ])
                     )
@@ -1969,7 +1971,7 @@ if selected == 'Technical Analysis':
     
     fig.update_yaxes(tickformat='.2f')
     
-    fig.update_layout(title=market)
+    fig.update_layout(title='OM Monthly S&D Volatility Zones')
     
     st.plotly_chart(fig, use_container_width=True, height=5000)
 
