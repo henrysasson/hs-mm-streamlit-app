@@ -1936,7 +1936,7 @@ if selected == 'Technical Analysis':
     # Configurações adicionais do layout do gráfico
     fig.update_layout(
         title='Ticker',
-        xaxis_rangeslider_visible=True,
+        xaxis_rangeslider_visible=False,
         xaxis=dict(
             # Ajustar o intervalo do eixo x para terminar um pouco depois da série
             range=[df1['Date'].min(), df1['Date'].max() + timedelta(days=30)]
@@ -1953,7 +1953,7 @@ if selected == 'Technical Analysis':
     )
     
     fig.update_xaxes(
-                    rangeslider_visible=True,
+                    rangeslider_visible=False,
                     rangeselector=dict(
                         buttons=list([
                             dict(count=3, label="3m", step="month", stepmode="backward"),
