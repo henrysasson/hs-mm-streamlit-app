@@ -17,6 +17,7 @@ from bcb import Expectativas
 from bcb import sgs
 import datetime
 from datetime import date
+from datetime import timedelta
 import warnings
 import numpy as np
 #import nasdaqdatalink
