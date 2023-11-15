@@ -1915,8 +1915,8 @@ if selected == 'Technical Analysis':
                           close=df1['Adj Close'],
                           hovertext=hovertext,
                           hoverinfo='text',
-                          name='Ticker',
-                          increasing_line_color='black', decreasing_line_color='red'), # Cores distintas
+                          name=market,
+                          increasing_line_color='blue', decreasing_line_color='pink'), # Cores distintas
                   row=1, col=1)
 
     fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_1sd'], mode='lines', 
