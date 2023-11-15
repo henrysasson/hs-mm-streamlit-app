@@ -1853,45 +1853,118 @@ if selected == 'Technical Analysis':
         ticker = '^AXJO'
         
         
-    df_index =  yf.download(ticker, period='4y').ffill(axis=0)
+    df1 = yf.download(ticker, period='3y')
+    df1['Returns'] = df1['Adj Close'].pct_change()
+    df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
+    df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
+    df1['Open'] = df1['Open'] - (df1['Close']-df1['Adj Close'])
+    df1['Dates'] = df1.index
+
+    vol_pl = 20
+    df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
     
-    df_index['50-day SMA'] = df_index['Adj Close'].rolling(50, min_periods=1).mean()
-    df_index['200-day SMA'] = df_index['Adj Close'].rolling(200, min_periods=1).mean()
+    # Adicionar o fechamento do mês anterior ao dataframe.
+    df1['Prev_Month_Close'] = df1['Adj Close'].shift(1).resample('M').last()
     
-    df_index['Date'] = df_index.index
+    # Identificar o último dia útil do mês para cada mês.
+    df1['Month'] = df1.index.to_period('M')
+    monthly_df = df1.groupby('Month').tail(1)
     
+    # Criando as chaves para o merge.
+    monthly_df = monthly_df.reset_index()
+    monthly_df['merge_key'] = monthly_df['Month'].astype(str)
+    
+    df1['merge_key'] = df1['Month'].astype(str)
+    
+    # Calcular as bandas mensais usando o fechamento do mês anterior.
+    monthly_df['Upper_Band_1sd'] = monthly_df['Vol'] * monthly_df['Prev_Month_Close'] + monthly_df['Prev_Month_Close']
+    monthly_df['Lower_Band_1sd'] = monthly_df['Prev_Month_Close'] - monthly_df['Vol'] * monthly_df['Prev_Month_Close']
+    
+    monthly_df['Upper_Band_2sd'] = (2*monthly_df['Vol']) * monthly_df['Prev_Month_Close'] + monthly_df['Prev_Month_Close']
+    monthly_df['Lower_Band_2sd'] = monthly_df['Prev_Month_Close'] - (2*monthly_df['Vol']) * monthly_df['Prev_Month_Close']
+    
+    # Juntar as bandas mensais calculadas de volta ao dataframe original.
+    df1 = df1.merge(monthly_df[['merge_key', 'Upper_Band_1sd', 'Lower_Band_1sd', 'Upper_Band_2sd', 'Lower_Band_2sd']], 
+                    on='merge_key', 
+                    how='left')
+    
+    # Preencher os valores faltantes.
+    df1.fillna(method='ffill', inplace=True)
+    
+    # Remover a chave de merge, pois ela não é mais necessária.
+    df1.drop(columns=['merge_key'], inplace=True)
+
+    # Converter a coluna 'Date' para datetime se ainda não for
+    df1['Date'] = df1['Dates']
+    # Criar o texto de hover com o formato correto
     hovertext = []
-    for i in range(len(df_index)):
+    for i in range(len(df1)):
         hovertext.append('Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
-            df_index['Date'][i].strftime('%Y-%m-%d'), df_index['Open'][i], df_index['High'][i], df_index['Low'][i], df_index['Adj Close'][i]))
+            df1.iloc[i]['Date'].strftime('%Y-%m-%d'), df1.iloc[i]['Open'], df1.iloc[i]['High'], 
+            df1.iloc[i]['Low'], df1.iloc[i]['Adj Close']))
+
+    # Criar a figura com subplots
+    fig = make_subplots(rows=1, cols=1, shared_xaxes=True, vertical_spacing=0.08)
     
-    fig = go.Figure(data=[go.Ohlc(x=df_index['Date'],
-                                 open=df_index['Open'],
-                                 high=df_index['High'],
-                                 low=df_index['Low'],
-                                 close=df_index['Adj Close'],
-                                 hovertext=hovertext,
-                                 hoverinfo='text',
-                                 name=market)])
+    # Adicionar o gráfico OHLC ao subplot
+    fig.add_trace(go.Candlestick(x=df1['Date'],
+                          open=df1['Open'],
+                          high=df1['High'],
+                          low=df1['Low'],
+                          close=df1['Adj Close'],
+                          hovertext=hovertext,
+                          hoverinfo='text',
+                          name='Ticker',
+                          increasing_line_color='black', decreasing_line_color='red'), # Cores distintas
+                  row=1, col=1)
+
+    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_1sd'], mode='lines', 
+                             name='Supply Band 1sd', line=dict(color='green')))
+    
+    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Lower_Band_1sd'], mode='lines', 
+                             name='Demand Band 1sd', line=dict(color='red')))
+    
+    # Adicionar as bandas com linha pontilhada ao gráfico
+    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_2sd'], mode='lines', 
+                             name='Supply Band 2sd', line=dict(dash='dash', color='green')), row=1, col=1)
+    
+    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Lower_Band_2sd'], mode='lines', 
+                             name='Demand Band 2sd', line=dict(dash='dash', color='red')), row=1, col=1)
     
     
-    # Adicionar a média móvel de 200 dias como uma linha trace ao gráfico
-    fig.add_trace(go.Scatter(x=df_index['Date'], y=df_index['200-day SMA'], mode='lines', name='200-day SMA'))
-    
-    # Adicionar a média móvel de 50 dias como uma linha trace ao gráfico
-    fig.add_trace(go.Scatter(x=df_index['Date'], y=df_index['50-day SMA'], mode='lines', name='50-day SMA'))
+    # Configurações adicionais do layout do gráfico
+    fig.update_layout(
+        title='Ticker',
+        xaxis_rangeslider_visible=True,
+        xaxis=dict(
+            # Ajustar o intervalo do eixo x para terminar um pouco depois da série
+            range=[df1['Date'].min(), df1['Date'].max() + timedelta(days=30)]
+        ),
+        yaxis=dict(
+            tickformat='.2f',
+            title='Preço'
+        ),
+        font=dict(size=12),
+        legend=dict(
+            y=1.02,
+            x=1
+        )
+    )
     
     fig.update_xaxes(
                     rangeslider_visible=True,
                     rangeselector=dict(
                         buttons=list([
+                            dict(count=3, label="3m", step="month", stepmode="backward"),
+                            dict(count=6, label="6m", step="month", stepmode="backward"),
                             dict(count=1, label="YTD", step="year", stepmode="todate"),
                             dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(count=3, label="3y", step="year", stepmode="backward"),
+    
                             dict(step="all")
                         ])
                     )
                 )
+
     
     fig.update_yaxes(tickformat='.2f')
     
