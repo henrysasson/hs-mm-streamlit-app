@@ -1868,32 +1868,34 @@ if selected == 'Technical Analysis':
     df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last().shift(1)
     
     # Identificar o último dia útil do mês para cada mês.
-    df1['Month'] = df1.index.to_period('M')
-    monthly_df = df1.groupby('Month').tail(1)
+    # df1['Month'] = df1.index.to_period('M')
+    # monthly_df = df1.groupby('Month').tail(1)
     
-    # Criando as chaves para o merge.
-    monthly_df = monthly_df.reset_index()
-    monthly_df['merge_key'] = monthly_df['Month'].astype(str)
+    # # Criando as chaves para o merge.
+    # monthly_df = monthly_df.reset_index()
+    # monthly_df['merge_key'] = monthly_df['Month'].astype(str)
     
-    df1['merge_key'] = df1['Month'].astype(str)
+    # df1['merge_key'] = df1['Month'].astype(str)
+
+    df1.fillna(method='ffill', inplace=True)
     
     # Calcular as bandas mensais usando o fechamento do mês anterior.
-    monthly_df['Upper_Band_1sd'] = monthly_df['Vol'] * monthly_df['Prev_Month_Close'] + monthly_df['Prev_Month_Close']
-    monthly_df['Lower_Band_1sd'] = monthly_df['Prev_Month_Close'] - monthly_df['Vol'] * monthly_df['Prev_Month_Close']
+    df1['Upper_Band_1sd'] = df1['Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
+    df1['Lower_Band_1sd'] = df1['Prev_Month_Close'] - df1['Vol'] * df1['Prev_Month_Close']
     
-    monthly_df['Upper_Band_2sd'] = (2*monthly_df['Vol']) * monthly_df['Prev_Month_Close'] + monthly_df['Prev_Month_Close']
-    monthly_df['Lower_Band_2sd'] = monthly_df['Prev_Month_Close'] - (2*monthly_df['Vol']) * monthly_df['Prev_Month_Close']
+    df1['Upper_Band_2sd'] = (2*df1['Vol']) * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
+    df1['Lower_Band_2sd'] = df1['Prev_Month_Close'] - (2*df1['Vol']) * df1['Prev_Month_Close']
     
     # Juntar as bandas mensais calculadas de volta ao dataframe original.
-    df1 = df1.merge(monthly_df[['merge_key', 'Upper_Band_1sd', 'Lower_Band_1sd', 'Upper_Band_2sd', 'Lower_Band_2sd']], 
-                    on='merge_key', 
-                    how='left')
+    # df1 = df1.merge(monthly_df[['merge_key', 'Upper_Band_1sd', 'Lower_Band_1sd', 'Upper_Band_2sd', 'Lower_Band_2sd']], 
+    #                 on='merge_key', 
+    #                 how='left')
     
     # Preencher os valores faltantes.
     df1.fillna(method='ffill', inplace=True)
     
     # Remover a chave de merge, pois ela não é mais necessária.
-    df1.drop(columns=['merge_key'], inplace=True)
+    #df1.drop(columns=['merge_key'], inplace=True)
 
     # Converter a coluna 'Date' para datetime se ainda não for
     df1['Date'] = df1['Dates']
