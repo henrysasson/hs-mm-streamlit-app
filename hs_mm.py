@@ -1866,6 +1866,8 @@ if selected == 'Technical Analysis':
     
     # Adicionar o fechamento do mês anterior ao dataframe.
     df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last().shift(1)
+
+    df1['Prev_Month_Vol'] = df1['Vol'].resample('M').last().shift(1)
     
     # Identificar o último dia útil do mês para cada mês.
     # df1['Month'] = df1.index.to_period('M')
@@ -1880,11 +1882,11 @@ if selected == 'Technical Analysis':
     df1.fillna(method='ffill', inplace=True)
     
     # Calcular as bandas mensais usando o fechamento do mês anterior.
-    df1['Upper_Band_1sd'] = df1['Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
-    df1['Lower_Band_1sd'] = df1['Prev_Month_Close'] - df1['Vol'] * df1['Prev_Month_Close']
+    df1['Upper_Band_1sd'] = df1['Prev_Month_Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
+    df1['Lower_Band_1sd'] = df1['Prev_Month_Close'] - df1['Prev_Month_Vol'] * df1['Prev_Month_Close']
     
-    df1['Upper_Band_2sd'] = (2*df1['Vol']) * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
-    df1['Lower_Band_2sd'] = df1['Prev_Month_Close'] - (2*df1['Vol']) * df1['Prev_Month_Close']
+    df1['Upper_Band_2sd'] = (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
+    df1['Lower_Band_2sd'] = df1['Prev_Month_Close'] - (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close']
     
     # Juntar as bandas mensais calculadas de volta ao dataframe original.
     # df1 = df1.merge(monthly_df[['merge_key', 'Upper_Band_1sd', 'Lower_Band_1sd', 'Upper_Band_2sd', 'Lower_Band_2sd']], 
