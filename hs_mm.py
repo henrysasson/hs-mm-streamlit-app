@@ -1854,7 +1854,7 @@ if selected == 'Technical Analysis':
         ticker = '^AXJO'
         
         
-    df1 = yf.download(ticker, period='10y')
+    df1 = yf.download(ticker, period='5y')
     df1['Returns'] = df1['Adj Close'].pct_change()
     df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
     df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
