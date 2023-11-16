@@ -1821,7 +1821,7 @@ if selected == 'Technical Analysis':
     if market == 'S&P/ASX':
         list_of_stocks = tickers_asx
 
-    df = yf.download(tickers=list_of_stocks, period = '4y').ffill(axis=0)
+    df = yf.download(tickers=list_of_stocks, period = '10y').ffill(axis=0)
 
     df = df.stack()
 
