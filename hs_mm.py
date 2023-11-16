@@ -1945,7 +1945,7 @@ if selected == 'Technical Analysis':
         ),
         yaxis=dict(
             tickformat='.2f',
-            title='Preço'
+            title='Price'
         ),
         font=dict(size=12),
         legend=dict(
