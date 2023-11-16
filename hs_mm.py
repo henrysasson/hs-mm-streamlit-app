@@ -1879,7 +1879,7 @@ if selected == 'Technical Analysis':
     
     # df1['merge_key'] = df1['Month'].astype(str)
 
-    df1.fillna(method='ffill', inplace=True)
+    df1.fillna(method='bfill', inplace=True)
     
     # Calcular as bandas mensais usando o fechamento do mês anterior.
     df1['Upper_Band_1sd'] = df1['Prev_Month_Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
