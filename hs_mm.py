@@ -1880,7 +1880,7 @@ if selected == 'Technical Analysis':
     
     
     # Preencher os valores faltantes.
-    df1.fillna(method='ffill', inplace=True)
+    #df1.fillna(method='ffill', inplace=True)
     
 
     # Converter a coluna 'Date' para datetime se ainda não for
