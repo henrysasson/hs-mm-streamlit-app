@@ -1865,7 +1865,7 @@ if selected == 'Technical Analysis':
     df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
     
     # Adicionar o fechamento do mês anterior ao dataframe.
-    df1['Prev_Month_Close'] = df1['Adj Close'].shift(1).resample('M').last()
+    df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last().shift(1)
     
     # Identificar o último dia útil do mês para cada mês.
     df1['Month'] = df1.index.to_period('M')
