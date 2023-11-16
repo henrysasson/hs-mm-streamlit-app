@@ -1854,7 +1854,7 @@ if selected == 'Technical Analysis':
         ticker = '^AXJO'
         
         
-    df1 = yf.download(ticker, period='5y')
+    df1 = yf.download(ticker, period='10y')
     df1['Returns'] = df1['Adj Close'].pct_change()
     df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
     df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
@@ -1868,16 +1868,6 @@ if selected == 'Technical Analysis':
     df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last().shift(1)
 
     df1['Prev_Month_Vol'] = df1['Vol'].resample('M').last().shift(1)
-    
-    # Identificar o último dia útil do mês para cada mês.
-    # df1['Month'] = df1.index.to_period('M')
-    # monthly_df = df1.groupby('Month').tail(1)
-    
-    # # Criando as chaves para o merge.
-    # monthly_df = monthly_df.reset_index()
-    # monthly_df['merge_key'] = monthly_df['Month'].astype(str)
-    
-    # df1['merge_key'] = df1['Month'].astype(str)
 
     df1.fillna(method='bfill', inplace=True)
     
@@ -1888,16 +1878,10 @@ if selected == 'Technical Analysis':
     df1['Upper_Band_2sd'] = (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
     df1['Lower_Band_2sd'] = df1['Prev_Month_Close'] - (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close']
     
-    # Juntar as bandas mensais calculadas de volta ao dataframe original.
-    # df1 = df1.merge(monthly_df[['merge_key', 'Upper_Band_1sd', 'Lower_Band_1sd', 'Upper_Band_2sd', 'Lower_Band_2sd']], 
-    #                 on='merge_key', 
-    #                 how='left')
     
     # Preencher os valores faltantes.
     df1.fillna(method='ffill', inplace=True)
     
-    # Remover a chave de merge, pois ela não é mais necessária.
-    #df1.drop(columns=['merge_key'], inplace=True)
 
     # Converter a coluna 'Date' para datetime se ainda não for
     df1['Date'] = df1['Dates']
