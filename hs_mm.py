@@ -2468,128 +2468,128 @@ if selected == 'Technical Analysis':
     
         st.plotly_chart(fig)
         
-    if selected == 'Volatillity':
-        st.title('Volatillity Momentum')
-        st.markdown('##')
+if selected == 'Volatillity':
+    st.title('Volatillity Momentum')
+    st.markdown('##')
 
+    
+    def vol_heatmap(df, classe):
+        janelas = ['1D', '3D', '1W', '2W', '1M', '3M', '6M', 'YTD', '1Y', '2Y']
+        matriz = pd.DataFrame(columns=janelas, index=df.columns)
+         
+        vol_pl = 20
+        hist_vol = (np.round(df.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+    
         
-        def vol_heatmap(df, classe):
-            janelas = ['1D', '3D', '1W', '2W', '1M', '3M', '6M', 'YTD', '1Y', '2Y']
-            matriz = pd.DataFrame(columns=janelas, index=df.columns)
-             
-            vol_pl = 20
-            hist_vol = (np.round(df.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+        df_2y = hist_vol.ffill().diff(520).iloc[-1]
+        df_1y = hist_vol.ffill().diff(260).iloc[-1]
+        start_of_year = hist_vol.index[df.index.year == hist_vol.index[-1].year][0]
+        df_ytd = (hist_vol.ffill().loc[hist_vol.index[-1]] - hist_vol.ffill().loc[start_of_year])
+        df_6m = hist_vol.ffill().diff(130).iloc[-1]
+        df_3m = hist_vol.ffill().diff(60).iloc[-1]
+        df_1m = hist_vol.ffill().diff(20).iloc[-1]
+        df_2w = hist_vol.ffill().diff(10).iloc[-1]
+        df_1w = hist_vol.ffill().diff(5).iloc[-1]
+        df_3d = hist_vol.ffill().diff(3).iloc[-1]
+        df_1d = hist_vol.ffill().diff(1).iloc[-1]
+    
+    
+        matriz['1D'] = df_1d
+        matriz['3D'] = df_3d
+        matriz['1W'] = df_1w
+        matriz['2W'] = df_2w
+        matriz['1M'] = df_1m
+        matriz['3M'] = df_3m
+        matriz['6M'] = df_6m
+        matriz['YTD'] = df_ytd
+        matriz['1Y'] = df_1y
+        matriz['2Y'] = df_2y
         
-            
-            df_2y = hist_vol.ffill().diff(520).iloc[-1]
-            df_1y = hist_vol.ffill().diff(260).iloc[-1]
-            start_of_year = hist_vol.index[df.index.year == hist_vol.index[-1].year][0]
-            df_ytd = (hist_vol.ffill().loc[hist_vol.index[-1]] - hist_vol.ffill().loc[start_of_year])
-            df_6m = hist_vol.ffill().diff(130).iloc[-1]
-            df_3m = hist_vol.ffill().diff(60).iloc[-1]
-            df_1m = hist_vol.ffill().diff(20).iloc[-1]
-            df_2w = hist_vol.ffill().diff(10).iloc[-1]
-            df_1w = hist_vol.ffill().diff(5).iloc[-1]
-            df_3d = hist_vol.ffill().diff(3).iloc[-1]
-            df_1d = hist_vol.ffill().diff(1).iloc[-1]
+        annotations = []
+        for y, row in enumerate(matriz.values):
+            for x, val in enumerate(row):
+                annotations.append({
+                    "x": matriz.columns[x],
+                    "y": matriz.index[y],
+                    "font": {"color": "black"},
+                    "text": f"{val:.2%}",
+                    "xref": "x1",
+                    "yref": "y1",
+                    "showarrow": False
+                })
+        
+        fig = go.Figure(data=go.Heatmap(
+                        z=matriz.values,
+                        x=matriz.columns.tolist(),
+                        y=matriz.index.tolist(),
+                        colorscale='RdYlGn',
+                        zmin=matriz.values.min(), zmax=matriz.values.max(),  # para garantir que o 0 seja neutro em termos de cor
+                        hoverongaps = False,
+            text=matriz.apply(lambda x: x.map(lambda y: f"{y:.2%}")),
+            hoverinfo='y+x+text',
+            showscale=True,
+            colorbar_tickformat='.2%'
+        ))
         
         
-            matriz['1D'] = df_1d
-            matriz['3D'] = df_3d
-            matriz['1W'] = df_1w
-            matriz['2W'] = df_2w
-            matriz['1M'] = df_1m
-            matriz['3M'] = df_3m
-            matriz['6M'] = df_6m
-            matriz['YTD'] = df_ytd
-            matriz['1Y'] = df_1y
-            matriz['2Y'] = df_2y
-            
-            annotations = []
-            for y, row in enumerate(matriz.values):
-                for x, val in enumerate(row):
-                    annotations.append({
-                        "x": matriz.columns[x],
-                        "y": matriz.index[y],
-                        "font": {"color": "black"},
-                        "text": f"{val:.2%}",
-                        "xref": "x1",
-                        "yref": "y1",
-                        "showarrow": False
-                    })
-            
-            fig = go.Figure(data=go.Heatmap(
-                            z=matriz.values,
-                            x=matriz.columns.tolist(),
-                            y=matriz.index.tolist(),
-                            colorscale='RdYlGn',
-                            zmin=matriz.values.min(), zmax=matriz.values.max(),  # para garantir que o 0 seja neutro em termos de cor
-                            hoverongaps = False,
-                text=matriz.apply(lambda x: x.map(lambda y: f"{y:.2%}")),
-                hoverinfo='y+x+text',
-                showscale=True,
-                colorbar_tickformat='.2%'
-            ))
-            
-            
-            fig.update_layout(title=classe, annotations=annotations, width=600,  # Largura do gráfico
-    height=600  # Altura do gráfico
+        fig.update_layout(title=classe, annotations=annotations, width=600,  # Largura do gráfico
+height=600  # Altura do gráfico
 )
-            st.plotly_chart(fig)
+        st.plotly_chart(fig)
 
 
-        col1, col2 = st.columns(2)
+    col1, col2 = st.columns(2)
+
+    with col1:
+        vol_heatmap(df_acoes, "Stocks")
+    with col2:
+        vol_heatmap(df_moedas, "Currencies")
+
+    col3, col4 = st.columns(2)
+
+    with col3:
+        vol_heatmap(df_commodities, "Commodities")
+    with col4:
+        vol_heatmap(df_rf, "Fixed Income")
+
+    all_assets_list_1 = all_assets.columns.tolist()
+
+    all_assets_list_1.remove('SPX')
+    all_assets_list_1.insert(0, 'SPX')
+
+    asset_1 = st.selectbox(
+        'Choose the first asset:',
+        (all_assets_list_1))
+
+    all_assets_list_2 = all_assets.columns.tolist()
+
+    all_assets_list_2.remove('Nasdaq')
+    all_assets_list_2.insert(0, 'Nasdaq')
+
+    asset_2 = st.selectbox(
+        'Choose the second asset:',
+        (all_assets_list_2))
+
+    df_spread = hist_vol[asset_1] -  hist_vol[asset_2]
+
+    fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread '+asset_1+str(' x ')+asset_2)
     
-        with col1:
-            vol_heatmap(df_acoes, "Stocks")
-        with col2:
-            vol_heatmap(df_moedas, "Currencies")
-    
-        col3, col4 = st.columns(2)
-    
-        with col3:
-            vol_heatmap(df_commodities, "Commodities")
-        with col4:
-            vol_heatmap(df_rf, "Fixed Income")
-
-        all_assets_list_1 = all_assets.columns.tolist()
-    
-        all_assets_list_1.remove('SPX')
-        all_assets_list_1.insert(0, 'SPX')
-
-        asset_1 = st.selectbox(
-            'Choose the first asset:',
-            (all_assets_list_1))
-
-        all_assets_list_2 = all_assets.columns.tolist()
-    
-        all_assets_list_2.remove('Nasdaq')
-        all_assets_list_2.insert(0, 'Nasdaq')
-
-        asset_2 = st.selectbox(
-            'Choose the second asset:',
-            (all_assets_list_2))
-
-        df_spread = hist_vol[asset_1] -  hist_vol[asset_2]
-
-        fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread '+asset_1+str(' x ')+asset_2)
-        
-        fig.update_xaxes(
-        rangeslider_visible=True,
-        rangeselector=dict(
-            buttons=list([
-                dict(count=1, label="1m", step="month", stepmode="backward"),
-                dict(count=6, label="6m", step="month", stepmode="backward"),
-                dict(count=1, label="YTD", step="year", stepmode="todate"),
-                dict(count=1, label="1y", step="year", stepmode="backward"),
-                dict(step="all")
-            ])
-        )
+    fig.update_xaxes(
+    rangeslider_visible=True,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1m", step="month", stepmode="backward"),
+            dict(count=6, label="6m", step="month", stepmode="backward"),
+            dict(count=1, label="YTD", step="year", stepmode="todate"),
+            dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(step="all")
+        ])
     )
+)
 
-        fig.update_yaxes(tickformat=".2%")
-        
-        st.plotly_chart(fig, use_container_width=True)
+    fig.update_yaxes(tickformat=".2%")
+    
+    st.plotly_chart(fig, use_container_width=True)
         
         
         
