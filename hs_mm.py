@@ -2547,6 +2547,39 @@ height=600  # Altura do gráfico
     with col4:
         vol_heatmap(df_rf, "Fixed Income")
 
+    all_assets = all_assets.columns.tolist()
+    
+    all_assets.remove('SPX')
+    all_assets.insert(0, 'SPX')
+
+    asset = st.selectbox(
+        'Choose the first asset:',
+        (all_assets))
+
+    hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+
+    df_vol = pd.DataFrame({'Value':hist_vol_asset, 'Date':hist_vol_asset.index})
+
+    fig = px.line(df_vol, x='Date', y='Value', title='Historical Volatillity')
+    
+    fig.update_xaxes(
+    rangeslider_visible=True,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1m", step="month", stepmode="backward"),
+            dict(count=6, label="6m", step="month", stepmode="backward"),
+            dict(count=1, label="YTD", step="year", stepmode="todate"),
+            dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(step="all")
+        ])
+    )
+)
+
+    fig.update_yaxes(tickformat=".2%")
+    
+    st.plotly_chart(fig, use_container_width=True)
+    
+
     col1, col2 = st.columns(2)
 
     with col1:
