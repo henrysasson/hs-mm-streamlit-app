@@ -45,9 +45,9 @@ column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
 # Moedas
-tickers_moedas = ['EURUSD=X', 'JPY=X', 'GBPUSD=X', 'BRL=X', 'AUDUSD=X', 'MXN=X']
+tickers_moedas = ['EURUSD=X', 'JPY=X', 'CHF=X', 'GBPUSD=X', 'CAD=X', 'NZD=X', 'NOK=X', 'SEK=X','AUD=X', 'BRL=X','MXN=X']
 df_moedas = get_data(tickers_moedas).fillna(method='ffill', axis=0)
-names_moedas = ['EURUSD', 'USDJPY', 'GBPUSD', 'USDBRL', 'AUDUSD', 'MXNUSD']
+names_moedas = ['EURUSD', 'USDJPY', 'USDCHF', 'GBPUSD', 'USDCAD', 'USDNZD', 'USDNOK', 'USDSEK','USDAUD', 'USDBRL','USDMXN']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
 # Renomeie as colunas
 df_moedas.rename(columns=column_mapping, inplace=True)
