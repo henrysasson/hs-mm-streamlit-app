@@ -2474,7 +2474,7 @@ if selected == 'Volatillity':
 
     
     def vol_heatmap(df, classe):
-        janelas = ['1D', '3D', '1W', '2W', '1M', '3M', '6M', 'YTD', '1Y', '2Y']
+        janelas = ['1W', '2W', '1M', '3M', '6M', 'YTD', '1Y', '2Y']
         matriz = pd.DataFrame(columns=janelas, index=df.columns)
          
         vol_pl = 20
@@ -2490,12 +2490,7 @@ if selected == 'Volatillity':
         df_1m = hist_vol.ffill().diff(20).iloc[-1]
         df_2w = hist_vol.ffill().diff(10).iloc[-1]
         df_1w = hist_vol.ffill().diff(5).iloc[-1]
-        df_3d = hist_vol.ffill().diff(3).iloc[-1]
-        df_1d = hist_vol.ffill().diff(1).iloc[-1]
     
-    
-        matriz['1D'] = df_1d
-        matriz['3D'] = df_3d
         matriz['1W'] = df_1w
         matriz['2W'] = df_2w
         matriz['1M'] = df_1m
