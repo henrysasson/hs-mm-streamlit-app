@@ -2547,14 +2547,14 @@ height=600  # Altura do gráfico
     with col4:
         vol_heatmap(df_rf, "Fixed Income")
 
-    all_assets = all_assets.columns.tolist()
+    all_assets_list = all_assets.columns.tolist()
     
-    all_assets.remove('SPX')
-    all_assets.insert(0, 'SPX')
+    all_assets_list.remove('SPX')
+    all_assets_list.insert(0, 'SPX')
 
     asset = st.selectbox(
         'Choose the first asset:',
-        (all_assets))
+        (all_assets_list))
 
     hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
 
