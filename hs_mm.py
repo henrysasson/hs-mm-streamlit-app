@@ -77,7 +77,7 @@ column_mapping = dict(zip(tickers_crypto, names_crypto))
 df_crypto.rename(columns=column_mapping, inplace=True)
 
 # Todos os Ativos
-all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).dropna()
+all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).ffill().dropna()
 
 options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Volatillity']
 selected = st.sidebar.selectbox('Main Menu', options)
