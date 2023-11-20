@@ -2472,14 +2472,15 @@ if selected == 'Technical Analysis':
         st.title('Volatillity Momentum')
         st.markdown('##')
 
-        vol_pl = 20
-        df = (np.round(df.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
         
-        def vol_heatmap(hist_vol, classe):
+        def vol_heatmap(df, classe):
             janelas = ['1D', '3D', '1W', '2W', '1M', '3M', '6M', 'YTD', '1Y', '2Y']
             matriz = pd.DataFrame(columns=janelas, index=df.columns)
              
+            vol_pl = 20
+            hist_vol = (np.round(df.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
         
+            
             df_2y = hist_vol.ffill().diff(520).iloc[-1]
             df_1y = hist_vol.ffill().diff(260).iloc[-1]
             start_of_year = hist_vol.index[df.index.year == hist_vol.index[-1].year][0]
