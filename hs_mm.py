@@ -2577,8 +2577,7 @@ height=600  # Altura do gráfico
 
     spread = (hist_vol_1 -  hist_vol_2)
 
-    df_spread = pd.DataFrame({'Value':spread})
-    df_spread.index = spread.index
+    df_spread = pd.DataFrame({'Value':spread, 'Date':spread.index})
     
 
     fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread '+asset_1+str(' x ')+asset_2)
