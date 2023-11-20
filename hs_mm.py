@@ -2575,7 +2575,11 @@ height=600  # Altura do gráfico
 
     hist_vol_2 = (np.round(all_assets[asset_2].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
 
-    df_spread = hist_vol_1 -  hist_vol_2
+    spread = (hist_vol_1 -  hist_vol_2)
+
+    df_spread = pd.DataFrame({'Value':spread})
+    df_spread.index = spread.index
+    
 
     fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread '+asset_1+str(' x ')+asset_2)
     
