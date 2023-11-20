@@ -2579,7 +2579,8 @@ height=600  # Altura do gráfico
     fig.update_yaxes(tickformat=".2%")
     
     st.plotly_chart(fig, use_container_width=True)
-    
+
+    st.markdown('##')
 
     col1, col2 = st.columns(2)
 
@@ -2604,6 +2605,8 @@ height=600  # Altura do gráfico
         asset_2 = st.selectbox(
             'Choose the second asset:',
             (all_assets_list_2))
+
+    
 
     vol_pl = 20
     hist_vol_1 = (np.round(all_assets[asset_1].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
