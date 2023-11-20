@@ -1885,7 +1885,9 @@ if selected == 'Technical Analysis':
 
     # Converter a coluna 'Date' para datetime se ainda não for
     df1['Date'] = df1['Dates']
-    df1.dropna(inplace=True)
+
+    df1 = df1.fillna(method='ffill', axis=0)
+    #df1.dropna(inplace=True)
     
     # Criar o texto de hover com o formato correto
     hovertext = []
