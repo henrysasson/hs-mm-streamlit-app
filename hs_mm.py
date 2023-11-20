@@ -2575,7 +2575,7 @@ height=600  # Altura do gráfico
     df_spread = pd.DataFrame({'Value':spread, 'Date':spread.index})
     
 
-    fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread '+asset_1+str(' x ')+asset_2)
+    fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread = '+asset_1+str(' x ')+asset_2)
     
     fig.update_xaxes(
     rangeslider_visible=True,
