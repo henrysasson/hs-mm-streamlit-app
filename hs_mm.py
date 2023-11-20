@@ -1865,11 +1865,15 @@ if selected == 'Technical Analysis':
     df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
     
     # Adicionar o fechamento do mês anterior ao dataframe.
-    df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last().shift(1)
+    df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last()
 
-    df1['Prev_Month_Vol'] = df1['Vol'].resample('M').last().shift(1)
+    df1['Prev_Month_Vol'] = df1['Vol'].resample('M').last()
 
-    df1.fillna(method='bfill', inplace=True)
+    df1 = df1.ffill()
+
+    df1['Prev_Month_Vol'] = df1['Prev_Month_Vol'].shift(1)
+
+    df1['Prev_Month_Close'] = df1['Prev_Month_Close'].shift(1)
     
     # Calcular as bandas mensais usando o fechamento do mês anterior.
     df1['Upper_Band_1sd'] = df1['Prev_Month_Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
@@ -1880,13 +1884,13 @@ if selected == 'Technical Analysis':
     
     
     # Preencher os valores faltantes.
-    #df1.fillna(method='ffill', inplace=True)
+    df1 = df1.ffill()
     
 
     # Converter a coluna 'Date' para datetime se ainda não for
     df1['Date'] = df1['Dates']
 
-    df1 = df1.fillna(method='ffill', axis=0)
+    #df1 = df1.fillna(method='ffill', axis=0)
     #df1.dropna(inplace=True)
     
     # Criar o texto de hover com o formato correto
