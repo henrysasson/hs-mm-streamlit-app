@@ -2553,6 +2553,7 @@ height=600  # Altura do gráfico
     with col4:
         vol_heatmap(df_rf, "Fixed Income")
 
+    
     all_assets_list = all_assets.columns.tolist()
     
     all_assets_list.remove('SPX')
@@ -2616,18 +2617,69 @@ height=600  # Altura do gráfico
             (all_assets_list_2))
 
     
+    original_names = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI', 'EURUSD=X', 'JPY=X', 'CHF=X', 'GBPUSD=X', 'CAD=X', 'NZD=X', 'NOK=X', 'SEK=X','AUD=X', 'BRL=X','MXN=X', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA', 'BTC-USD', 'ETH-USD']
 
-    vol_pl = 20
-    hist_vol_1 = (np.round(all_assets[asset_1].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+    trasformed_names = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE', 'EURUSD', 'USDJPY', 'USDCHF', 'GBPUSD', 'USDCAD', 'USDNZD', 'USDNOK', 'USDSEK','USDAUD', 'USDBRL','USDMXN', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB', 'BTCUSD', 'ETHUSD']
+    
+    # Crie um dicionário de correspondência
+    correspondencia = dict(zip(trasformed_names, original_names))
 
-    hist_vol_2 = (np.round(all_assets[asset_2].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+    # Nome que você deseja encontrar a correspondência
+    nome_procurado_1 = asset_1
 
-    spread = (hist_vol_1 -  hist_vol_2)
+    nome_procurado_2 = asset_2
+    
+    # Verificar a correspondência
+    correspondencia_original_1 = correspondencia.get(nome_procurado_1)
 
-    df_spread = pd.DataFrame({'Value':spread, 'Date':spread.index})
+    correspondencia_original_2 = correspondencia.get(nome_procurado_2)
+
+    df_asset_1 = yf.download(correspondencia_original_1, period='15y')['Adj Close']
+
+    df_asset_2 = yf.download(correspondencia_original_2, period='15y')['Adj Close']
     
 
-    fig = px.line(df_spread, x='Date', y='Value', title='Volatillity Spread - '+asset_1+str(' x ')+asset_2)
+    # Volatilidade de 20, 60 e 260 dias
+
+    hist_vol_1_20d = (np.round(df_asset_1.ffill().pct_change(1).rolling(window=20).std()*np.sqrt(252), 4))
+    
+    hist_vol_2_20d = (np.round(df_asset_2.ffill().pct_change(1).rolling(window=20).std()*np.sqrt(252), 4))
+
+    
+    hist_vol_1_60d = (np.round(df_asset_1.ffill().pct_change(1).rolling(window=60).std()*np.sqrt(252), 4))
+    
+    hist_vol_2_60d = (np.round(df_asset_2.ffill().pct_change(1).rolling(window=60).std()*np.sqrt(252), 4))
+
+    
+    hist_vol_1_260d = (np.round(df_asset_1.ffill().pct_change(1).rolling(window=260).std()*np.sqrt(252), 4))
+    
+    hist_vol_2_260d = (np.round(df_asset_2.ffill().pct_change(1).rolling(window=260).std()*np.sqrt(252), 4))
+
+    
+
+    #vol_pl = 20
+    #hist_vol_1 = (np.round(all_assets[asset_1].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+
+    #hist_vol_2 = (np.round(all_assets[asset_2].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+
+    #spread = (hist_vol_1 -  hist_vol_2)
+
+    spread_20d = pd.concat([hist_vol_1_20d, hist_vol_2_20d], axis=1).dropna()
+    spread_20d = spread_20d.diff(axis=1) 
+
+    spread_60d = pd.concat([hist_vol_1_60d, hist_vol_2_60d], axis=1).dropna()
+    spread_60d = spread_60d.diff(axis=1)
+
+    spread_260d = pd.concat([hist_vol_1_260d, hist_vol_2_260d], axis=1).dropna()
+    spread_260d = spread_260d.diff(axis=1)
+
+    df_spread = pd.concat([spread_20d, spread_60d, spread_260d, spread_260d.index], axis=1).dropna()
+    df_spread.columns = ['1 month', '3 month', '1 year', 'Date']
+
+    #df_spread = pd.DataFrame({'1 month':spread, 'Date':spread.index})
+    
+
+    fig = px.line(df_spread, x='Date', y=['1 month', '3 month', '1 year'], title='Volatillity Spread - '+asset_1+str(' x ')+asset_2)
     
     fig.update_xaxes(
     rangeslider_visible=False,
