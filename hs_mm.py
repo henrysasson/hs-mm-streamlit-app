@@ -2635,10 +2635,8 @@ height=600  # Altura do gráfico
     correspondencia_original_2 = correspondencia.get(nome_procurado_2)
 
     df_asset_1 = yf.download(correspondencia_original_1, period='15y')['Adj Close']
-    df_asset_1 = df_asset_1.pct_change(1)
 
     df_asset_2 = yf.download(correspondencia_original_2, period='15y')['Adj Close']
-    df_asset_2 = df_asset_2.pct_change(1)
     
 
     # Volatilidade de 20, 60 e 260 dias
