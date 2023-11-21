@@ -2674,8 +2674,9 @@ height=600  # Altura do gráfico
     spread_260d = spread_260d.diff(axis=1)
 
     df_spread = pd.concat([spread_20d, spread_60d, spread_260d], axis=1).dropna()
+    df_spread.columns = ['1 month', '3 month', '1 year']
     df_spread['Date'] = df_spread.index
-    df_spread.columns = ['1 month', '3 month', '1 year', 'Date']
+    
 
     #df_spread = pd.DataFrame({'1 month':spread, 'Date':spread.index})
     
