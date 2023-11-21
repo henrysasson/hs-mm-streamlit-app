@@ -2717,6 +2717,8 @@ height=600  # Altura do gráfico
         
         # Calcule o beta dividindo a covariância pelo valor
         rolling_beta = rolling_cov / rolling_var
+
+        return round(rolling_beta,2)
         
         
     beta_20d = rolling_beta(df_asset_1, df_asset_2, 20)
