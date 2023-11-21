@@ -2823,6 +2823,36 @@ height=600  # Altura do gráfico
     
     st.plotly_chart(fig, use_container_width=True)
 
+    # Relative Performance
+
+    r_p = (df_asset_1/df_asset_2).dropna()
+
+    df_rp = pd.DataFrame({'Value':r_p,
+                          'Date':r_p.index})
+
+    fig = px.line(df_rp, x='Date', y='Value', title='Relative Performance - '+asset_1+str(' x ')+asset_2)
+    
+    fig.update_xaxes(
+    rangeslider_visible=False,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1m", step="month", stepmode="backward"),
+            dict(count=6, label="6m", step="month", stepmode="backward"),
+            dict(count=1, label="YTD", step="year", stepmode="todate"),
+            dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(count=3, label="3y", step="year", stepmode="backward"),
+            dict(count=5, label="5y", step="year", stepmode="backward"),
+            dict(step="all")
+        ])
+    )
+)
+
+    fig.update_yaxes(tickformat=".2f")
+    
+    st.plotly_chart(fig, use_container_width=True)
+
+    
+
     
                 
 
