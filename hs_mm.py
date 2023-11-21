@@ -33,7 +33,7 @@ st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
 #@st.cache_data
 def get_data(tickers):
-    data = yf.download(tickers, period='4y')['Adj Close']
+    data = yf.download(tickers, period='10y')['Adj Close']
     return data
 
 
@@ -2561,8 +2561,6 @@ height=600  # Altura do gráfico
     asset = st.selectbox(
         'Choose the asset:',
         (all_assets_list))
-
-    asset_vol = yf.download(asset, period='20y')['Adj Close']
 
     vol_pl = 20
     #hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
