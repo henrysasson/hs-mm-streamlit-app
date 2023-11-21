@@ -2691,6 +2691,8 @@ height=600  # Altura do gráfico
             dict(count=6, label="6m", step="month", stepmode="backward"),
             dict(count=1, label="YTD", step="year", stepmode="todate"),
             dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(count=3, label="3y", step="year", stepmode="backward"),
+            dict(count=5, label="5y", step="year", stepmode="backward"),
             dict(step="all")
         ])
     )
@@ -2699,9 +2701,56 @@ height=600  # Altura do gráfico
     fig.update_yaxes(tickformat=".2%")
     
     st.plotly_chart(fig, use_container_width=True)
+
+
+
+    # Rolling Beta
+
+    def rolling_beta(a1, a2, window):
+
+        ret_a1 = a1.pct_change(1)    
+        ret_a2 = a2.pct_change(1)
+    
+        # Calcule o rolling beta usando a função rolling do pandas
+        rolling_cov = ret_a1.rolling(window).cov(ret_a2)
+        rolling_var = ret_a2.rolling(window).var()
+        
+        # Calcule o beta dividindo a covariância pelo valor
+        rolling_beta = rolling_cov / rolling_var
         
         
-        
+    beta_20d = rolling_beta(df_asset_1, df_asset_2, 20)
+
+    beta_60d = rolling_beta(df_asset_1, df_asset_2, 60)
+
+    beta_260d = rolling_beta(df_asset_1, df_asset_2, 260)
+
+    df_beta = pd.concat([beta_20d, beta_60d, beta_260d], axis=1).dropna()
+    df_beta.columns = ['1 month', '3 month', '1 year']
+    df_beta['Date'] = df_beta.index
+    
+
+    fig = px.line(df_beta, x='Date', y=['1 month', '3 month', '1 year'], title='Rolling Beta - '+asset_1+str(' x ')+asset_2)
+    
+    fig.update_xaxes(
+    rangeslider_visible=False,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1m", step="month", stepmode="backward"),
+            dict(count=6, label="6m", step="month", stepmode="backward"),
+            dict(count=1, label="YTD", step="year", stepmode="todate"),
+            dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(count=3, label="3y", step="year", stepmode="backward"),
+            dict(count=5, label="5y", step="year", stepmode="backward"),
+            dict(step="all")
+        ])
+    )
+)
+
+    fig.update_yaxes(tickformat=".2%")
+    
+    st.plotly_chart(fig, use_container_width=True)
+
 
     
                 
