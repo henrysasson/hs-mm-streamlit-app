@@ -2665,13 +2665,13 @@ height=600  # Altura do gráfico
     #spread = (hist_vol_1 -  hist_vol_2)
 
     spread_20d = pd.concat([hist_vol_1_20d, hist_vol_2_20d], axis=1).dropna()
-    spread_20d = spread_20d.diff(axis=1) 
+    spread_20d = spread_20d.iloc[:, 0] - spread_20d.iloc[:, 1]
 
     spread_60d = pd.concat([hist_vol_1_60d, hist_vol_2_60d], axis=1).dropna()
-    spread_60d = spread_60d.diff(axis=1)
+    spread_60d = spread_60d.iloc[:, 0] - spread_60d.iloc[:, 1]
 
     spread_260d = pd.concat([hist_vol_1_260d, hist_vol_2_260d], axis=1).dropna()
-    spread_260d = spread_260d.diff(axis=1)
+    spread_260d = spread_260d.iloc[:, 0] - spread_260d.iloc[:, 1]
 
     df_spread = pd.concat([spread_20d, spread_60d, spread_260d], axis=1).dropna()
     df_spread.columns = ['1 month', '3 month', '1 year']
