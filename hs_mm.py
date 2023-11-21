@@ -2563,15 +2563,34 @@ height=600  # Altura do gráfico
         'Choose the asset:',
         (all_assets_list))
 
+    original_names = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI', 'EURUSD=X', 'JPY=X', 'CHF=X', 'GBPUSD=X', 'CAD=X', 'NZD=X', 'NOK=X', 'SEK=X','AUD=X', 'BRL=X','MXN=X', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA', 'BTC-USD', 'ETH-USD']
+
+    trasformed_names = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE', 'EURUSD', 'USDJPY', 'USDCHF', 'GBPUSD', 'USDCAD', 'USDNZD', 'USDNOK', 'USDSEK','USDAUD', 'USDBRL','USDMXN', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB', 'BTCUSD', 'ETHUSD']
+    
+    # Crie um dicionário de correspondência
+    correspondencia = dict(zip(trasformed_names, original_names))
+
+    # Nome que você deseja encontrar a correspondência
+    nome_procurado = asset
+    
+    # Verificar a correspondência
+    correspondencia_original = correspondencia.get(nome_procurado)
+
+    df_asset = yf.download(correspondencia_original, period='15y')['Adj Close']
+    
+    hist_vol_asset_20d = (np.round(df_asset.ffill().pct_change(1).rolling(window=20).std()*np.sqrt(252), 4))
+    
+    hist_vol_asset_60d = (np.round(df_asset.ffill().pct_change(1).rolling(window=60).std()*np.sqrt(252), 4))
+        
+    hist_vol_asset_260d = (np.round(df_asset.ffill().pct_change(1).rolling(window=260).std()*np.sqrt(252), 4))
+
+
+    df_hist_vol_asset = pd.concat([hist_vol_asset_20d, hist_vol_asset_60d, hist_vol_asset_260d], axis=1).dropna()
+    df_hist_vol_asset.columns = ['1 month', '3 month', '1 year']
+    df_hist_vol_asset['Date'] = df_hist_vol_asset.index
     
 
-    vol_pl = 20
-    hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
-
-    df_vol = pd.DataFrame({'Value':hist_vol_asset,
-                           'Date':hist_vol_asset.index})
-
-    fig = px.line(df_vol, x='Date', y='Value', title='Historical Volatillity')
+    fig = px.line(df_hist_vol_asset, x='Date', y=['1 month', '3 month', '1 year'], title='Historical Volatillity')
     
     fig.update_xaxes(
     rangeslider_visible=False,
