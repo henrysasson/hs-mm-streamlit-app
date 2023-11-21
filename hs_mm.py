@@ -33,7 +33,7 @@ st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
 #@st.cache_data
 def get_data(tickers):
-    data = yf.download(tickers, period='10y')['Adj Close']
+    data = yf.download(tickers, period='4y')['Adj Close']
     return data
 
 
@@ -2563,22 +2563,12 @@ height=600  # Altura do gráfico
         (all_assets_list))
 
     vol_pl = 20
-    #hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+    hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
 
-    hist_vol_asset_20 = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+    df_vol = pd.DataFrame({'Value':hist_vol_asset,
+                           'Date':hist_vol_asset.index})
 
-    vol_pl = 60
-    hist_vol_asset_60 = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
-
-    vol_pl = 252
-    hist_vol_asset_252 = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
-
-    df_vol = pd.DataFrame({'1 month':hist_vol_asset_20,
-                           '3 month':hist_vol_asset_60, 
-                           '1 year':hist_vol_asset_252, 
-                           'Date':all_assets[asset].index})
-
-    fig = px.line(df_vol, x='Date', y=['1 month', '3 month', '1 year'], title='Historical Volatillity')
+    fig = px.line(df_vol, x='Date', y='Value', title='Historical Volatillity')
     
     fig.update_xaxes(
     rangeslider_visible=False,
