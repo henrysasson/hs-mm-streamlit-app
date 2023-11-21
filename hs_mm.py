@@ -79,7 +79,7 @@ df_crypto.rename(columns=column_mapping, inplace=True)
 # Todos os Ativos
 all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).ffill().dropna()
 
-options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Volatillity']
+options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatillity']
 selected = st.sidebar.selectbox('Main Menu', options)
 
 
@@ -2474,7 +2474,7 @@ if selected == 'Technical Analysis':
     
         st.plotly_chart(fig)
         
-if selected == 'Volatillity':
+if selected == 'Risk & Volatillity':
     st.title('Volatillity Momentum')
     st.markdown('##')
 
@@ -2753,6 +2753,50 @@ height=600  # Altura do gráfico
     
     st.plotly_chart(fig, use_container_width=True)
 
+
+    # Rolling Correlation
+
+    def rolling_corr(a1, a2, window):
+
+        ret_a1 = a1.pct_change(1)    
+        ret_a2 = a2.pct_change(1)
+
+        rolling_corr = ret_a1.pct_change(1).rolling(window).corr(ret_a2.pct_change(1))
+
+        return round(rolling_corr, 2)
+
+
+    corr_20d = rolling_corr(df_asset_1, df_asset_2, 20)
+
+    corr_60d = rolling_corr(df_asset_1, df_asset_2, 60)
+
+    corr_260d = rolling_corr(df_asset_1, df_asset_2, 260)
+
+    df_corr = pd.concat([corr_20d, corr_60d, corr_260d], axis=1).dropna()
+    df_corr.columns = ['1 month', '3 month', '1 year']
+    df_corr['Date'] = df_corr.index
+    
+
+    fig = px.line(df_corr, x='Date', y=['1 month', '3 month', '1 year'], title='Rolling Correlation - '+asset_1+str(' x ')+asset_2)
+    
+    fig.update_xaxes(
+    rangeslider_visible=False,
+    rangeselector=dict(
+        buttons=list([
+            dict(count=1, label="1m", step="month", stepmode="backward"),
+            dict(count=6, label="6m", step="month", stepmode="backward"),
+            dict(count=1, label="YTD", step="year", stepmode="todate"),
+            dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(count=3, label="3y", step="year", stepmode="backward"),
+            dict(count=5, label="5y", step="year", stepmode="backward"),
+            dict(step="all")
+        ])
+    )
+)
+
+    fig.update_yaxes(tickformat=".2f")
+    
+    st.plotly_chart(fig, use_container_width=True)
 
     
                 
