@@ -55,7 +55,7 @@ df_moedas.rename(columns=column_mapping, inplace=True)
 # Commodities
 tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY']
 df_commodities = get_data(tickers_commodities).fillna(method='ffill', axis=0)
-names_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY']
+names_commodities = ['DBC', 'GSCI', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY']
 column_mapping = dict(zip(tickers_commodities, names_commodities))
 # Renomeie as colunas
 df_commodities.rename(columns=column_mapping, inplace=True)
@@ -2563,9 +2563,8 @@ height=600  # Altura do gráfico
         'Choose the asset:',
         (all_assets_list))
 
-    original_names = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI', 'EURUSD=X', 'JPY=X', 'CHF=X', 'GBPUSD=X', 'CAD=X', 'NZD=X', 'NOK=X', 'SEK=X','AUD=X', 'BRL=X','MXN=X', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA', 'BTC-USD', 'ETH-USD']
-
-    trasformed_names = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE', 'EURUSD', 'USDJPY', 'USDCHF', 'GBPUSD', 'USDCAD', 'USDNZD', 'USDNOK', 'USDSEK','USDAUD', 'USDBRL','USDMXN', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB', 'BTCUSD', 'ETHUSD']
+    original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto
+    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + tickers_crypto
     
     # Crie um dicionário de correspondência
     correspondencia = dict(zip(trasformed_names, original_names))
@@ -2638,9 +2637,8 @@ height=600  # Altura do gráfico
             (all_assets_list_2))
 
     
-    original_names = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI', 'EURUSD=X', 'JPY=X', 'CHF=X', 'GBPUSD=X', 'CAD=X', 'NZD=X', 'NOK=X', 'SEK=X','AUD=X', 'BRL=X','MXN=X', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM11.SA', 'IMAB11.SA', 'BTC-USD', 'ETH-USD']
-
-    trasformed_names = ['SPX', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'IBOV', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE', 'EURUSD', 'USDJPY', 'USDCHF', 'GBPUSD', 'USDCAD', 'USDNZD', 'USDNOK', 'USDSEK','USDAUD', 'USDBRL','USDMXN', 'DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY', 'BIL', 'SHY', 'IEI', 'IEF', 'TLT', 'TIP', 'STIP', 'LQD', 'HYG', 'EMB', 'BNDX', 'IAGG','HYEM','IRFM', 'IMAB', 'BTCUSD', 'ETHUSD']
+    original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto
+    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + tickers_crypto
     
     # Crie um dicionário de correspondência
     correspondencia = dict(zip(trasformed_names, original_names))
