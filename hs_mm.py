@@ -444,7 +444,7 @@ if selected == 'Macro Indicators':
             fig_yc = px.line(df_yc, x='Date', y=['T10Y3M', 'T10Y2Y'], title='Yield Curve')
                 
             fig_yc.update_xaxes(
-                rangeslider_visible=True,
+                rangeslider_visible=False,
                 rangeselector=dict(
                     buttons=list([
                         dict(count=1, label="YTD", step="year", stepmode="todate"),
@@ -501,7 +501,7 @@ if selected == 'Macro Indicators':
             fig_hys = px.line(hys, x='Date', y=['US', 'EU', 'EM'], title='High Yield Spread')
                 
             fig_hys.update_xaxes(
-                rangeslider_visible=True,
+                rangeslider_visible=False,
                 rangeselector=dict(
                     buttons=list([
                         dict(count=1, label="YTD", step="year", stepmode="todate"),
@@ -550,7 +550,7 @@ if selected == 'Macro Indicators':
             fig_t1y = px.line(df_t1, x='Date', y=['T01Y', '12 MA'], title='Hike Indicator')
             
             fig_t1y.update_xaxes(
-            rangeslider_visible=True,
+            rangeslider_visible=False,
             rangeselector=dict(
                 buttons=list([
                     dict(count=1, label="YTD", step="year", stepmode="todate"),
