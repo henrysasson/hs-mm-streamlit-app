@@ -2716,8 +2716,8 @@ height=600  # Altura do gráfico
         df = pd.concat([ret_a1, ret_a2], axis=1).dropna()
         
         # Calcule o rolling beta usando a função rolling do pandas
-        rolling_cov = df.iloc[:, 0].rolling(20).cov(df.iloc[:, 1])
-        rolling_var = df.iloc[:, 1].rolling(20).var()
+        rolling_cov = df.iloc[:, 0].rolling(window).cov(df.iloc[:, 1])
+        rolling_var = df.iloc[:, 1].rolling(window).var()
         
         # Calcule o beta dividindo a covariância pelo valor
         rolling_beta = rolling_cov / rolling_var
