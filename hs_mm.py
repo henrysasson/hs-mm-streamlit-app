@@ -2563,6 +2563,8 @@ height=600  # Altura do gráfico
         'Choose the asset:',
         (all_assets_list))
 
+    
+
     vol_pl = 20
     hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
 
@@ -2710,10 +2712,12 @@ height=600  # Altura do gráfico
 
         ret_a1 = a1.pct_change(1)    
         ret_a2 = a2.pct_change(1)
-    
+
+        df = pd.concat([ret_a1, ret_a2], axis=1).dropna()
+        
         # Calcule o rolling beta usando a função rolling do pandas
-        rolling_cov = ret_a1.rolling(window).cov(ret_a2)
-        rolling_var = ret_a2.rolling(window).var()
+        rolling_cov = df.iloc[:, 0].rolling(20).cov(df.iloc[:, 1])
+        rolling_var = df.iloc[:, 1].rolling(20).var()
         
         # Calcule o beta dividindo a covariância pelo valor
         rolling_beta = rolling_cov / rolling_var
@@ -2761,7 +2765,9 @@ height=600  # Altura do gráfico
         ret_a1 = a1.pct_change(1)    
         ret_a2 = a2.pct_change(1)
 
-        rolling_corr = ret_a1.rolling(window).corr(ret_a2)
+        df = pd.concat([ret_a1, ret_a2], axis=1).dropna()
+
+        rolling_corr = df.iloc[:, 0].rolling(window).corr(df.iloc[:, 1])
 
         return round(rolling_corr, 2)
 
