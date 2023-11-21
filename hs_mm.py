@@ -2749,7 +2749,7 @@ height=600  # Altura do gráfico
     )
 )
 
-    fig.update_yaxes(tickformat=".2%")
+    fig.update_yaxes(tickformat=".2f")
     
     st.plotly_chart(fig, use_container_width=True)
 
