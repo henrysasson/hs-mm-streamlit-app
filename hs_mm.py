@@ -2562,12 +2562,25 @@ height=600  # Altura do gráfico
         'Choose the asset:',
         (all_assets_list))
 
+    asset_vol = yf.download(asset, period='20y')['Adj Close']
+
     vol_pl = 20
-    hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+    #hist_vol_asset = (np.round(all_assets[asset].ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
 
-    df_vol = pd.DataFrame({'Value':hist_vol_asset, 'Date':hist_vol_asset.index})
+    hist_vol_asset_20 = (np.round(asset_vol.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
 
-    fig = px.line(df_vol, x='Date', y='Value', title='Historical Volatillity')
+    vol_pl = 60
+    hist_vol_asset_60 = (np.round(asset_vol.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+
+    vol_pl = 252
+    hist_vol_asset_252 = (np.round(asset_vol.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
+
+    df_vol = pd.DataFrame({'1 month':hist_vol_asset_20,
+                           '3 month':hist_vol_asset_60, 
+                           '1 year':hist_vol_asset_252, 
+                           'Date':asset_vol.index}).dropna()
+
+    fig = px.line(df_vol, x='Date', y=['1 month', '3 month', '1 year'], title='Historical Volatillity')
     
     fig.update_xaxes(
     rangeslider_visible=False,
@@ -2577,6 +2590,8 @@ height=600  # Altura do gráfico
             dict(count=6, label="6m", step="month", stepmode="backward"),
             dict(count=1, label="YTD", step="year", stepmode="todate"),
             dict(count=1, label="1y", step="year", stepmode="backward"),
+            dict(count=3, label="3y", step="year", stepmode="backward"),
+            dict(count=5, label="5y", step="year", stepmode="backward"),
             dict(step="all")
         ])
     )
