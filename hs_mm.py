@@ -2576,7 +2576,7 @@ height=600  # Altura do gráfico
     df_vol = pd.DataFrame({'1 month':hist_vol_asset_20,
                            '3 month':hist_vol_asset_60, 
                            '1 year':hist_vol_asset_252, 
-                           'Date':all_assets[asset].index}).dropna()
+                           'Date':all_assets[asset].index})
 
     fig = px.line(df_vol, x='Date', y=['1 month', '3 month', '1 year'], title='Historical Volatillity')
     
