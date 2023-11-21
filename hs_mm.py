@@ -2761,7 +2761,7 @@ height=600  # Altura do gráfico
         ret_a1 = a1.pct_change(1)    
         ret_a2 = a2.pct_change(1)
 
-        rolling_corr = ret_a1.pct_change(1).rolling(window).corr(ret_a2.pct_change(1))
+        rolling_corr = ret_a1.rolling(window).corr(ret_a2)
 
         return round(rolling_corr, 2)
 
