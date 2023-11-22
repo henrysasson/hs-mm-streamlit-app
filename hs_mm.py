@@ -1583,6 +1583,37 @@ with col1:
 
     # Large Specs
     try:
+        st.metric(label = 'Large Speculators Index', value = str(rank(df['Sum of Large Speculators'], 52)))
+        st.text('1 Year')
+    except:
+        pass
+
+with col2:
+
+    # Small Specs
+    try:
+        st.metric(label = 'Small Speculators Index', value = str(rank(df['Sum of Small Speculators'], 52)))
+        st.text('1 Year')
+    except:
+        pass
+
+with col3:
+
+    # Commercials
+    try:
+        st.metric(label = 'Commercials Index', value = str(rank(df['Sum of Commercials'], 52)))
+        st.text('1 Year')
+    except:
+        pass
+
+st.markdown('##')
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+
+    # Large Specs
+    try:
         st.metric(label = 'Large Speculators Index', value = str(rank(df['Sum of Large Speculators'], 156)))
         st.text('3 Years')
     except:
