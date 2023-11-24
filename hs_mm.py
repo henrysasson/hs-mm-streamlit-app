@@ -87,7 +87,7 @@ df_factors.rename(columns=column_mapping, inplace=True)
 #Sectors
 tickers_sectors = ['XLE', 'XLY', 'XLP', 'XLF', 'XLI', 'XLV', 'XLK', 'XLB', 'XHB', 'XTL', 'XLU']
 df_sectors = get_data(tickers_sectors).ffill(axis=0)
-name_setcors = ['Energy', 'Consumer Discritionary', 'Consumer Staples', 'Financials','Industrials', 'Health Care', 'Technology', 'Materials', 'Homebuilders', 'Telecomunications', 'Utilities']
+name_setcors = ['Energy', 'Consumer Discritionary', 'Consumer Staples', 'Financials','Industrials', 'Health Care', 'Technology', 'Materials', 'Homebuilders', 'Telecomunication', 'Utilities']
 column_mapping = dict(zip(tickers_sectors, name_setcors))
 # Renomeie as colunas
 df_sectors.rename(columns=column_mapping, inplace=True)
