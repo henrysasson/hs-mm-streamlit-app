@@ -2617,6 +2617,14 @@ height=600  # Altura do gráfico
         vol_heatmap(df_rf, "Fixed Income")
 
     
+    col5, col6 = st.columns(2)
+
+    with col5:
+        vol_heatmap(df_factors, "Factors")
+    with col6:
+        vol_heatmap(df_sectors, "US Sectors")
+
+    
     all_assets_list = all_assets.columns.tolist()
     
     all_assets_list.remove('SPX')
