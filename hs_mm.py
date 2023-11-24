@@ -76,8 +76,24 @@ column_mapping = dict(zip(tickers_crypto, names_crypto))
 # Renomeie as colunas
 df_crypto.rename(columns=column_mapping, inplace=True)
 
+# Factors
+tikckers_factors = ['VLUE', 'QUAL', 'MTUM', 'SIZE',  'SMLF', 'USMV', 'IVLU', 'IQLT', 'IMTM', 'ISZE', 'ISCF', 'ACWV']
+df_factors = get_data(tikckers_factors).ffill(axis=0)
+name_factors = ['US Value', 'US Quality', 'US Momentum', 'US Size', 'US Small-Cap', 'US Low Vol', 'Global Value', 'Global Quality', 'Global Momentum', 'Gloabl Size', 'Global Small-Cap', 'Global Low Vol']
+column_mapping = dict(zip(tikckers_factors, name_factors))
+# Renomeie as colunas
+df_factors.rename(columns=column_mapping, inplace=True)
+
+#Sectors
+tickers_sectors = ['XLE', 'XLY', 'XLP', 'XLF', 'XLI', 'XLV', 'XLK', 'XLB', 'XHB', 'XTL', 'XLU']
+df_sectors = get_data(tickers_sectors).ffill(axis=0)
+name_setcors = ['Energy', 'Consumer Discritionary', 'Consumer Staples', 'Financials','Industrials', 'Health Care', 'Technology', 'Materials', 'Homebuilders', 'Telecomunicatios', 'Utilities']
+column_mapping = dict(zip(tickers_sectors, name_setcors))
+# Renomeie as colunas
+df_sectors.rename(columns=column_mapping, inplace=True)
+
 # Todos os Ativos
-all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto], axis=1).ffill().dropna()
+all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto, df_factors, df_sectors], axis=1).ffill().dropna()
 
 options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatillity']
 selected = st.sidebar.selectbox('Main Menu', options)
@@ -161,6 +177,13 @@ if selected == 'Returns Heatmap':
         returns_heatmap(df_commodities, "Commodities")
     with col4:
         returns_heatmap(df_rf, "Fixed Income")
+
+    col5, col6 = st.columns(2)
+
+    with col5:
+        returns_heatmap(df_factors, "Factors")
+    with col6:
+        returns_heatmap(df_sectors, "US Sectors")
 
 
 # # Matriz de Correlação
@@ -254,6 +277,15 @@ if selected == 'Correlation Matrix':
     with col4:
     
         corr_matrix(df_rf, lookback, 'Fixed Income')
+
+    col5, col6 = st.columns(2)
+
+    with col5:
+        corr_matrix(df_factors, "Factors")
+    with col6:
+        corr_matrix(df_sectors, "US Sectors")
+
+    
 
 
     corr_matrix(all_assets, lookback, 'Multi-Asset')
@@ -2594,8 +2626,8 @@ height=600  # Altura do gráfico
         'Choose the asset:',
         (all_assets_list))
 
-    original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto
-    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + tickers_crypto
+    original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto + tikckers_factors + tickers_sectors
+    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + tickers_crypto + tikckers_factors + tickers_sectors
     
     # Crie um dicionário de correspondência
     correspondencia = dict(zip(trasformed_names, original_names))
