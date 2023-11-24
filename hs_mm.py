@@ -281,9 +281,9 @@ if selected == 'Correlation Matrix':
     col5, col6 = st.columns(2)
 
     with col5:
-        corr_matrix(df_factors, "Factors")
+        corr_matrix(df_factors, lookback, "Factors")
     with col6:
-        corr_matrix(df_sectors, "US Sectors")
+        corr_matrix(df_sectors, lookback, "US Sectors")
 
     
 
