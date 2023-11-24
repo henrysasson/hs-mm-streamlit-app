@@ -79,7 +79,7 @@ df_crypto.rename(columns=column_mapping, inplace=True)
 # Factors
 tikckers_factors = ['VLUE', 'QUAL', 'MTUM', 'SIZE',  'SMLF', 'USMV', 'IVLU', 'IQLT', 'IMTM', 'ISZE', 'ISCF', 'ACWV']
 df_factors = get_data(tikckers_factors).ffill(axis=0)
-name_factors = ['US Value', 'US Quality', 'US Momentum', 'US Size', 'US Small-Cap', 'US Low Vol', 'Global Value', 'Global Quality', 'Global Momentum', 'Gloabl Size', 'Global Small-Cap', 'Global Low Vol']
+name_factors = ['US Value', 'US Quality', 'US Momentum', 'US Size', 'US Small-Cap', 'US Low Vol', 'Global Value', 'Global Quality', 'Global Momentum', 'Global Size', 'Global Small-Cap', 'Global Low Vol']
 column_mapping = dict(zip(tikckers_factors, name_factors))
 # Renomeie as colunas
 df_factors.rename(columns=column_mapping, inplace=True)
