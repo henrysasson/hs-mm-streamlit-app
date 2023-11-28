@@ -80,7 +80,7 @@ df_crypto.rename(columns=column_mapping, inplace=True)
 tikckers_factors = ['VLUE', 'QUAL', 'MTUM',  'SMLF', 'USMV', 'IVLU', 'IQLT', 'IMTM', 'ISCF', 'ACWV']
 df_factors = get_data(tikckers_factors).ffill(axis=0)
 names_factors = ['US Value', 'US Quality', 'US Momentum', 'US Small-Cap', 'US Low Vol', 'Global Value', 'Global Quality', 'Global Momentum', 'Global Small-Cap', 'Global Low Vol']
-column_mapping = dict(zip(tikckers_factors, name_factors))
+column_mapping = dict(zip(tikckers_factors, names_factors))
 # Renomeie as colunas
 df_factors.rename(columns=column_mapping, inplace=True)
 
@@ -88,7 +88,7 @@ df_factors.rename(columns=column_mapping, inplace=True)
 tickers_sectors = ['XLE', 'XLY', 'XLP', 'XLF', 'XLI', 'XLV', 'XLK', 'XLB', 'XHB', 'XTL', 'XLU']
 df_sectors = get_data(tickers_sectors).ffill(axis=0)
 names_setcors = ['Energy', 'Consumer Discritionary', 'Consumer Staples', 'Financials','Industrials', 'Health Care', 'Technology', 'Materials', 'Homebuilders', 'Telecomunication', 'Utilities']
-column_mapping = dict(zip(tickers_sectors, name_setcors))
+column_mapping = dict(zip(tickers_sectors, names_setcors))
 # Renomeie as colunas
 df_sectors.rename(columns=column_mapping, inplace=True)
 
