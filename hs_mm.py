@@ -2635,7 +2635,7 @@ height=600  # Altura do gráfico
         (all_assets_list))
 
     original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto + tikckers_factors + tickers_sectors
-    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + tickers_crypto + tikckers_factors + tickers_sectors
+    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + names_crypto + name_factors + name_sectors
     
     # Crie um dicionário de correspondência
     correspondencia = dict(zip(trasformed_names, original_names))
@@ -2708,8 +2708,8 @@ height=600  # Altura do gráfico
             (all_assets_list_2))
 
     
-    original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto
-    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + tickers_crypto
+    original_names = tickers_acoes + tickers_moedas + tickers_commodities + tickers_rf + tickers_crypto + tikckers_factors + tickers_sectors
+    trasformed_names = names_acoes + names_moedas + names_commodities + names_rf + names_crypto + name_factors + name_sectors
     
     # Crie um dicionário de correspondência
     correspondencia = dict(zip(trasformed_names, original_names))
