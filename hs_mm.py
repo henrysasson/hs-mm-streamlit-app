@@ -1507,16 +1507,6 @@ if selected == 'Macro Indicators':
             fig_pib.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
-
-            fig_pib.update_layout(
-    legend=dict(
-        orientation="h",
-        yanchor="bottom",
-        y=1.02,
-        xanchor="right",
-        x=1
-    )
-)
             
             st.plotly_chart(fig_pib)
 
