@@ -1174,6 +1174,16 @@ if selected == 'Macro Indicators':
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             # Adicionar o símbolo de % ao eixo y
             fig_scl.update_yaxes(tickformat=".2%")
+
+            fig_scl.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
                 
             st.plotly_chart(fig_scl)
 
