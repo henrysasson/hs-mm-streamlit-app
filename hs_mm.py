@@ -2689,8 +2689,8 @@ height=600  # Altura do gráfico
 
         all_assets_list_1 = all_assets.columns.tolist()
     
-        all_assets_list_1.remove('SPX')
-        all_assets_list_1.insert(0, 'SPX')
+        all_assets_list_1.remove('IBOV')
+        all_assets_list_1.insert(0, 'IBOV')
     
         asset_1 = st.selectbox(
             'Choose the first asset:',
@@ -2700,8 +2700,8 @@ height=600  # Altura do gráfico
 
         all_assets_list_2 = all_assets.columns.tolist()
     
-        all_assets_list_2.remove('Nasdaq')
-        all_assets_list_2.insert(0, 'Nasdaq')
+        all_assets_list_2.remove('USDBRL')
+        all_assets_list_2.insert(0, 'USDBRL')
     
         asset_2 = st.selectbox(
             'Choose the second asset:',
