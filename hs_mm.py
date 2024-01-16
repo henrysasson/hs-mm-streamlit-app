@@ -1979,16 +1979,13 @@ if selected == 'Technical Analysis':
     vol_pl = 20
     df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
     
-    # Adicionar o fechamento do mês anterior ao dataframe.
-    df1['Prev_Month_Close'] = df1['Adj Close'].resample('M').last()
-
-    df1['Prev_Month_Vol'] = df1['Vol'].resample('M').last()
+    df1['Month_End'] = df1['Adj Close'].asfreq('BM').ffill()  # 'BM' para o último dia útil de cada mês
+    df1['Month_End_Vol'] = df1['Vol'].asfreq('BM').ffill()
 
     df1 = df1.ffill()
 
-    df1['Prev_Month_Vol'] = df1['Prev_Month_Vol'].shift(1)
-
-    df1['Prev_Month_Close'] = df1['Prev_Month_Close'].shift(1)
+    df1['Prev_Month_Close'] = df1['Month_End'].shift(1)
+    df1['Prev_Month_Vol'] = df1['Month_End_Vol'].shift(1)
     
     # Calcular as bandas mensais usando o fechamento do mês anterior.
     df1['Upper_Band_1sd'] = df1['Prev_Month_Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
