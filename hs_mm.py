@@ -457,7 +457,7 @@ if selected == 'Macro Indicators':
         
         # Yield Curve
         
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
 
         with col1:
 
@@ -494,7 +494,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_yc.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_yc.update_layout( width=500,  # Largura do gráfico
+            fig_yc.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
@@ -552,7 +552,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_hys.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_hys.update_layout( width=500,  # Largura do gráfico
+            fig_hys.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
@@ -568,7 +568,8 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_hys)
 
 
-
+        col3 = st.columns(1)
+    
         with col3:
             T01Y = fred.get_series('DGS1').dropna()
 
@@ -600,7 +601,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_t1y.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_t1y.update_layout( width=500,  # Largura do gráfico
+            fig_t1y.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
