@@ -965,6 +965,16 @@ if selected == 'Macro Indicators':
             
             # Set width and height
             fig.update_layout(width=600, height=500)
+
+            fig.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
             
             st.plotly_chart(fig)
         
