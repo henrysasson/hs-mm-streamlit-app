@@ -2368,10 +2368,10 @@ if selected == 'Technical Analysis':
 
     with col1:
 
-        mkt_50 = pd.DataFrame({'Percentile':above_50,
+        mkt_50 = pd.DataFrame({'Value':above_50,
                               'Date':above_50.index})
         
-        fig = px.line(mkt_50, x='Date', y='Percentile', title='Stocks Above 50-Day SMA')
+        fig = px.line(mkt_50, x='Date', y='Value', title='Stocks Above 50-Day SMA')
         
         fig.update_xaxes(
                         rangeslider_visible=True,
@@ -2410,10 +2410,10 @@ if selected == 'Technical Analysis':
 
     with col2:
 
-        mkt_200 = pd.DataFrame({'Percentile':above_200,
+        mkt_200 = pd.DataFrame({'Value':above_200,
                       'Date':above_200.index})
 
-        fig = px.line(mkt_200, x='Date', y='Percentile', title='Stocks Above 200-Day SMA')
+        fig = px.line(mkt_200, x='Date', y='Value', title='Stocks Above 200-Day SMA')
         
         fig.update_xaxes(
                         rangeslider_visible=True,
@@ -2536,10 +2536,10 @@ if selected == 'Technical Analysis':
     
     with col5:
     
-        v_r_10 = pd.DataFrame({'Percentile':v_r,
+        v_r_10 = pd.DataFrame({'Value':v_r,
                           'Date':v_r.index})
     
-        fig = px.line(v_r_10, x='Date', y='Percentile', title='10-day Supply and Demand Volume')
+        fig = px.line(v_r_10, x='Date', y='Value', title='10-day Supply and Demand Volume')
         
         fig.update_xaxes(
                         rangeslider_visible=True,
