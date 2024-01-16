@@ -1222,6 +1222,15 @@ if selected == 'Macro Indicators':
             fig_icc.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
+            fig_icc.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
             
                 
             st.plotly_chart(fig_icc)
@@ -1256,6 +1265,16 @@ if selected == 'Macro Indicators':
             fig_pmc.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
+
+            fig_pmc.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
         
 
             st.plotly_chart(fig_pmc)
@@ -1370,6 +1389,16 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_inad.update_yaxes(ticksuffix="%")
 
+            fig_inad.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
+
         
             st.plotly_chart(fig_inad)
 
@@ -1410,6 +1439,16 @@ if selected == 'Macro Indicators':
             fig_inf.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
+
+            fig_inf.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
 
             st.plotly_chart(fig_inf)
 
@@ -1468,6 +1507,16 @@ if selected == 'Macro Indicators':
             fig_pib.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
+
+            fig_pib.update_layout(
+    legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.02,
+        xanchor="right",
+        x=1
+    )
+)
             
             st.plotly_chart(fig_pib)
 
