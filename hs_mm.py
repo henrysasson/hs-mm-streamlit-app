@@ -1135,7 +1135,7 @@ if selected == 'Macro Indicators':
 
         st.subheader('Credit')
         
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
         
         with col1:
 
@@ -1166,7 +1166,7 @@ if selected == 'Macro Indicators':
                 )
             )
 
-            fig_scl.update_layout( width=500,  # Largura do gráfico
+            fig_scl.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
         
@@ -1209,13 +1209,14 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_icc.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_icc.update_layout( width=500,  # Largura do gráfico
+            fig_icc.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
             
                 
             st.plotly_chart(fig_icc)
 
+        col3, col4 = st.columns(2)
         
         with col3:
 
@@ -1242,15 +1243,13 @@ if selected == 'Macro Indicators':
                 )
             )
             
-            fig_pmc.update_layout( width=500,  # Largura do gráfico
+            fig_pmc.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
         
 
             st.plotly_chart(fig_pmc)
 
-        
-        col4, col5, col6 = st.columns(3)
 
         with col4:
 
@@ -1282,13 +1281,14 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_ef.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_ef.update_layout( width=500,  # Largura do gráfico
+            fig_ef.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
     
 
             st.plotly_chart(fig_ef)
 
+        col5, col6 = st.columns(2)
         
         with col5:
 
@@ -1320,7 +1320,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_crf.update_yaxes(tickformat=".2f", ticksuffix="%")
 
-            fig_crf.update_layout( width=500,  # Largura do gráfico
+            fig_crf.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
          
@@ -1351,7 +1351,7 @@ if selected == 'Macro Indicators':
                 )
             )
             
-            fig_inad.update_layout( width=500,  # Largura do gráfico
+            fig_inad.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
             
@@ -1365,7 +1365,7 @@ if selected == 'Macro Indicators':
 
         st.subheader('Economic Activity')
         
-        col7, col8, col9 = st.columns(3)
+        col7, col8 = st.columns(2)
 
         with col7:
             
@@ -1387,26 +1387,17 @@ if selected == 'Macro Indicators':
                 rangeslider_visible=True,
                 rangeselector=dict(
                     buttons=list([
-                        dict(count=6, label="6m", step="month", stepmode="backward"),
-                        dict(count=1, label="YTD", step="year", stepmode="todate"),
-                        dict(count=1, label="1y", step="year", stepmode="backward"),
+                        dict(count=3, label="3y", step="year", stepmode="backward"),
                         dict(count=5, label="5y", step="year", stepmode="backward"),
-                        dict(count=7, label="7y", step="year", stepmode="backward"),
-                        dict(count=10, label="10y", step="year", stepmode="backward"),
-                        dict(count=15, label="15y", step="year", stepmode="backward"),
-                        dict(count=20, label="20y", step="year", stepmode="todate"),            
+                        dict(count=10, label="10y", step="year", stepmode="backward"),           
                         dict(step="all")
                     ])
                 )
             )
             # Formatar os números do eixo y até a segunda casa decimal e adicionar o símbolo de %
             fig_inf.update_yaxes(tickformat=".2f", ticksuffix="%")
-            fig_inf.update_layout( width=600,  # Largura do gráfico
-        height=600,
-        # Altura do gráfico
-    )
     
-            fig_inf.update_layout( width=500,  # Largura do gráfico
+            fig_inf.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
@@ -1433,13 +1424,14 @@ if selected == 'Macro Indicators':
                 )
             )
             
-            fig_ibc.update_layout( width=500,  # Largura do gráfico
+            fig_ibc.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
             
             st.plotly_chart(fig_ibc)
 
-
+        col9, col10 = st.columns(2)
+        
         with col9:
 
             pib = sgs.get({'Investment': 24363,
@@ -1463,7 +1455,7 @@ if selected == 'Macro Indicators':
                 )
             )
             
-            fig_pib.update_layout( width=500,  # Largura do gráfico
+            fig_pib.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
             
