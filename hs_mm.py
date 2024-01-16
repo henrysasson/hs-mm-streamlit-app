@@ -568,7 +568,7 @@ if selected == 'Macro Indicators':
             st.plotly_chart(fig_hys)
 
 
-        col3 = st.columns(1)
+        col3, col4 = st.columns(2)
     
         with col3:
             T01Y = fred.get_series('DGS1').dropna()
