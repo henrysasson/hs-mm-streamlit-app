@@ -1903,11 +1903,21 @@ if selected == 'Technical Analysis':
     "HEI.DE", "1COV.DE", "QIA.DE", "PAH3.DE", "CON.DE", "SRT3.DE", "ZAL.DE", "ENR.DE"
 ]
 
+    tickers_nse = [
+    "APOLLOHOSP.NS", "ULTRACEMCO.NS", "KOTAKBANK.NS", "NESTLEIND.NS", "HEROMOTOCO.NS",
+    "BAJFINANCE.NS", "BAJAJ-AUTO.NS", "HDFCLIFE.NS", "BAJAJFINSV.NS", "BHARTIARTL.NS",
+    "TATACONSUM.NS", "ONGC.NS", "COALINDIA.NS", "CIPLA.NS", "HINDALCO.NS", "LT.NS",
+    "BRITANNIA.NS", "MARUTI.NS", "ITC.NS", "ADANIENT.NS", "TCS.NS", "LTIM.NS", "TECHM.NS",
+    "INDUSINDBK.NS", "RELIANCE.NS", "TITAN.NS", "TATASTEEL.NS", "MM.NS", "NTPC.NS",
+    "WIPRO.NS", "EICHERMOT.NS", "AXISBANK.NS", "SBILIFE.NS", "SBIN.NS", "SUNPHARMA.NS",
+    "HDFCBANK.NS", "BPCL.NS", "ASIANPAINT.NS", "JSWSTEEL.NS", "DRREDDY.NS", "HINDUNILVR.NS",
+    "INFY.NS", "HCLTECH.NS", "POWERGRID.NS", "ICICIBANK.NS", "ADANIPORTS.NS", "TATAMOTORS.NS",
+    "DIVISLAB.NS", "UPL.NS", "GRASIM.NS"]
 
 
     market = st.selectbox(
         'Choose the market index:',
-        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'DAX', 'Ibovespa', 'S&P/BMV IPC', 'S&P/ASX']))
+        (['Nasdaq', 'Dow Jones','S&P 500', 'FTSE', 'Euro Stoxx', 'DAX', 'Ibovespa', 'S&P/BMV IPC', 'S&P/ASX', 'NSE']))
 
     if market == 'S&P 500':
         list_of_stocks = tickers_sp500
@@ -1935,6 +1945,9 @@ if selected == 'Technical Analysis':
 
     if market == 'S&P/ASX':
         list_of_stocks = tickers_asx
+
+    if market == 'NSE':
+        list_of_stocks = tickers_nse
 
     df = yf.download(tickers=list_of_stocks, period = '4y').ffill(axis=0)
 
@@ -1967,6 +1980,9 @@ if selected == 'Technical Analysis':
 
     if market == 'S&P/ASX':
         ticker = '^AXJO'
+
+    if market == 'NSE':
+        ticker = '^NSEI'
         
         
     df1 = yf.download(ticker, period='10y')
