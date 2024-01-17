@@ -1799,17 +1799,19 @@ if selected == 'Technical Analysis':
                     'BT-A.L', 'SKG.L', 'GLEN.L', 'FRES.L', 'UTG.L', 'AV.L', 'LGEN.L', 'PRU.L']
     
     tickers_nasdaq = [
-    "AAPL", "MSFT", "AMZN", "NVDA", "META", "AVGO", "GOOGL", "GOOG", "TSLA", "COST",
-    "ADBE", "PEP", "CSCO", "NFLX", "CMCSA", "TMUS", "AMD", "INTC", "INTU", "AMGN",
-    "TXN", "HON", "QCOM", "AMAT", "SBUX", "BKNG", "GILD", "VRTX", "ISRG", "MDLZ",
-    "ADP", "REGN", "ADI", "LRCX", "PANW", "MU", "SNPS", "PDD", "CDNS", "KLAC",
-    "MELI", "CHTR", "CSX", "PYPL", "MAR", "ORLY", "MNST", "ASML", "CTAS", "ABNB",
-    "LULU", "FTNT", "NXPI", "WDAY", "PCAR", "KDP", "ADSK", "CPRT", "ODFL", "MRVL",
-    "PAYX", "CRWD", "SGEN", "ROST", "AEP", "MCHP", "EXC", "KHC", "AZN", "CEG",
-    "BKR", "DXCM", "BIIB", "EA", "FAST", "IDXX", "VRSK", "XEL", "CTSH", "TTD",
-    "GEHC", "CSGP", "MRNA", "FANG", "TEAM", "GFS", "ON", "DLTR", "DDOG", "WBD",
-    "ANSS", "ZS", "EBAY", "WBA", "ILMN", "SIRI", "ZM", "ALGN", "JD", "ENPH", "LCID"
-]
+    "MELI", "CDW", "MDLZ", "AMZN", "CPRT", "DDOG", "IDXX", "GOOG", "CSGP", 
+    "ABNB", "CHTR", "TEAM", "CSCO", "INTC", "PANW", "MSFT", "NVDA", "CTSH", 
+    "ISRG", "MRVL", "BKR", "BKNG", "ILMN", "TXN", "KHC", "GOOGL", "DASH", 
+    "NFLX", "KDP", "ADP", "XEL", "CRWD", "WBA", "PDD", "AMD", "ADBE", "ODFL", 
+    "AMGN", "AAPL", "CSX", "ADSK", "CTAS", "CMCSA", "CEG", "KLAC", "AEP", 
+    "MDB", "AVGO", "CDNS", "PCAR", "COST", "REGN", "AMAT", "ZS", "LULU", 
+    "CCEP", "GEHC", "SPLK", "SNPS", "EA", "FAST", "ANSS", "GILD", "META", 
+    "EXC", "BIIB", "LRCX", "TTWO", "GFS", "VRTX", "ON", "ADI", "PAYX", 
+    "PYPL", "QCOM", "MAR", "ROST", "SBUX", "PEP", "INTU", "MCHP", "MNST", 
+    "WDAY", "ORLY", "ASML", "TSLA", "ROP", "NXPI", "HON", "AZN", "MRNA", 
+    "SIRI", "WBD", "MU", "TMUS", "VRSK", "DLTR", "FANG", "DXCM", "FTNT", 
+    "TTD"]
+    
     tickers_sp500 = ['LYB', 'AXP', 'VZ', 'AVGO', 'BA', 'CAT', 'JPM', 'CVX', 'KO', 'ABBV', 'DIS', 'FLT', 'EXR', 
                      'XOM', 'PSX', 'GE', 'HPQ', 'HD', 'MPWR', 'IBM', 'JNJ', 'LULU', 'MCD', 'MRK', 'MMM', 'AWK', 
                      'BAC', 'PFE', 'PG', 'T', 'TRV', 'RTX', 'ADI', 'WMT', 'CSCO', 'INTC', 'GM', 'MSFT', 'DG', 'CI', 
