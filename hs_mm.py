@@ -1856,42 +1856,46 @@ if selected == 'Technical Analysis':
 ]
 
     tickers_asx = [
-    "BHP.AX", "CBA.AX", "CSL.AX", "NAB.AX", "ANZ.AX", "WBC.AX", "WDS.AX", "WES.AX",
-    "MQG.AX", "RIO.AX", "TLS.AX", "WOW.AX", "FMG.AX", "TCL.AX", "GMG.AX", "ALL.AX",
-    "STO.AX", "QBE.AX", "NEM.AX", "COL.AX", "BXB.AX", "JHX.AX", "SUN.AX", "COH.AX",
-    "XRO.AX", "S32.AX", "ORG.AX", "CPU.AX", "IAG.AX", "SHL.AX", "SCG.AX", "NST.AX",
-    "ASX.AX", "WTC.AX", "CAR.AX", "MIN.AX", "APA.AX", "PLS.AX", "TLC.AX", "MPL.AX",
-    "RHC.AX", "RMD.AX", "QAN.AX", "SGP.AX", "BSL.AX", "SOL.AX", "AMC.AX", "REA.AX",
-    "TWE.AX", "ALD.AX", "SEK.AX", "MGR.AX", "GPT.AX", "DXS.AX", "VCX.AX", "EDV.AX",
-    "ORI.AX", "LYC.AX", "IGO.AX", "AZJ.AX", "IEL.AX", "EVN.AX", "NXT.AX", "AGL.AX",
-    "ALX.AX", "WOR.AX", "WHC.AX", "SDF.AX", "AKE.AX", "IPL.AX", "CWY.AX", "ALQ.AX",
-    "BEN.AX", "QUB.AX", "JBH.AX", "ALU.AX", "CHC.AX", "SVW.AX", "TNE.AX", "LLC.AX",
-    "PME.AX", "REH.AX", "MTS.AX", "BOQ.AX", "VUK.AX", "NHF.AX", "LTR.AX",
-    "DMP.AX", "FLT.AX", "ORA.AX", "FPH.AX", "ILU.AX", "VEA.AX", "CIA.AX", "PDN.AX",
-    "CNU.AX", "RWC.AX", "AMP.AX", "A2M.AX", "SFR.AX", "NHC.AX", "ANN.AX", "CSR.AX",
-    "AUB.AX", "NEC.AX", "CGF.AX", "HUB.AX", "NSR.AX", "DOW.AX", "TLX.AX", "BPT.AX",
-    "ARB.AX", "WEB.AX", "PMV.AX", "RGN.AX", "HVN.AX", "SQ2.AX", "PRU.AX", "PPT.AX",
-    "APE.AX", "TPG.AX", "BRG.AX", "CTD.AX", "BKW.AX", "CLW.AX", "SUL.AX", "VNT.AX",
-    "NIC.AX", "DRR.AX", "HDN.AX", "SGM.AX", "GOR.AX", "BAP.AX", "AWC.AX", "TAH.AX",
-    "RMS.AX", "DEG.AX", "NUF.AX", "AIA.AX", "BWP.AX", "CMM.AX", "CQR.AX", "LIC.AX",
-    "GNC.AX", "MP1.AX", "NEU.AX", "NWL.AX", "IPH.AX", "360.AX", "GUD.AX", "CIP.AX",
-    "INA.AX", "BGL.AX", "WPR.AX", "PXA.AX", "CRN.AX", "IFL.AX", "KAR.AX", "JLG.AX",
-    "KLS.AX", "BLD.AX", "GMD.AX", "IVC.AX", "ING.AX", "MND.AX", "LNW.AX", "PNI.AX",
-    "RRL.AX", "EMR.AX", "CGC.AX", "ARF.AX", "SGR.AX", "LOV.AX", "EVT.AX", "NWH.AX",
-    "MFG.AX", "DTL.AX", "HMC.AX", "NAN.AX", "HLS.AX", "AVZ.AX", "CKF.AX", "NWS.AX",
-    "SPK.AX", "CNI.AX", "FBU.AX", "SLR.AX", "ELD.AX", "IRE.AX", "DHG.AX", "PNV.AX",
-    "CCP.AX", "CQE.AX", "WAF.AX", "SYA.AX", "BGA.AX", "WBT.AX", "CXO.AX", "CHN.AX",
-    "LNK.AX", "GOZ.AX", "CMW.AX", "UMG.AX", "NCM.AX", "PBH.AX"
+    "CQE.AX", "QBE.AX", "ALX.AX", "BKW.AX", "WEB.AX", "PNI.AX", "BOQ.AX", 
+    "ORA.AX", "GNC.AX", "WTC.AX", "WES.AX", "RRL.AX", "EDV.AX", "BPT.AX", 
+    "NEC.AX", "EVT.AX", "FLT.AX", "RMD.AX", "MPL.AX", "LIC.AX", "ALU.AX", 
+    "A2M.AX", "NSR.AX", "KLS.AX", "LTM.AX", "CPU.AX", "REA.AX", "SOL.AX", 
+    "EMR.AX", "ANN.AX", "WDS.AX", "JBH.AX", "TNE.AX", "GOR.AX", "EVN.AX", 
+    "IFL.AX", "DEG.AX", "RMS.AX", "SUL.AX", "BGA.AX", "SIQ.AX", "GPT.AX", 
+    "DTL.AX", "CLW.AX", "CRN.AX", "JHX.AX", "CGC.AX", "SFR.AX", "FPH.AX", 
+    "HLS.AX", "CNI.AX", "PNV.AX", "HMC.AX", "PMV.AX", "KAR.AX", "TLX.AX", 
+    "PRU.AX", "NAN.AX", "NXT.AX", "CXO.AX", "PXA.AX", "CAR.AX", "DMP.AX", 
+    "CWY.AX", "SEK.AX", "NST.AX", "CHC.AX", "XRO.AX", "COL.AX", "NHF.AX", 
+    "MIN.AX", "SCG.AX", "VEA.AX", "SYA.AX", "QUB.AX", "TLC.AX", "BHP.AX", 
+    "NAB.AX", "AWC.AX", "WBC.AX", "NWH.AX", "ORG.AX", "ALD.AX", "AUB.AX", 
+    "REH.AX", "SLR.AX", "CBA.AX", "RIO.AX", "HVN.AX", "ORI.AX", "SDF.AX", 
+    "LLC.AX", "NWS.AX", "SUN.AX", "STO.AX", "CCP.AX", "IRE.AX", "SGM.AX", 
+    "ILU.AX", "WOW.AX", "PDN.AX", "SHL.AX", "RHC.AX", "CSL.AX", "LYC.AX", 
+    "GMD.AX", "MTS.AX", "SVW.AX", "BEN.AX", "CQR.AX", "TAH.AX", "IAG.AX", 
+    "FMG.AX", "COH.AX", "MQG.AX", "ASX.AX", "BWP.AX", "AMP.AX", "HLI.AX", 
+    "MGR.AX", "RGN.AX", "WAF.AX", "BLD.AX", "WHC.AX", "WOR.AX", "IPL.AX", 
+    "CMM.AX", "GMG.AX", "AGL.AX", "SGR.AX", "BOE.AX", "AIA.AX", "BSL.AX", 
+    "PME.AX", "ALL.AX", "IEL.AX", "S32.AX", "NUF.AX", "INA.AX", "LNW.AX", 
+    "ELD.AX", "CTD.AX", "PPT.AX", "CGF.AX", "SGP.AX", "JLG.AX", "VCX.AX", 
+    "RWC.AX", "NEU.AX", "IPH.AX", "CNU.AX", "NWL.AX", "VUK.AX", "AMC.AX", 
+    "LOV.AX", "BGL.AX", "LTR.AX", "VNT.AX", "APA.AX", "ALQ.AX", "APE.AX", 
+    "MP1.AX", "MFG.AX", "ARB.AX", "HDN.AX", "GUD.AX", "TPG.AX", "MND.AX", 
+    "QAN.AX", "CIA.AX", "PLS.AX", "HUB.AX", "BRG.AX", "TCL.AX", "TLS.AX", 
+    "NHC.AX", "SQ2.AX", "NIC.AX", "BXB.AX", "CKF.AX", "AZJ.AX", "360.AX", 
+    "CHN.AX", "IGO.AX", "CSR.AX", "DXS.AX", "DRR.AX", "ARF.AX", "CIP.AX", 
+    "BAP.AX", "NEM.AX", "ING.AX", "FBU.AX", "DHG.AX", "ANZ.AX", "DOW.AX", 
+    "TWE.AX", "SPK.AX", "WBT.AX"
 ]
 
     tickers_dax = [
-    "SAP.DE", "SIE.DE", "ALV.DE", "AIR.PA", "DTE.DE", "MUV2.DE", "MBG.DE", "BAYN.DE",
-    "BAS.DE", "IFX.DE", "DHL.DE", "DB1.DE", "ADS.DE", "BMW.DE", "RWE.DE", "EOAN.DE",
-    "VOW3.DE", "DBK.DE", "MRK.DE", "VNA.DE", "DTG.DE", "SHL.DE", "HNR1.DE", "BEI.DE",
-    "SY1.DE", "RHM.DE", "HEN3.DE", "CBK.DE", "FRE.DE", "P911.DE", "MTX.DE", "BNR.DE",
-    "HEI.DE", "1COV.DE", "QIA.DE", "PAH3.DE", "CON.DE", "SRT3.DE", "ZAL.DE", "ENR.DE"
+    "ENR.DE", "SY1.DE", "PAH3.DE", "MTX.DE", "RHM.DE", "DTG.DE", "SHL.DE",
+    "ZAL.DE", "QIA.DE", "SRT3.DE", "BNR.DE", "AIR.DE", "ALV.DE", "1COV.DE",
+    "RWE.DE", "BAYN.DE", "BMW.DE", "CBK.DE", "DBK.DE", "BAS.DE", "HEN3.DE",
+    "SIE.DE", "VOW3.DE", "EOAN.DE", "BEI.DE", "HEI.DE", "MUV2.DE", "FRE.DE",
+    "SAP.DE", "MRK.DE", "ADS.DE", "DTE.DE", "DHL.DE", "MBG.DE", "IFX.DE",
+    "DB1.DE", "VNA.DE", "P911.DE", "HNR1.DE", "CON.DE"
 ]
-
+    
     tickers_nse = [
     "APOLLOHOSP.NS", "ULTRACEMCO.NS", "KOTAKBANK.NS", "NESTLEIND.NS", "HEROMOTOCO.NS",
     "BAJFINANCE.NS", "BAJAJ-AUTO.NS", "HDFCLIFE.NS", "BAJAJFINSV.NS", "BHARTIARTL.NS",
