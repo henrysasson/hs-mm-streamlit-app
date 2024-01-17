@@ -1758,44 +1758,46 @@ if selected == 'Technical Analysis':
     st.markdown('##')
 
     tickers_ibov = [
-    "RRRP3.SA", "ALOS3.SA", "ALPA4.SA", "ABEV3.SA", "ARZZ3.SA", "ASAI3.SA", "AZUL4.SA",
-    "B3SA3.SA", "BBSE3.SA", "BBDC3.SA", "BBDC4.SA", "BRAP4.SA", "BBAS3.SA", "BRKM5.SA",
-    "BRFS3.SA", "BPAC11.SA", "CRFB3.SA", "BHIA3.SA", "CCRO3.SA", "CMIG4.SA", "CIEL3.SA",
-    "COGN3.SA", "CPLE6.SA", "CSAN3.SA", "CPFE3.SA", "CMIN3.SA", "CVCB3.SA", "CYRE3.SA",
-    "DXCO3.SA", "ELET3.SA", "ELET6.SA", "EMBR3.SA", "ENGI11.SA", "ENEV3.SA", "EGIE3.SA",
-    "EQTL3.SA", "EZTC3.SA", "FLRY3.SA", "GGBR4.SA", "GOAU4.SA", "GOLL4.SA", "NTCO3.SA",
-    "SOMA3.SA", "HAPV3.SA", "HYPE3.SA", "IGTI11.SA", "IRBR3.SA", "ITSA4.SA", "ITUB4.SA",
-    "JBSS3.SA", "KLBN11.SA", "RENT3.SA", "LWSA3.SA", "LREN3.SA", "MGLU3.SA", "MRFG3.SA",
-    "BEEF3.SA", "MRVE3.SA", "MULT3.SA", "PCAR3.SA", "PETR3.SA", "PETR4.SA", "RECV3.SA",
-    "PRIO3.SA", "PETZ3.SA", "RADL3.SA", "RAIZ4.SA", "RDOR3.SA", "RAIL3.SA", "SBSP3.SA",
-    "SANB11.SA", "SMTO3.SA", "CSNA3.SA", "SLCE3.SA", "SUZB3.SA", "TAEE11.SA", "VIVT3.SA",
-    "TIMS3.SA", "TOTS3.SA", "UGPA3.SA", "USIM5.SA", "VALE3.SA", "VAMO3.SA", "VBBR3.SA",
-    "WEGE3.SA", "YDUQ3.SA"
+    "RRRP3.SA", "RADL3.SA", "SOMA3.SA", "BBAS3.SA", "CMIN3.SA",
+    "JBSS3.SA", "IGTI11.SA", "TOTS3.SA", "EQTL3.SA", "SBSP3.SA",
+    "ELET3.SA", "RENT3.SA", "ELET6.SA", "BRFS3.SA", "ITUB4.SA",
+    "PETR3.SA", "PETR4.SA", "VALE3.SA", "MULT3.SA", "AZUL4.SA",
+    "TAEE11.SA", "SANB11.SA", "MRFG3.SA", "UGPA3.SA", "BBDC3.SA",
+    "ALPA4.SA", "EGIE3.SA", "USIM5.SA", "SMTO3.SA", "MRVE3.SA",
+    "RAIZ4.SA", "MGLU3.SA", "CSNA3.SA", "VIVT3.SA", "EZTC3.SA",
+    "BBDC4.SA", "CRFB3.SA", "BBSE3.SA", "VAMO3.SA", "BRKM5.SA",
+    "YDUQ3.SA", "ENEV3.SA", "CMIG4.SA", "CPLE6.SA", "ABEV3.SA",
+    "TRPL4.SA", "B3SA3.SA", "DXCO3.SA", "PCAR3.SA", "GGBR4.SA",
+    "CYRE3.SA", "SUZB3.SA", "EMBR3.SA", "COGN3.SA", "ITSA4.SA",
+    "ALOS3.SA", "LREN3.SA", "ARZZ3.SA", "CIEL3.SA", "PETZ3.SA",
+    "HYPE3.SA", "GOAU4.SA", "TIMS3.SA", "RAIL3.SA", "LWSA3.SA",
+    "BEEF3.SA", "PRIO3.SA", "BRAP4.SA", "KLBN11.SA", "HAPV3.SA",
+    "CCRO3.SA", "FLRY3.SA", "NTCO3.SA", "ASAI3.SA", "ENGI11.SA",
+    "CPFE3.SA", "BHIA3.SA", "IRBR3.SA", "BPAC11.SA", "WEGE3.SA",
+    "VBBR3.SA", "RDOR3.SA", "SLCE3.SA", "GOLL4.SA", "RECV3.SA",
+    "CSAN3.SA", "CVCB3.SA"
 ]
 
     tickers_bmv = [
     "MEGACPO.MX", "AC.MX", "ASURB.MX", "FEMSAUBD.MX", "CUERVO.MX", "KIMBERA.MX",
     "GRUMAB.MX", "GMEXICOB.MX", "GCC.MX", "BOLSAA.MX", "OMAB.MX", "GFNORTEO.MX",
     "BIMBOA.MX", "ALSEA.MX", "LABB.MX", "GAPB.MX", "GENTERA.MX", "TLEVISACPO.MX",
-    "GCARSOA1.MX", "ALPEKA.MX", "LIVEPOLC-1.MX",
-    "BBAJIOO.MX", "CEMEXCPO.MX", "AMXB.MX", "PINFRA.MX", "SITES1A-1.MX", "WALMEX.MX", "ORBIA.MX",
-    "Q.MX", "RA.MX", "PE&OLES.MX", "CHDRAUIB.MX", "ELEKTRA.MX", "KOFUBL.MX"
+    "GCARSOA1.MX", "BBAJIOO.MX", "CEMEXCPO.MX", "AMXB.MX", "PINFRA.MX",
+    "WALMEX.MX", "ORBIA.MX", "Q.MX", "RA.MX", "PE&OLES.MX", "CHDRAUIB.MX", "ELEKTRA.MX", "KOFUBL.MX",
+    "ALFAA.MX", "GFINBURO.MX", "VESTA.MX", "VOLARA.MX"
 ]
   
-    tickers_ftse = [
-    "WTB.L", "WPP.L", "WEIR.L", "VOD.L", "UU.L", "UTG.L", "ULVR.L", "TW.L", "TSCO.L",
-    "SVT.L", "STJ.L", "STAN.L", "SSE.L", "SPX.L", "SN.L", "SMT.L", "SMIN.L", "SMDS.L",
-    "SKG.L", "SHEL.L", "SGRO.L", "SGE.L", "SDR.L", "SBRY.L", "RTO.L", "RS1.L", "RR.L",
-    "RMV.L", "RKT.L", "RIO.L", "REL.L", "PSON.L", "PSH.L", "PRU.L", "PHNX.L", "OCDO.L",
-    "NXT.L", "NWG.L", "NG.L", "MRO.L", "MNG.L", "MNDI.L", "MKS.L", "LSEG.L", "LLOY.L",
-    "LGEN.L", "LAND.L", "KGF.L", "JD.L", "ITRK.L", "INF.L", "IMI.L", "IMB.L", "III.L",
-    "IHG.L", "IAG.L", "HWDN.L", "HSBA.L", "HLN.L", "HLMA.L", "HL.L", "HIK.L", "GSK.L",
-    "GLEN.L", "FRES.L", "FRAS.L", "FLTR.L", "FCIT.L", "EXPN.L", "ENT.L", "EDV.L",
-    "DPLM.L", "DPH.L", "DGE.L", "DCC.L", "CTEC.L", "CRDA.L", "CPG.L", "CNA.L", "CCH.L",
-    "BT-A.L", "BRBY.L", "BP.L", "BNZL.L", "BME.L", "BKG.L", "BEZ.L", "BDEV.L", "BATS.L",
-    "BARC.L", "BA.L", "AZN.L", "AV.L", "AUTO.L", "ANTO.L", "AHT.L", "ADM.L", "ABF.L",
-    "AAL.L", "AAF.L"
-] 
+    tickers_ftse = ['ANTO.L', 'STJ.L', 'FCIT.L', 'BEZ.L', 'SSE.L', 'WEIR.L', 'RIO.L', 'AUTO.L', 'AAL.L',
+                    'BDEV.L', 'BKG.L', 'ITRK.L', 'KGF.L', 'MNG.L', 'MKS.L', 'NXT.L', 'PSON.L', 'PSN.L', 
+                    'SN.L', 'REL.L', 'TW.L', 'LSEG.L', 'JD.L', 'WTB.L', 'AAF.L', 'EXPN.L', 'WPP.L', 'ENT.L', 
+                    'DCC.L', 'SPX.L', 'NG.L', 'SHEL.L', 'FRAS.L', 'ULVR.L', 'GSK.L', 'ADM.L', 'INF.L', 'EDV.L', 
+                    'IHG.L', 'HIK.L', 'OCDO.L', 'BRBY.L', 'CPG.L', 'DPLM.L', 'LAND.L', 'PSH.L', 'AZN.L', 'AHT.L', 
+                    'ABF.L', 'RKT.L', 'BME.L', 'RR.L', 'BNZL.L', 'RMV.L', 'CRDA.L', 'RS1.L', 'CNA.L', 'DGE.L', 'HLMA.L', 
+                    'HSBA.L', 'IMI.L', 'HLN.L', 'PHNX.L', 'HWDN.L', 'UU.L', 'IMB.L', 'VOD.L', 'RTO.L', 'NWG.L', 'BARC.L', 
+                    'SBRY.L', 'SDR.L', 'BATS.L', 'SGRO.L', 'BA.L', 'SMIN.L', 'STAN.L', 'TSCO.L', 'SGE.L', 'CCH.L', 'LLOY.L', 
+                    'SMT.L', 'MNDI.L', 'FLTR.L', 'CTEC.L', 'SMDS.L', 'ICP.L', 'III.L', 'MRO.L', 'IAG.L', 'SVT.L', 'BP.L', 
+                    'BT-A.L', 'SKG.L', 'GLEN.L', 'FRES.L', 'UTG.L', 'AV.L', 'LGEN.L', 'PRU.L']
+    
     tickers_nasdaq = [
     "AAPL", "MSFT", "AMZN", "NVDA", "META", "AVGO", "GOOGL", "GOOG", "TSLA", "COST",
     "ADBE", "PEP", "CSCO", "NFLX", "CMCSA", "TMUS", "AMD", "INTC", "INTU", "AMGN",
@@ -1808,62 +1810,49 @@ if selected == 'Technical Analysis':
     "GEHC", "CSGP", "MRNA", "FANG", "TEAM", "GFS", "ON", "DLTR", "DDOG", "WBD",
     "ANSS", "ZS", "EBAY", "WBA", "ILMN", "SIRI", "ZM", "ALGN", "JD", "ENPH", "LCID"
 ]
-    tickers_sp500 = [
-    "AAPL", "MSFT", "AMZN", "NVDA", "GOOGL", "META", "GOOG", "BRK.B", "TSLA", "UNH", "LLY",
-    "XOM", "JPM", "V", "JNJ", "AVGO", "PG", "MA", "HD", "CVX", "MRK", "ADBE", "ABBV", "COST",
-    "WMT", "PEP", "KO", "CSCO", "CRM", "MCD", "ACN", "BAC", "LIN", "NFLX", "CMCSA", "AMD",
-    "TMO", "PFE", "ORCL", "ABT", "INTC", "DIS", "VZ", "WFC", "COP", "AMGN", "PM", "INTU", "IBM",
-    "TXN", "QCOM", "UNP", "NKE", "DHR", "HON", "SPGI", "NOW", "CAT", "NEE", "RTX", "GE", "AMAT",
-    "SBUX", "LOW", "T", "BA", "BMY", "ELV", "GS", "TJX", "UPS", "LMT", "DE", "BKNG", "GILD",
-    "ISRG", "VRTX", "PLD", "MDT", "MMC", "CI", "SYK", "MS", "PGR", "MDLZ", "BLK", "ADP", "CB",
-    "CVS", "AXP", "REGN", "ETN", "AMT", "LRCX", "ADI", "SCHW", "SLB", "C", "MU", "BSX", "PANW",
-    "CME", "SO", "TMUS", "EOG", "BDX", "ZTS", "SNPS", "MO", "FI", "EQIX", "BX", "DUK", "NOC",
-    "KLAC", "CDNS", "AON", "APD", "ITW", "MPC", "CL", "WM", "CSX", "ICE", "PYPL", "MCK", "HUM",
-    "SHW", "PXD", "ORLY", "FDX", "CMG", "GD", "USB", "ANET", "PSX", "ROP", "EMR", "AJG", "PH",
-    "MCO", "TGT", "MMM", "FCX", "APH", "ABNB", "TT", "TDG", "PNC", "MSI", "MAR", "LULU", "AZO",
-    "HCA", "AIG", "NXPI", "WELL", "VLO", "SRE", "CTAS", "AFL", "PCAR", "NSC", "WMB", "ECL",
-    "ADSK", "CCI", "CHTR", "OXY", "CARR", "KMB", "HES", "AEP", "EXC", "ROST", "MCHP", "F",
-    "HLT", "COF", "EW", "TFC", "GM", "DLR", "PSA", "CPRT", "MNST", "TEL", "ADM", "OKE", "GIS",
-    "TRV", "MSCI", "STZ", "SPG", "MET", "CEG", "NUE", "FTNT", "CNC", "HAL", "DXCM", "PAYX",
-    "O", "BKR", "CTVA", "PCG", "BIIB", "IQV", "ODFL", "IDXX", "YUM", "DHI", "LHX", "JCI", "DOW",
-    "BK", "ALL", "D", "FAST", "AMP", "GWW", "XEL", "VRSK", "PRU", "KVUE", "SYY", "AME", "KMI",
-    "OTIS", "CTSH", "COR", "ACGL", "PEG", "EA", "DD", "ED", "RSG", "KDP", "A", "CMI", "FIS",
-    "DVN", "NEM", "CSGP", "ROK", "KR", "URI", "PPG", "LEN", "FANG", "GPN", "ON", "VICI", "HSY",
-    "CDW", "VMC", "MLM", "GEHC", "IT", "IR", "KHC", "EL", "WEC", "DG", "PWR", "WTW", "WBD",
-    "EIX", "WST", "AWK", "CAH", "DLTR", "ANSS", "MRNA", "SBAC", "AVB", "LYB", "HPQ", "ZBH",
-    "FTV", "MPWR", "HIG", "XYL", "CHD", "FICO", "EXR", "CBRE", "WY", "RMD", "KEYS", "APTV",
-    "EFX", "TTWO", "MTD", "CTRA", "DFS", "STT", "TSCO", "TROW", "BR", "STE", "ETR", "GLW",
-    "RCL", "EBAY", "DAL", "DTE", "AEE", "TRGP", "HPE", "MTB", "WAB", "MOH", "ES", "ULTA", "HWM",
-    "FE", "DOV", "RJF", "NVR", "EQR", "PPL", "GPC", "LH", "VRSN", "INVH", "DRI", "IFF", "ILMN",
-    "VTR", "GRMN", "PHM", "TDY", "FLT", "PTC", "STLD", "CNP", "BAX", "IRM", "CBOE", "FITB",
-    "MRO", "FDS", "TYL", "J", "NDAQ", "BRO", "EXPD", "ATO", "EG", "HOLX", "MKC", "CMS", "COO",
-    "EQT", "AKAM", "LVS", "BG", "FSLR", "NTAP", "PFG", "CINF", "CF", "WBA", "VLTO", "TXT",
-    "BALL", "ARE", "CLX", "OMC", "HUBB", "AXON", "HBAN", "ALB", "DGX", "IEX", "NTRS", "WAT",
-    "RF", "SWKS", "AVY", "JBHT", "SNA", "LDOS", "PKG", "MAA", "STX", "WRB", "LUV", "ALGN", "K",
-    "TSN", "ESS", "WDC", "LW", "SWK", "EPAM", "TER", "CAG", "EXPE", "AMCR", "BBY", "POOL", "LNT",
-    "APA", "DPZ", "SYF", "MAS", "L", "CCL", "IP", "CFG", "EVRG", "UAL", "NDSN", "HST", "LYV",
-    "SJM", "LKQ", "CE", "KIM", "IPG", "MOS", "TAP", "ENPH", "VTRS", "ZBRA", "ROL", "BF.B", "RVTY",
-    "NI", "TRMB", "AES", "JKHY", "NRG", "KEY", "CDAY", "REG", "MGM", "GL", "KMX", "INCY", "UDR",
-    "PNR", "TFX", "PODD", "GEN", "HRL", "CHRW", "WRK", "CPT", "HII", "PEAK", "FFIV", "EMN", "CRL",
-    "AOS", "ALLE", "TECH", "AIZ", "WYNN", "JNPR", "CZR", "PNW", "QRVO", "MKTX", "MTCH", "CPB",
-    "RHI", "NWSA", "HSIC", "PAYC", "FOXA", "UHS", "BXP", "BWA", "ETSY", "AAL", "BBWI", "FMC",
-    "FRT", "BEN", "TPR", "GNRC", "IVZ", "XRAY", "CTLT", "HAS", "BIO", "WHR", "PARA", "CMA",
-    "NCLH", "ZION", "VFC", "SEE", "RL", "MHK", "DVA", "SEDG", "ALK", "FOX", "NWS"
-]
-    tickers_dow = [
-    "MMM", "AXP", "AAPL", "BA", "CAT", "CVX", "CSCO", "KO", "DIS", "DWDP", 
-    "XOM", "GS", "HD", "IBM", "INTC", "JNJ", "JPM", "MCD", "MEK", "MSFT", 
-    "NKE", "PFE", "PG", "TRV", "UTX", "UNH", "VZ", "V", "WMT", "WBA"
-]
+    tickers_sp500 = ['LYB', 'AXP', 'VZ', 'AVGO', 'BA', 'CAT', 'JPM', 'CVX', 'KO', 'ABBV', 'DIS', 'FLT', 'EXR', 
+                     'XOM', 'PSX', 'GE', 'HPQ', 'HD', 'MPWR', 'IBM', 'JNJ', 'LULU', 'MCD', 'MRK', 'MMM', 'AWK', 
+                     'BAC', 'PFE', 'PG', 'T', 'TRV', 'RTX', 'ADI', 'WMT', 'CSCO', 'INTC', 'GM', 'MSFT', 'DG', 'CI', 
+                     'KMI', 'C', 'AIG', 'MO', 'HCA', 'IP', 'HPE', 'ABT', 'AFL', 'APD', 'RCL', 'HES', 'ADM', 'ADP', 'VRSK', 
+                     'AZO', 'LIN', 'AVY', 'ENPH', 'MSCI', 'BALL', 'AXON', 'CDAY', 'CARR', 'BK', 'OTIS', 'BAX', 'BDX', 'BRK-B', 
+                     'BBY', 'BSX', 'BMY', 'BF-B', 'CTRA', 'CPB', 'HLT', 'CCL', 'QRVO', 'BLDR', 'UDR', 'CLX', 'PAYC', 'CMS', 'CL', 
+                     'EPAM', 'CMA', 'CAG', 'ABNB', 'ED', 'GLW', 'CMI', 'CZR', 'DHR', 'TGT', 'DE', 'D', 'DOV', 'LNT', 'STLD', 'DUK', 
+                     'REG', 'ETN', 'ECL', 'RVTY', 'EMR', 'EOG', 'AON', 'ETR', 'EFX', 'EQT', 'IQV', 'IT', 'FDX', 'FMC', 'BRO', 'F', 'NEE', 
+                     'BEN', 'GRMN', 'FCX', 'DXCM', 'GD', 'GIS', 'GPC', 'ATO', 'GWW', 'HAL', 'LHX', 'PEAK', 'PODD', 'CTLT', 'FTV', 'HSY', 'SYF', 
+                     'HRL', 'AJG', 'MDLZ', 'CNP', 'HUM', 'WTW', 'ITW', 'CDW', 'TT', 'IPG', 'IFF', 'GNRC', 'NXPI', 'K', 'BR', 'KMB', 'KIM', 'ORCL', 
+                     'KR', 'LEN', 'LLY', 'BBWI', 'CHTR', 'L', 'LOW', 'HUBB', 'IEX', 'MMC', 'MAS', 'SPGI', 'MDT', 'VTRS', 'CVS', 'DD', 'MU', 'MSI', 
+                     'CBOE', 'LH', 'NEM', 'NKE', 'NI', 'NSC', 'PFG', 'ES', 'NOC', 'WFC', 'NUE', 'OXY', 'OMC', 'OKE', 'RJF', 'PCG', 'PH', 'ROL', 
+                     'PPL', 'COP', 'PHM', 'PNW', 'PNC', 'PPG', 'PGR', 'VLTO', 'PEG', 'RHI', 'COO', 'EIX', 'SLB', 'SCHW', 'SHW', 'WST', 'SJM', 
+                     'SNA', 'AME', 'UBER', 'SO', 'TFC', 'LUV', 'WRB', 'SWK', 'PSA', 'ANET', 'SYY', 'CTVA', 'TXN', 'TXT', 'TMO', 'TJX', 'GL', 'JCI', 
+                     'ULTA', 'UNP', 'KEYS', 'UNH', 'BX', 'MRO', 'BIO', 'VTR', 'VFC', 'VMC', 'WY', 'WHR', 'WMB', 'CEG', 'WEC', 'ADBE', 'AES', 'EXPD', 
+                     'AMGN', 'AAPL', 'ADSK', 'CTAS', 'CMCSA', 'TAP', 'KLAC', 'MAR', 'FI', 'MKC', 'PCAR', 'COST', 'SYK', 'TSN', 'LW', 'AMAT', 'AAL', 
+                     'CAH', 'CINF', 'PARA', 'DHI', 'EA', 'FICO', 'FAST', 'MTB', 'XEL', 'FITB', 'GILD', 'HAS', 'HBAN', 'WELL', 'BIIB', 'NTRS', 'PKG', 
+                     'PAYX', 'QCOM', 'ROST', 'IDXX', 'SBUX', 'KEY', 'FOXA', 'FOX', 'STT', 'NCLH', 'USB', 'AOS', 'GEN', 'TROW', 'WM', 'STZ', 'XRAY', 'ZION', 
+                     'IVZ', 'INTU', 'MS', 'MCHP', 'CB', 'HOLX', 'CFG', 'JBL', 'ORLY', 'ALL', 'EQR', 'BWA', 'KDP', 'HST', 'INCY', 'SPG', 'EMN', 'AVB', 'PRU', 
+                     'UPS', 'WBA', 'STE', 'MCK', 'LMT', 'COR', 'COF', 'WAT', 'NDSN', 'DLTR', 'DRI', 'EVRG', 'MTCH', 'DPZ', 'NVR', 'NTAP', 'ODFL', 'DVA', 'HIG', 
+                     'IRM', 'EL', 'CDNS', 'TYL', 'UHS', 'SWKS', 'DGX', 'ROK', 'KHC', 'AMT', 'REGN', 'AMZN', 'JKHY', 'RL', 'BXP', 'APH', 'HWM', 'PXD', 'VLO', 'SNPS', 
+                     'ETSY', 'CHRW', 'ACN', 'TDG', 'YUM', 'PLD', 'FE', 'VRSN', 'PWR', 'HSIC', 'AEE', 'ANSS', 'FDS', 'NVDA', 'CTSH', 'ISRG', 'TTWO', 'RSG', 'EBAY', 'GS', 
+                     'SBAC', 'SRE', 'MCO', 'ON', 'BKNG', 'FFIV', 'AKAM', 'CRL', 'MKTX', 'DVN', 'TECH', 'GOOGL', 'TFX', 'NFLX', 'ALLE', 'A', 'WBD', 'ELV', 'TRMB', 'CME', 
+                     'JNPR', 'BLK', 'DTE', 'NDAQ', 'CE', 'PM', 'CRM', 'IR', 'HII', 'ROP', 'MET', 'TPR', 'CSX', 'EW', 'AMP', 'ZBRA', 'ZBH', 'CBRE', 'CPT', 'MA', 'KMX', 'ICE', 
+                     'FIS', 'CMG', 'WYNN', 'LYV', 'AIZ', 'NRG', 'RF', 'MNST', 'MOS', 'BKR', 'EXPE', 'CF', 'LDOS', 'APA', 'GOOG', 'FSLR', 'TEL', 'DFS', 'V', 'MAA', 'XYL', 'MPC', 
+                     'AMD', 'TSCO', 'RMD', 'MTD', 'J', 'CPRT', 'VICI', 'FTNT', 'ALB', 'MRNA', 'ESS', 'CSGP', 'O', 'WRK', 'WAB', 'POOL', 'WDC', 'PEP', 'FANG', 'PANW', 'NOW', 'CHD', 
+                     'FRT', 'MGM', 'AEP', 'INVH', 'PTC', 'JBHT', 'LRCX', 'MHK', 'PNR', 'GEHC', 'VRTX', 'AMCR', 'META', 'TMUS', 'URI', 'HON', 'ARE', 'DAL', 'STX', 'UAL', 'NWS', 'CNC', 
+                     'MLM', 'TER', 'PYPL', 'TSLA', 'ACGL', 'DOW', 'EG', 'TDY', 'NWSA', 'EXC', 'GPN', 'CCI', 'APTV', 'ALGN', 'ILMN', 'KVUE', 'TRGP', 'BG', 'LKQ', 'ZTS', 'DLR', 'EQIX', 'LVS', 'MOH']
+    
+    tickers_dow = ['AXP', 'VZ', 'BA', 'CAT', 'JPM', 'CVX', 'KO', 'DIS', 'HD', 'IBM', 'JNJ', 
+                   'MCD', 'MRK', 'MMM', 'PG', 'TRV', 'WMT', 'HON', 'INTC', 'MSFT', 'GS', 
+                   'AMGN', 'AAPL', 'CSCO', 'UNH', 'CRM', 'DOW', 'V', 'WBA', 'NKE']
 
     tickers_euro_stoxx = [
-    "ADS.DE", "ADYEN.AS", "AIR.PA", "AI.PA", "ALV.DE", "ABI.BR", "ASML.AS",
-    "CS.PA", "BBVA.MC", "SAN.MC", "BAS.DE", "BAYN.DE", "BMW.DE", "BNP.PA",
-    "CRH", "BN.PA", "DBK.DE", "DB1.DE", "DHL.DE", "DTE.DE", "ENEL.MI", "ENI.MI",
-    "EL.PA", "FLTR.IR", "RMS.PA", "IBE.MC", "ITX.MC", "IFX.DE", "INGA.AS",
-    "ISP.MI", "KER.PA", "OR.PA", "MC.PA", "MBG.DE", "MUV2.DE", "NOKIA.HE",
-    "NDA-FI.HE", "RI.PA", "PRX.AS", "SAF.PA", "SAN.PA", "SAP.DE", "SU.PA",
-    "SIE.DE", "GLE.PA", "STLA", "TTE.PA", "UNA.AS", "DG.PA", "VOW.DE", "VNA.DE"
+    "OR.PA", "DG.PA", "BBVA.MC", "SAN.MC", "ASML.AS", "TTE.PA",
+    "AI.PA", "CS.PA", "BNP.PA", "BN.PA", "SGO.PA", "EL.PA",
+    "MC.PA", "KER.PA", "RACE.MI", "SAF.PA", "WKL.AS", "AD.AS",
+    "UCG.MI", "IBE.MC", "RMS.PA", "INGA.AS", "STLAM.MI", "PRX.AS",
+    "ITX.MC", "ISP.MI", "ENI.MI", "ABI.BR", "NDA-FI.HE", "ADYEN.AS",
+    "SAN.PA", "ENEL.MI", "NOKIA.HE", "SU.PA", "ALV.DE", "AIR.PA",
+    "BAYN.DE", "BMW.DE", "BAS.DE", "SIE.DE", "VOW3.DE", "MUV2.DE",
+    "SAP.DE", "RI.PA", "ADS.DE", "DTE.DE", "DHL.DE", "MBG.DE",
+    "IFX.DE", "DB1.DE"
 ]
 
     tickers_asx = [
