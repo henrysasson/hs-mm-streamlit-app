@@ -164,7 +164,7 @@ if selected == 'Returns Heatmap':
         st.plotly_chart(fig)
 
 
-    col1, col2 = st.columns(2)
+    col1, col2 = st.beta_columns(2)
 
     with col1:
         returns_heatmap(df_acoes, "Stocks")
