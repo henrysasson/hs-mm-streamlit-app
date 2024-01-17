@@ -167,11 +167,9 @@ if selected == 'Returns Heatmap':
     col1, col2 = st.columns(2)
 
     with col1:
-        with st.container(height=300):
-            returns_heatmap(df_acoes, "Stocks")
+        returns_heatmap(df_acoes, "Stocks")
     with col2:
-        with st.container(height=300):
-            returns_heatmap(df_moedas, "Currencies")
+        returns_heatmap(df_moedas, "Currencies")
 
     col3, col4 = st.columns(2)
 
