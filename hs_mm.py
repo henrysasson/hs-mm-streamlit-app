@@ -164,12 +164,14 @@ if selected == 'Returns Heatmap':
         st.plotly_chart(fig)
 
 
-    col1, col2 = st.columns(2,gap="medium")
+    col1, col2 = st.columns(2)
 
     with col1:
-        returns_heatmap(df_acoes, "Stocks")
+        with st.container(border=True):
+            returns_heatmap(df_acoes, "Stocks")
     with col2:
-        returns_heatmap(df_moedas, "Currencies")
+        with st.container(border=True):
+            returns_heatmap(df_moedas, "Currencies")
 
     col3, col4 = st.columns(2)
 
