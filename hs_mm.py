@@ -154,7 +154,8 @@ if selected == 'Returns Heatmap':
             text=matriz.apply(lambda x: x.map(lambda y: f"{y:.2%}")),
             hoverinfo='y+x+text',
             showscale=True,
-            colorbar_tickformat='.2%'
+            colorbar_tickformat='.2%',
+            fixedrange=True
         ))
         
         
