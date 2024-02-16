@@ -161,8 +161,7 @@ if selected == 'Returns Heatmap':
         fig.update_layout(title=classe, annotations=annotations, width=600,  # Largura do gráfico
     height=600  # Altura do gráfico
 )
-        fig.update_layout(autosize=True)
-        st.plotly_chart(fig)
+        st.plotly_chart(fig, use_container_width=True)
 
 
     col1, col2 = st.columns(2)
