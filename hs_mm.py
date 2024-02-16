@@ -95,7 +95,7 @@ df_sectors.rename(columns=column_mapping, inplace=True)
 # Todos os Ativos
 all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto, df_factors, df_sectors], axis=1).ffill().dropna()
 
-options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatillity']
+options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatility']
 selected = st.sidebar.selectbox('Main Menu', options)
 
 
@@ -2639,7 +2639,7 @@ if selected == 'Technical Analysis':
     
         st.plotly_chart(fig)
         
-if selected == 'Risk & Volatillity':
+if selected == 'Risk & Volatility':
     st.title('Volatillity Momentum')
     st.markdown('##')
 
@@ -2762,7 +2762,7 @@ height=600  # Altura do gráfico
     df_hist_vol_asset['Date'] = df_hist_vol_asset.index
     
 
-    fig = px.line(df_hist_vol_asset, x='Date', y=['1 month', '3 month', '1 year'], title='Historical Volatillity')
+    fig = px.line(df_hist_vol_asset, x='Date', y=['1 month', '3 month', '1 year'], title='Historical Volatility')
     
     fig.update_xaxes(
     rangeslider_visible=False,
@@ -2873,7 +2873,7 @@ height=600  # Altura do gráfico
     #df_spread = pd.DataFrame({'1 month':spread, 'Date':spread.index})
     
 
-    fig = px.line(df_spread, x='Date', y=['1 month', '3 month', '1 year'], title='Volatillity Spread - '+asset_1+str(' x ')+asset_2)
+    fig = px.line(df_spread, x='Date', y=['1 month', '3 month', '1 year'], title='Volatility Spread - '+asset_1+str(' x ')+asset_2)
     
     fig.update_xaxes(
     rangeslider_visible=False,
