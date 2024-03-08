@@ -53,9 +53,9 @@ column_mapping = dict(zip(tickers_moedas, names_moedas))
 df_moedas.rename(columns=column_mapping, inplace=True)
 
 # Commodities
-tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO', 'BDRY']
+tickers_commodities = ['DBC', 'GSG', 'USO', 'GLD', 'SLV', 'DBA', 'U-UN.TO']
 df_commodities = get_data(tickers_commodities).fillna(method='ffill', axis=0)
-names_commodities = ['DBC', 'GSCI', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN', 'BDRY']
+names_commodities = ['DBC', 'GSCI', 'USO', 'GLD', 'SLV', 'DBA', 'U.UN']
 column_mapping = dict(zip(tickers_commodities, names_commodities))
 # Renomeie as colunas
 df_commodities.rename(columns=column_mapping, inplace=True)
@@ -85,9 +85,9 @@ column_mapping = dict(zip(tikckers_factors, names_factors))
 df_factors.rename(columns=column_mapping, inplace=True)
 
 #Sectors
-tickers_sectors = ['XLE', 'XLY', 'XLP', 'XLF', 'XLI', 'XLV', 'XLK', 'XLB', 'XHB', 'XTL', 'XLU']
+tickers_sectors = ['XLE', 'XLY', 'XLP', 'XLF', 'XLI', 'XLV', 'XLK', 'XLB', 'XHB', 'XTL', 'XLU', 'SMH']
 df_sectors = get_data(tickers_sectors).ffill(axis=0)
-names_sectors = ['Energy', 'Consumer Discritionary', 'Consumer Staples', 'Financials','Industrials', 'Health Care', 'Technology', 'Materials', 'Homebuilders', 'Telecomunication', 'Utilities']
+names_sectors = ['Energy', 'Consumer Discritionary', 'Consumer Staples', 'Financials','Industrials', 'Health Care', 'Technology', 'Materials', 'Homebuilders', 'Telecomunication', 'Utilities', 'Semiconductor']
 column_mapping = dict(zip(tickers_sectors, names_sectors))
 # Renomeie as colunas
 df_sectors.rename(columns=column_mapping, inplace=True)
