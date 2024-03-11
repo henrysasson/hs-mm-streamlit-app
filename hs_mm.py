@@ -69,9 +69,9 @@ column_mapping = dict(zip(tickers_rf, names_rf))
 df_rf.rename(columns=column_mapping, inplace=True)
 
 # Crypto
-tickers_crypto = ['BTC-USD', 'ETH-USD', 'MATIC-USD', 'LINK-USD', 'SOL-USD', 'RNDR-USD', 'UNI-USD', 'STX-USD', 'LDO-USD', 'OP-USD', 'ARB-USD']
+tickers_crypto = ['BTC-USD', 'ETH-USD', 'MATIC-USD', 'LINK-USD', 'SOL-USD', 'UNI-USD', 'STX-USD', 'LDO-USD', 'ARB-USD']
 df_crypto = get_data(tickers_crypto).fillna(method='ffill', axis=0)
-names_crypto = ['BTCUSD', 'ETHUSD', 'MATICUSD', 'LINKUSD', 'SOLUSD', 'RNDRUSD', 'UNIUSD', 'STXUSD', 'LDOUSD', 'OPUSD', 'ARBUSD']
+names_crypto = ['BTCUSD', 'ETHUSD', 'MATICUSD', 'LINKUSD', 'SOLUSD', 'UNIUSD', 'STXUSD', 'LDOUSD', 'ARBUSD']
 column_mapping = dict(zip(tickers_crypto, names_crypto))
 # Renomeie as colunas
 df_crypto.rename(columns=column_mapping, inplace=True)
