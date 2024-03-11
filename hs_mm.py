@@ -69,9 +69,9 @@ column_mapping = dict(zip(tickers_rf, names_rf))
 df_rf.rename(columns=column_mapping, inplace=True)
 
 # Crypto
-tickers_crypto = ['BTC-USD', 'ETH-USD']
+tickers_crypto = ['BTC-USD', 'ETH-USD', 'MATIC-USD', 'LINK-USD', 'SOL-USD', 'RNDR-USD', 'UNI-USD', 'STX-USD', 'LDO-USD', 'OP-USD', 'ARB-USD']
 df_crypto = get_data(tickers_crypto).fillna(method='ffill', axis=0)
-names_crypto = ['BTCUSD', 'ETHUSD']
+names_crypto = ['BTCUSD', 'ETHUSD', 'MATICUSD', 'LINKUSD', 'SOLUSD', 'RNDR-USD', 'UNIUSD', 'STXUSD', 'LDO-USD', 'OPUSD', 'ARBUSD']
 column_mapping = dict(zip(tickers_crypto, names_crypto))
 # Renomeie as colunas
 df_crypto.rename(columns=column_mapping, inplace=True)
@@ -185,6 +185,11 @@ if selected == 'Returns Heatmap':
     with col6:
         returns_heatmap(df_sectors, "US Sectors")
 
+    col7, col8 = st.columns(2)
+
+    with col7:
+        returns_heatmap(df_crypto, "Crypto")
+
 
 # # Matriz de Correlação
 
@@ -284,6 +289,11 @@ if selected == 'Correlation Matrix':
         corr_matrix(df_factors, lookback, "Factors")
     with col6:
         corr_matrix(df_sectors, lookback, "US Sectors")
+
+    col7, col8 = st.columns(2)
+
+    with col7:
+        corr_matrix(df_crypto, lookback, "Crypto")
 
     
 
@@ -433,6 +443,12 @@ if selected == 'Market Directionality':
     with col4:
 
         directional_indicator(df_rf, lookback, 'Fixed Income')
+
+    col5, col6 = st.columns(2)
+
+    with col5:
+
+        directional_indicator(df_crypto, lookback, 'Crypto')
 
 
 
@@ -2725,6 +2741,11 @@ height=600  # Altura do gráfico
         vol_heatmap(df_factors, "Factors")
     with col6:
         vol_heatmap(df_sectors, "US Sectors")
+
+    col7, col8 = st.columns(2)
+
+    with col7:
+        vol_heatmap(df_crypto, "Crypto")
 
     
     all_assets_list = all_assets.columns.tolist()
