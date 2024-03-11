@@ -45,7 +45,7 @@ column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
 # Moedas
-tickers_moedas = ['6E=F', '6J=F', '6J=F', '6B=F', '6C=F', '6A=F','6M=F', '6Z=F', '6N=F', '6L=F']
+tickers_moedas = ['6E=F', '6J=F', '6S=F', '6B=F', '6C=F', '6A=F','6M=F', '6Z=F', '6N=F', '6L=F']
 df_moedas = get_data(tickers_moedas).fillna(method='ffill', axis=0)
 names_moedas = ['Euro', 'Japanese Yen', 'Swiss Franc', 'British Pound', 'Canadian Dollar', 'Australian Dollar', 'Mexican Peso', 'South African Rand','New Zeland Dollar', 'Brazilian Real']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
@@ -169,7 +169,7 @@ if selected == 'Returns Heatmap':
     with col1:
         returns_heatmap(df_acoes, "Stocks")
     with col2:
-        returns_heatmap(df_moedas, "Currencies")
+        returns_heatmap(df_moedas, "Currencies (Futures)")
 
     col3, col4 = st.columns(2)
 
@@ -271,7 +271,7 @@ if selected == 'Correlation Matrix':
 
     with col2:
 
-        corr_matrix(df_moedas, lookback, 'Currencies')
+        corr_matrix(df_moedas, lookback, 'Currencies (Futures)')
 
     col3, col4 = st.columns(2)
 
@@ -432,7 +432,7 @@ if selected == 'Market Directionality':
 
     with col2:
 
-        directional_indicator(df_moedas, lookback, 'Currencies')
+        directional_indicator(df_moedas, lookback, 'Currencies (Futures)')
 
     col3, col4 = st.columns(2)
 
@@ -2725,7 +2725,7 @@ height=600  # Altura do gráfico
     with col1:
         vol_heatmap(df_acoes, "Stocks")
     with col2:
-        vol_heatmap(df_moedas, "Currencies")
+        vol_heatmap(df_moedas, "Currencies (Futures)")
 
     col3, col4 = st.columns(2)
 
