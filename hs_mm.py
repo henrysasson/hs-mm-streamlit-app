@@ -45,9 +45,9 @@ column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
 # Moedas
-tickers_moedas = ['6E=F', '6J=F', '6S=F', '6B=F', '6C=F', '6A=F','6M=F', '6Z=F', '6N=F', '6L=F']
+tickers_moedas = ['6E=F', '6J=F', '6S=F', '6B=F', '6C=F', '6A=F','6M=F', '6Z=F', '6N=F', '6L=F', 'DX=F']
 df_moedas = get_data(tickers_moedas).fillna(method='ffill', axis=0)
-names_moedas = ['Euro', 'Japanese Yen', 'Swiss Franc', 'British Pound', 'Canadian Dollar', 'Australian Dollar', 'Mexican Peso', 'South African Rand','New Zeland Dollar', 'Brazilian Real']
+names_moedas = ['Euro', 'Japanese Yen', 'Swiss Franc', 'British Pound', 'Canadian Dollar', 'Australian Dollar', 'Mexican Peso', 'South African Rand','New Zeland Dollar', 'Brazilian Real', 'Dollar Index']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
 # Renomeie as colunas
 df_moedas.rename(columns=column_mapping, inplace=True)
@@ -77,9 +77,9 @@ column_mapping = dict(zip(tickers_crypto, names_crypto))
 df_crypto.rename(columns=column_mapping, inplace=True)
 
 # Factors
-tikckers_factors = ['VLUE', 'QUAL', 'MTUM',  'SMLF', 'USMV', 'IVLU', 'IQLT', 'IMTM', 'ISCF', 'ACWV']
+tikckers_factors = ['VLUE', 'QUAL', 'MTUM',  'SMLF', 'USMV', 'IVLU', 'IQLT', 'IMTM', 'ISCF', 'ACWV', 'EEM']
 df_factors = get_data(tikckers_factors).ffill(axis=0)
-names_factors = ['US Value', 'US Quality', 'US Momentum', 'US Small-Cap', 'US Low Vol', 'Global Value', 'Global Quality', 'Global Momentum', 'Global Small-Cap', 'Global Low Vol']
+names_factors = ['US Value', 'US Quality', 'US Momentum', 'US Small-Cap', 'US Low Vol', 'Global Value', 'Global Quality', 'Global Momentum', 'Global Small-Cap', 'Global Low Vol', 'EM Equity']
 column_mapping = dict(zip(tikckers_factors, names_factors))
 # Renomeie as colunas
 df_factors.rename(columns=column_mapping, inplace=True)
@@ -2823,8 +2823,8 @@ height=600  # Altura do gráfico
 
         all_assets_list_2 = all_assets.columns.tolist()
     
-        all_assets_list_2.remove('USDBRL')
-        all_assets_list_2.insert(0, 'USDBRL')
+        all_assets_list_2.remove('EM Equity')
+        all_assets_list_2.insert(0, 'EM Equity')
     
         asset_2 = st.selectbox(
             'Choose the second asset:',
