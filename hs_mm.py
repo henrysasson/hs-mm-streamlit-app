@@ -1573,8 +1573,8 @@ if selected == 'Positioning':
         "SR1 SECURED OVERNIGHT FINANCING RATE (1-MONTH)", "SR3 SECURED OVERNIGHT FINANCING RATE (3-MONTH)",
         "ZQ FED FUNDS", "TN ULTRA 10-YEAR NOTES", "ULTRA 30-YEAR BONDS", "WHEAT",
         "OATS", "CORN", "SOYBEAN MEAL", "SOYBEANS", "SOYBEAN OIL", "GOLD", "SILVER", "PLATINUM",
-        "PALLADIUM", "COPPER", "ALUMINIUM", "STEEL", "SUGAR", "COCOA", "COFFEE", "ORANGE JUICE",
-        "COTTON", "LUMBER"
+        "PALLADIUM", "COPPER", "ALUMINIUM", "STEEL", "COCOA", "COFFEE",
+        "COTTON", "LUMBER",  "ORANGE JUICE", "SUGAR"
     ]
     
     
@@ -1589,8 +1589,8 @@ if selected == 'Positioning':
         "132741", "134742", "134741", "045601", "043607", "020604",
         "001602", "004603", "002602", "026603",
         "005602", "007601", "088691", "084691", "076651", "075651",
-        "085692", "191693", "192651", "080732", "073732", "083731",
-        "040701", "033661", "058644"
+        "085692", "191693", "192651", "073732", "083731",
+         "033661", "058644", "040701", "080732"
     ]
     
     
