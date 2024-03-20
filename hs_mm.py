@@ -741,13 +741,11 @@ if selected == 'Macro Indicators':
 
             # Convert to DataFrame for plotting
             fed_liq = pd.DataFrame({
-                    'Date': df_fed_liq.index,
-                    'Fed Liquidity': df_fed_liq.sum(axis=1).values
-                
-                }).dropna()
+                    'TGA':tga,
+                        'RRP':rrp}).dropna()
 
             # Plot both 'Value' and '12M MA' on the same figure
-            fig_fed_liq = px.line(fed_liq, x='Date', y='Fed Liquidity', title=' Fed Liquidity (TGA + RRP)')
+            fig_fed_liq = px.line(fed_liq, x='Date', y=['TGA', 'RRP'], title=' Fed Liquidity')
 
             fig_fed_liq.update_xaxes(
                 rangeslider_visible=True,
@@ -843,7 +841,8 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_nfpr.update_yaxes(tickformat='.2%')
 
-            fig_nfpr.update_layout(height=600  # Altura do gráfico
+            fig_nfpr.update_layout.update_layout( width=600,  # Largura do gráfico
+        height=500  # Altura do gráfico
     )
 
             fig_nfpr.update_layout(
