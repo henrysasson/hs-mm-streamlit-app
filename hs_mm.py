@@ -732,20 +732,23 @@ if selected == 'Macro Indicators':
             rrp = fred.get_series('RRPONTSYD')
 
 
+           # Create initial df_fed_liq DataFrame
             df_fed_liq = pd.DataFrame({
-                        'TGA':tga,
-                        'RRP':rrp})
+                'Date': tga.index,  # Assuming both tga and rrp share the same date index after dropna
+                'TGA': tga,
+                'RRP': rrp
+            }).dropna()  # Drop rows where any of the three fields is NaN
 
-            df_fed_liq.dropna(inplace=True)
+            # df_fed_liq.dropna(inplace=True)
 
 
-            # Convert to DataFrame for plotting
-            fed_liq = pd.DataFrame({'Date': df_fed_liq.index,
-                    'TGA':tga.values,
-                        'RRP':rrp.values}).dropna()
+            # # Convert to DataFrame for plotting
+            # fed_liq = pd.DataFrame({'Date': df_fed_liq.index,
+            #         'TGA':tga.values,
+            #             'RRP':rrp.values}).dropna()
 
             # Plot both 'Value' and '12M MA' on the same figure
-            fig_fed_liq = px.line(fed_liq, x='Date', y=['TGA', 'RRP'], title=' Fed Liquidity')
+            fig_fed_liq = px.line(df_fed_liq, x='Date', y=['TGA', 'RRP'], title='Fed Liquidity')
 
             fig_fed_liq.update_xaxes(
                 rangeslider_visible=True,
