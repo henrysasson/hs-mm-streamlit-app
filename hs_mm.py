@@ -837,7 +837,7 @@ if selected == 'Macro Indicators':
             # Adicionar o símbolo de % ao eixo y
             fig_nfpr.update_yaxes(tickformat='.2%')
 
-            fig_nfpr.update_layout.update_layout( width=600,  # Largura do gráfico
+            fig_nfpr.update_layout( width=600,  # Largura do gráfico
         height=500  # Altura do gráfico
     )
 
