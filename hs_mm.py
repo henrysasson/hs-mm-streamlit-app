@@ -741,8 +741,8 @@ if selected == 'Macro Indicators':
 
             # Convert to DataFrame for plotting
             fed_liq = pd.DataFrame({
-                    'TGA':tga,
-                        'RRP':rrp}).dropna()
+                    'TGA':tga.values,
+                        'RRP':rrp.values}).dropna()
 
             # Plot both 'Value' and '12M MA' on the same figure
             fig_fed_liq = px.line(fed_liq, x='Date', y=['TGA', 'RRP'], title=' Fed Liquidity')
