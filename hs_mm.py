@@ -740,7 +740,7 @@ if selected == 'Macro Indicators':
 
 
             # Convert to DataFrame for plotting
-            fed_liq = pd.DataFrame({
+            fed_liq = pd.DataFrame({'Date': df_fed_liq.index,
                     'TGA':tga.values,
                         'RRP':rrp.values}).dropna()
 
