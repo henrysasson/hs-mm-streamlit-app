@@ -53,7 +53,7 @@ column_mapping = dict(zip(tickers_moedas, names_moedas))
 df_moedas.rename(columns=column_mapping, inplace=True)
 
 # Commodities
-tickers_commodities = ['CL=F', 'GC=F', 'SI=F', 'U-UN.TO', 'HG=F', 'ZC='F', 'CC=F', 'KC=F', 'OJ=F', 'SB=F', 'CT=F', 'LE=F', 'ZS=F', 'ZL=F', 'PL=F', 'HO=F', 'BZ=F']
+tickers_commodities = ['CL=F', 'GC=F', 'SI=F', 'U-UN.TO', 'HG=F', 'ZC=F', 'CC=F', 'KC=F', 'OJ=F', 'SB=F', 'CT=F', 'LE=F', 'ZS=F', 'ZL=F', 'PL=F', 'HO=F', 'BZ=F']
 df_commodities = get_data(tickers_commodities).fillna(method='ffill', axis=0)
 names_commodities = ['Crude Oil', 'Gold', 'Silver', 'Uranium', 'Copper', 'Corn', 'Cocoa', 'Coffe', 'Orange Juice', 'Sugar', 'Cotton', 'Live Cattle', 'Soybean', 'Soybean Oil', 'Platinum', 'Heating Oil', 'Brent Oil']
 column_mapping = dict(zip(tickers_commodities, names_commodities))
