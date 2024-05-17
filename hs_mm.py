@@ -2807,8 +2807,8 @@ height=600  # Altura do gráfico
 
         all_assets_list_1 = all_assets.columns.tolist()
     
-        all_assets_list_1.remove('IBOV')
-        all_assets_list_1.insert(0, 'IBOV')
+        all_assets_list_1.remove('Ibovespa')
+        all_assets_list_1.insert(0, 'Ibovespa')
     
         asset_1 = st.selectbox(
             'Choose the first asset:',
