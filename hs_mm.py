@@ -2745,8 +2745,8 @@ height=600  # Altura do gráfico
     
     all_assets_list = all_assets.columns.tolist()
     
-    all_assets_list.remove('SPX')
-    all_assets_list.insert(0, 'SPX')
+    all_assets_list.remove('S&P 500')
+    all_assets_list.insert(0, 'S&P 500')
 
     asset = st.selectbox(
         'Choose the asset:',
