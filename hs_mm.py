@@ -941,10 +941,9 @@ if selected == 'Macro Indicators':
     
             # Sample data fetch (you can use your own methods)
             tax = fred.get_series('W006RC1Q027SBEA').dropna()
-            wilshire = fred.get_series('WILL5000PR').dropna()
             
-            df = pd.concat([tax, wilshire], axis=1).dropna()
-            df.columns = ['Federal government current tax receipts', 'Wilshire 5000']
+            df = pd.concat([tax], axis=1).dropna()
+            df.columns = ['Federal government current tax receipts']
     
             
             # Create a subplot with dual Y-axes
@@ -952,13 +951,11 @@ if selected == 'Macro Indicators':
             
             # Plot data
             fig.add_trace(go.Scatter(x=df.index, y=df['Federal government current tax receipts'], name="Tax Receipts"), secondary_y=False)
-            fig.add_trace(go.Scatter(x=df.index, y=df['Wilshire 5000'], name="Wilshire 5000"), secondary_y=True)
             
             # Titles and labels
             fig.update_layout(title_text="Federal government current tax receipts")
             fig.update_xaxes(title_text="Date")
             fig.update_yaxes(title_text="Tax Receipts", secondary_y=False)
-            fig.update_yaxes(title_text="Wilshire 5000 Index", secondary_y=True)
             
             # Add range slider
             fig.update_layout(
