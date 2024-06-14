@@ -2651,12 +2651,13 @@ if selected == 'Risk & Volatility':
     st.title('Volatility Momentum')
     st.markdown('##')
 
+    lookback = st.number_input(label="Choose the volatility lookback period:", value=20)
     
-    def vol_heatmap(df, classe):
+    def vol_heatmap(df, classe, lookback):
         janelas = ['1W', '2W', '1M', '3M', '6M', 'YTD', '1Y', '2Y']
         matriz = pd.DataFrame(columns=janelas, index=df.columns)
          
-        vol_pl = 20
+        vol_pl = lookback
         hist_vol = (np.round(df.ffill().pct_change(1).rolling(window=vol_pl).std()*np.sqrt(252), 4))
     
         
