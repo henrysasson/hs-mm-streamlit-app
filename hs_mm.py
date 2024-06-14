@@ -261,7 +261,7 @@ if selected == 'Correlation Matrix':
 
            
 
-    lookback = st.number_input(label="Choose the lookback period", value=20)
+    lookback = st.number_input(label="Choose the lookback period:", value=30)
 
     col1, col2 = st.columns(2)
 
@@ -422,7 +422,7 @@ if selected == 'Market Directionality':
             st.plotly_chart(fig)
 
 
-    lookback = st.number_input(label="Choose the lookback period", value=260)
+    lookback = st.number_input(label="Choose the lookback period:", value=260)
 
     col1, col2 = st.columns(2)
 
