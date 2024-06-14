@@ -167,7 +167,7 @@ if selected == 'Returns Heatmap':
     col1, col2 = st.columns(2)
 
     with col1:
-        returns_heatmap(df_acoes, "Stocks")
+        returns_heatmap(df_acoes, "Equities")
     with col2:
         returns_heatmap(df_moedas, "Currencies (Futures)")
 
@@ -267,7 +267,7 @@ if selected == 'Correlation Matrix':
 
     with col1:
         
-        corr_matrix(df_acoes, lookback, 'Stocks')
+        corr_matrix(df_acoes, lookback, 'Equities')
 
     with col2:
 
@@ -428,7 +428,7 @@ if selected == 'Market Directionality':
 
     with col1:
     
-        directional_indicator(df_acoes, lookback, 'Stocks')
+        directional_indicator(df_acoes, lookback, 'Equities')
 
     with col2:
 
@@ -2715,7 +2715,7 @@ height=600  # Altura do gráfico
     col1, col2 = st.columns(2)
 
     with col1:
-        vol_heatmap(df_acoes, "Stocks")
+        vol_heatmap(df_acoes, "Equities")
     with col2:
         vol_heatmap(df_moedas, "Currencies (Futures)")
 
