@@ -33,14 +33,14 @@ st.set_page_config(page_title='HS Market Monitor', layout='wide')
 
 #@st.cache_data
 def get_data(tickers):
-    data = yf.download(tickers, period='4y')['Adj Close']
+    data = yf.download(tickers, period='5y')['Adj Close']
     return data
 
 
 # Ações
-tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI']
+tickers_acoes = ['^GSPC', '^IXIC', '^RUT', '^N225', '^FTSE', '^STOXX50E', '^GDAXI', '^BVSP', '^AXJO', '^MXX', '000001.SS', '^HSI', '^NSEI', '^M.BA']
 df_acoes = get_data(tickers_acoes).fillna(method='ffill', axis=0)
-names_acoes = ['S&P 500', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'Ibovespa', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE']
+names_acoes = ['S&P 500', 'Nasdaq', 'Russel 2000', 'Nikkei', 'FTSE', 'Euro Stoxx', 'DAX', 'Ibovespa', 'S&P ASX', 'BMV', 'Shanghai', 'Hang Seng', 'NSE', 'Merval']
 column_mapping = dict(zip(tickers_acoes, names_acoes))
 df_acoes.rename(columns=column_mapping, inplace=True)
 
