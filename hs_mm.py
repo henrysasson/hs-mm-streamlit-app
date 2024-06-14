@@ -2716,29 +2716,29 @@ height=600  # Altura do gráfico
     col1, col2 = st.columns(2)
 
     with col1:
-        vol_heatmap(df_acoes, "Equities")
+        vol_heatmap(df_acoes, "Equities", lookback)
     with col2:
-        vol_heatmap(df_moedas, "Currencies (Futures)")
+        vol_heatmap(df_moedas, "Currencies (Futures)", lookback)
 
     col3, col4 = st.columns(2)
 
     with col3:
-        vol_heatmap(df_commodities, "Commodities")
+        vol_heatmap(df_commodities, "Commodities", lookback)
     with col4:
-        vol_heatmap(df_rf, "Fixed Income")
+        vol_heatmap(df_rf, "Fixed Income", lookback)
 
     
     col5, col6 = st.columns(2)
 
     with col5:
-        vol_heatmap(df_factors, "Factors")
+        vol_heatmap(df_factors, "Factors", lookback)
     with col6:
-        vol_heatmap(df_sectors, "US Sectors")
+        vol_heatmap(df_sectors, "US Sectors", lookback)
 
     col7, col8 = st.columns(2)
 
     with col7:
-        vol_heatmap(df_crypto, "Crypto")
+        vol_heatmap(df_crypto, "Crypto", lookback)
 
     
     all_assets_list = all_assets.columns.tolist()
