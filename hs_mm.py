@@ -2648,7 +2648,7 @@ if selected == 'Technical Analysis':
         st.plotly_chart(fig)
         
 if selected == 'Risk & Volatility':
-    st.title('Volatillity Momentum')
+    st.title('Volatility Momentum')
     st.markdown('##')
 
     
