@@ -47,7 +47,7 @@ df_acoes.rename(columns=column_mapping, inplace=True)
 # Moedas
 tickers_moedas = ['6E=F', '6J=F', '6S=F', '6B=F', '6C=F', '6A=F','6M=F', '6Z=F', '6N=F', '6L=F', 'DX=F']
 df_moedas = get_data(tickers_moedas).fillna(method='ffill', axis=0)
-names_moedas = ['Euro', 'Japanese Yen', 'Swiss Franc', 'British Pound', 'Canadian Dollar', 'Australian Dollar', 'Mexican Peso', 'South African Rand','New Zeland Dollar', 'Brazilian Real', 'Dollar Index']
+names_moedas = ['Euro', 'Japanese Yen', 'Swiss Franc', 'British Pound', 'Canadian Dollar', 'Australian Dollar', 'Mexican Peso', 'South African Rand','New Zealand Dollar', 'Brazilian Real', 'Dollar Index']
 column_mapping = dict(zip(tickers_moedas, names_moedas))
 # Renomeie as colunas
 df_moedas.rename(columns=column_mapping, inplace=True)
