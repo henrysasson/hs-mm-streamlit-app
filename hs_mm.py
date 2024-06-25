@@ -359,7 +359,7 @@ if selected == 'Correlation Matrix':
         side='top'  # Move os rótulos das colunas para o topo
     ))
     
-    fig.update_layout(title=asset + " Correlation (Multi-Timeframe)", height=1600, annotations=annotations)
+    fig.update_layout(title=asset + " Correlation (Multi-Timeframe)", height=2000, annotations=annotations)
                 
     st.plotly_chart(fig,use_container_width=True)
 
