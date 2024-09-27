@@ -1463,7 +1463,7 @@ if selected == 'Macro Indicators':
         
         with col8:
 
-            ibc = sgs.get({'IBC-Br': 24363}).dropna()
+            ibc = sgs.get({'IBC-Br': 24363}).pct_change(12).dropna()
 
             ibc['Date'] = ibc.index
         
@@ -1484,6 +1484,8 @@ if selected == 'Macro Indicators':
             fig_ibc.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
+
+            fig_ibc.update_yaxes(tickformat=".2f", ticksuffix="%")
             
             st.plotly_chart(fig_ibc)
 
@@ -1494,7 +1496,7 @@ if selected == 'Macro Indicators':
             pib = sgs.get({'Investment': 24363,
                           'Services':22107,
                           'Household Consumption':22100,
-                          'Goverment Cosnumption':22101}).dropna()
+                          'Goverment Cosnumption':22101}).pct_change(4).dropna()
 
             pib['Date'] = pib.index
             
@@ -1515,6 +1517,8 @@ if selected == 'Macro Indicators':
             fig_pib.update_layout( width=600,  # Largura do gráfico
             height=500  # Altura do gráfico
             )
+
+            fig_pib.update_yaxes(tickformat=".2f", ticksuffix="%")
             
             st.plotly_chart(fig_pib)
 
