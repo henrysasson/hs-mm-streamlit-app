@@ -2040,6 +2040,7 @@ if selected == 'Technical Analysis':
         df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
         df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
         df1['Open'] = df1['Open'] - (df1['Close']-df1['Adj Close'])
+        df1.index = df1.index.tz_localize(None)
         df1['Dates'] = df1.index
     
         vol_pl = 20
@@ -2064,7 +2065,7 @@ if selected == 'Technical Analysis':
         # Preencher os valores faltantes.
         df1 = df1.ffill()
         
-    
+        
         # Converter a coluna 'Date' para datetime se ainda não for
         df1['Date'] = df1['Dates']
     
