@@ -2073,11 +2073,13 @@ if selected == 'Technical Analysis':
         #df1.dropna(inplace=True)
         
         # Criar o texto de hover com o formato correto
-        hovertext = []
-        for i in range(len(df1)):
-            hovertext.append('Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
-                df1.iloc[i]['Date'].strftime('%Y-%m-%d'), df1.iloc[i]['Open'], df1.iloc[i]['High'], 
-                df1.iloc[i]['Low'], df1.iloc[i]['Adj Close']))
+        hovertext = [
+            'Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
+                df1.index[i].strftime('%Y-%m-%d'), df1.iloc[i]['Open'], df1.iloc[i]['High'],
+                df1.iloc[i]['Low'], df1.iloc[i]['Adj Close']
+            )
+            for i in range(len(df1))
+]
     
         # Criar a figura com subplots
         fig = make_subplots(rows=1, cols=1, shared_xaxes=True, vertical_spacing=0.08)
