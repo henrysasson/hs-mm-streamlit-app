@@ -1769,26 +1769,21 @@ if selected == 'Technical Analysis':
     st.title('Technical Analysis')
     st.markdown('##')
 
-    tickers_ibov = [
-    "RRRP3.SA", "RADL3.SA", "SOMA3.SA", "BBAS3.SA", "CMIN3.SA",
-    "JBSS3.SA", "IGTI11.SA", "TOTS3.SA", "EQTL3.SA", "SBSP3.SA",
-    "ELET3.SA", "RENT3.SA", "ELET6.SA", "BRFS3.SA", "ITUB4.SA",
-    "PETR3.SA", "PETR4.SA", "VALE3.SA", "MULT3.SA", "AZUL4.SA",
-    "TAEE11.SA", "SANB11.SA", "MRFG3.SA", "UGPA3.SA", "BBDC3.SA",
-    "ALPA4.SA", "EGIE3.SA", "USIM5.SA", "SMTO3.SA", "MRVE3.SA",
-    "RAIZ4.SA", "MGLU3.SA", "CSNA3.SA", "VIVT3.SA", "EZTC3.SA",
-    "BBDC4.SA", "CRFB3.SA", "BBSE3.SA", "VAMO3.SA", "BRKM5.SA",
-    "YDUQ3.SA", "ENEV3.SA", "CMIG4.SA", "CPLE6.SA", "ABEV3.SA",
-    "TRPL4.SA", "B3SA3.SA", "DXCO3.SA", "PCAR3.SA", "GGBR4.SA",
-    "CYRE3.SA", "SUZB3.SA", "EMBR3.SA", "COGN3.SA", "ITSA4.SA",
-    "ALOS3.SA", "LREN3.SA", "ARZZ3.SA", "CIEL3.SA", "PETZ3.SA",
-    "HYPE3.SA", "GOAU4.SA", "TIMS3.SA", "RAIL3.SA", "LWSA3.SA",
-    "BEEF3.SA", "PRIO3.SA", "BRAP4.SA", "KLBN11.SA", "HAPV3.SA",
-    "CCRO3.SA", "FLRY3.SA", "NTCO3.SA", "ASAI3.SA", "ENGI11.SA",
-    "CPFE3.SA", "BHIA3.SA", "IRBR3.SA", "BPAC11.SA", "WEGE3.SA",
-    "VBBR3.SA", "RDOR3.SA", "SLCE3.SA", "GOLL4.SA", "RECV3.SA",
-    "CSAN3.SA", "CVCB3.SA"
-]
+    tickers_ibov = ['ABEV3.SA', 'ALOS3.SA', 'ALPA4.SA', 'ASAI3.SA', 'AURE3.SA', 'AZUL4.SA',
+       'AZZA3.SA', 'B3SA3.SA', 'BBAS3.SA', 'BBDC3.SA', 'BBDC4.SA', 'BBSE3.SA',
+       'BEEF3.SA', 'BPAC11.SA', 'BRAP4.SA', 'BRAV3.SA', 'BRFS3.SA', 'BRKM5.SA',
+       'CCRO3.SA', 'CMIG4.SA', 'CMIN3.SA', 'COGN3.SA', 'CPFE3.SA', 'CPLE6.SA',
+       'CRFB3.SA', 'CSAN3.SA', 'CSNA3.SA', 'CVCB3.SA', 'CXSE3.SA', 'CYRE3.SA',
+       'EGIE3.SA', 'ELET3.SA', 'ELET6.SA', 'EMBR3.SA', 'ENEV3.SA', 'ENGI11.SA',
+       'EQTL3.SA', 'EZTC3.SA', 'FLRY3.SA', 'GGBR4.SA', 'GOAU4.SA', 'HAPV3.SA',
+       'HYPE3.SA', 'IGTI11.SA', 'IRBR3.SA', 'ITSA4.SA', 'ITUB4.SA', 'JBSS3.SA',
+       'KLBN11.SA', 'LREN3.SA', 'LWSA3.SA', 'MGLU3.SA', 'MRFG3.SA', 'MRVE3.SA',
+       'MULT3.SA', 'NTCO3.SA', 'PCAR3.SA', 'PETR3.SA', 'PETR4.SA', 'PETZ3.SA',
+       'PRIO3.SA', 'RADL3.SA', 'RAIL3.SA', 'RAIZ4.SA', 'RDOR3.SA', 'RECV3.SA',
+       'RENT3.SA', 'SANB11.SA', 'SBSP3.SA', 'SLCE3.SA', 'SMTO3.SA', 'STBP3.SA',
+       'SUZB3.SA', 'TAEE11.SA', 'TIMS3.SA', 'TOTS3.SA', 'TRPL4.SA', 'UGPA3.SA',
+       'USIM5.SA', 'VALE3.SA', 'VAMO3.SA', 'VBBR3.SA', 'VIVA3.SA', 'VIVT3.SA',
+       'WEGE3.SA', 'YDUQ3.SA']
 
     tickers_bmv = [
     "MEGACPO.MX", "AC.MX", "ASURB.MX", "FEMSAUBD.MX", "CUERVO.MX", "KIMBERA.MX",
@@ -1995,7 +1990,7 @@ if selected == 'Technical Analysis':
     if market == 'Nikkei':
         list_of_stocks = tickers_nikkei
 
-    df = yf.download(tickers=list_of_stocks, period = '4y').ffill(axis=0)
+    df = yf.download(tickers=list_of_stocks, period = '5y').ffill(axis=0)
 
     df = df.stack()
 
@@ -2033,302 +2028,106 @@ if selected == 'Technical Analysis':
     if market == 'Nikkei':
         ticker = '^N225'
         
+    analysis_type = st.radio(
+    "Choose the analysis type:",
+    ["Index", "Constituents"])
+    
+
+    if analysis_type == "Index":
+    
+        df1 = yf.download(ticker, period='10y')
+        df1['Returns'] = df1['Adj Close'].pct_change()
+        df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
+        df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
+        df1['Open'] = df1['Open'] - (df1['Close']-df1['Adj Close'])
+        df1['Dates'] = df1.index
+    
+        vol_pl = 20
+        df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
         
-    df1 = yf.download(ticker, period='10y')
-    df1['Returns'] = df1['Adj Close'].pct_change()
-    df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
-    df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
-    df1['Open'] = df1['Open'] - (df1['Close']-df1['Adj Close'])
-    df1['Dates'] = df1.index
-
-    vol_pl = 20
-    df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
+        df1['Month_End'] = df1['Adj Close'].asfreq('BM').ffill()  # 'BM' para o último dia útil de cada mês
+        df1['Month_End_Vol'] = df1['Vol'].asfreq('BM').ffill()
     
-    df1['Month_End'] = df1['Adj Close'].asfreq('BM').ffill()  # 'BM' para o último dia útil de cada mês
-    df1['Month_End_Vol'] = df1['Vol'].asfreq('BM').ffill()
-
-    df1 = df1.ffill()
-
-    df1['Prev_Month_Close'] = df1['Month_End'].shift(1)
-    df1['Prev_Month_Vol'] = df1['Month_End_Vol'].shift(1)
+        df1 = df1.ffill()
     
-    # Calcular as bandas mensais usando o fechamento do mês anterior.
-    df1['Upper_Band_1sd'] = df1['Prev_Month_Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
-    df1['Lower_Band_1sd'] = df1['Prev_Month_Close'] - df1['Prev_Month_Vol'] * df1['Prev_Month_Close']
+        df1['Prev_Month_Close'] = df1['Month_End'].shift(1)
+        df1['Prev_Month_Vol'] = df1['Month_End_Vol'].shift(1)
+        
+        # Calcular as bandas mensais usando o fechamento do mês anterior.
+        df1['Upper_Band_1sd'] = df1['Prev_Month_Vol'] * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
+        df1['Lower_Band_1sd'] = df1['Prev_Month_Close'] - df1['Prev_Month_Vol'] * df1['Prev_Month_Close']
+        
+        df1['Upper_Band_2sd'] = (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
+        df1['Lower_Band_2sd'] = df1['Prev_Month_Close'] - (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close']
+        
+        
+        # Preencher os valores faltantes.
+        df1 = df1.ffill()
+        
     
-    df1['Upper_Band_2sd'] = (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close'] + df1['Prev_Month_Close']
-    df1['Lower_Band_2sd'] = df1['Prev_Month_Close'] - (2*df1['Prev_Month_Vol']) * df1['Prev_Month_Close']
+        # Converter a coluna 'Date' para datetime se ainda não for
+        df1['Date'] = df1['Dates']
     
+        #df1 = df1.fillna(method='ffill', axis=0)
+        #df1.dropna(inplace=True)
+        
+        # Criar o texto de hover com o formato correto
+        hovertext = []
+        for i in range(len(df1)):
+            hovertext.append('Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
+                df1.iloc[i]['Date'].strftime('%Y-%m-%d'), df1.iloc[i]['Open'], df1.iloc[i]['High'], 
+                df1.iloc[i]['Low'], df1.iloc[i]['Adj Close']))
     
-    # Preencher os valores faltantes.
-    df1 = df1.ffill()
+        # Criar a figura com subplots
+        fig = make_subplots(rows=1, cols=1, shared_xaxes=True, vertical_spacing=0.08)
+        
+        # Adicionar o gráfico OHLC ao subplot
+        fig.add_trace(go.Candlestick(x=df1['Date'],
+                              open=df1['Open'],
+                              high=df1['High'],
+                              low=df1['Low'],
+                              close=df1['Adj Close'],
+                              hovertext=hovertext,
+                              hoverinfo='text',
+                              name=market,
+                              increasing_line_color='blue', decreasing_line_color='pink'), # Cores distintas
+                      row=1, col=1)
     
-
-    # Converter a coluna 'Date' para datetime se ainda não for
-    df1['Date'] = df1['Dates']
-
-    #df1 = df1.fillna(method='ffill', axis=0)
-    #df1.dropna(inplace=True)
-    
-    # Criar o texto de hover com o formato correto
-    hovertext = []
-    for i in range(len(df1)):
-        hovertext.append('Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
-            df1.iloc[i]['Date'].strftime('%Y-%m-%d'), df1.iloc[i]['Open'], df1.iloc[i]['High'], 
-            df1.iloc[i]['Low'], df1.iloc[i]['Adj Close']))
-
-    # Criar a figura com subplots
-    fig = make_subplots(rows=1, cols=1, shared_xaxes=True, vertical_spacing=0.08)
-    
-    # Adicionar o gráfico OHLC ao subplot
-    fig.add_trace(go.Candlestick(x=df1['Date'],
-                          open=df1['Open'],
-                          high=df1['High'],
-                          low=df1['Low'],
-                          close=df1['Adj Close'],
-                          hovertext=hovertext,
-                          hoverinfo='text',
-                          name=market,
-                          increasing_line_color='blue', decreasing_line_color='pink'), # Cores distintas
-                  row=1, col=1)
-
-    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_1sd'], mode='lines', 
-                             name='Supply Band 1sd', line=dict(color='green')))
-    
-    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Lower_Band_1sd'], mode='lines', 
-                             name='Demand Band 1sd', line=dict(color='red')))
-    
-    # Adicionar as bandas com linha pontilhada ao gráfico
-    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_2sd'], mode='lines', 
-                             name='Supply Band 2sd', line=dict(dash='dash', color='green')), row=1, col=1)
-    
-    fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Lower_Band_2sd'], mode='lines', 
-                             name='Demand Band 2sd', line=dict(dash='dash', color='red')), row=1, col=1)
-    
-    
-    # Configurações adicionais do layout do gráfico
-    fig.update_layout(
-        title='Ticker',
-        xaxis_rangeslider_visible=False,
-        xaxis=dict(
-            # Ajustar o intervalo do eixo x para terminar um pouco depois da série
-            range=[df1['Date'].min(), df1['Date'].max() + timedelta(days=30)]
-        ),
-        yaxis=dict(
-            tickformat='.2f',
-            title='Price'
-        ),
-        font=dict(size=12),
-        legend=dict(
-            y=1.02,
-            x=1
+        fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_1sd'], mode='lines', 
+                                 name='Supply Band 1sd', line=dict(color='green')))
+        
+        fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Lower_Band_1sd'], mode='lines', 
+                                 name='Demand Band 1sd', line=dict(color='red')))
+        
+        # Adicionar as bandas com linha pontilhada ao gráfico
+        fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Upper_Band_2sd'], mode='lines', 
+                                 name='Supply Band 2sd', line=dict(dash='dash', color='green')), row=1, col=1)
+        
+        fig.add_trace(go.Scatter(x=df1['Date'], y=df1['Lower_Band_2sd'], mode='lines', 
+                                 name='Demand Band 2sd', line=dict(dash='dash', color='red')), row=1, col=1)
+        
+        
+        # Configurações adicionais do layout do gráfico
+        fig.update_layout(
+            title='Ticker',
+            xaxis_rangeslider_visible=False,
+            xaxis=dict(
+                # Ajustar o intervalo do eixo x para terminar um pouco depois da série
+                range=[df1['Date'].min(), df1['Date'].max() + timedelta(days=30)]
+            ),
+            yaxis=dict(
+                tickformat='.2f',
+                title='Price'
+            ),
+            font=dict(size=12),
+            legend=dict(
+                y=1.02,
+                x=1
+            )
         )
-    )
-    
-    fig.update_xaxes(
-                    rangeslider_visible=False,
-                    rangeselector=dict(
-                        buttons=list([
-                            dict(count=3, label="3m", step="month", stepmode="backward"),
-                            dict(count=6, label="6m", step="month", stepmode="backward"),
-                            dict(count=1, label="YTD", step="year", stepmode="todate"),
-                            dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(count=3, label="3y", step="year", stepmode="backward"),
-                            dict(step="all")
-                        ])
-                    )
-                )
-
-    
-    fig.update_yaxes(tickformat='.2f')
-    
-    fig.update_layout(title='OM Monthly S&D Volatility Zones')
-    
-    st.plotly_chart(fig, use_container_width=True, height=5000)
-
-    ################## Stocks abova MA (50 and 200) #################
-    
-    df['50_sma'] = df.groupby(level=1)['Adj Close']\
-                  .rolling(window=50, min_periods=1).mean()\
-                  .reset_index(level=0, drop=True)
-
-    df['200_sma'] = df.groupby(level=1)['Adj Close']\
-                  .rolling(window=200, min_periods=1).mean()\
-                  .reset_index(level=0, drop=True)
-
-    df['above_50_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['50_sma'])
-                                          else 0, axis=1)
-
-    df['above_200_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['200_sma'])
-                                           else 0, axis=1)
-
-    above_50 = round(((df.groupby(level=0)['above_50_sma'].sum()/len(list_of_stocks))*100),2)
-
-    above_50 = above_50[above_50>0]
-    
-    above_200 = round(((df.groupby(level=0)['above_200_sma'].sum()/len(list_of_stocks))*100),2)
-    
-    above_200 = above_200[above_200>0]
-
-    ################## Range High_Low #################
-
-    # Definir a janela de rolagem
-    window = 200
-    
-    # Identificar novas máximas e mínimas com base em uma janela móvel de 200 dias
-    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
-    
-    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
-    
-    dist_low = (df['Close'] - df['Rolling Low'])
-    
-    dist_low[dist_low < 0] = 0
-    
-    df['RHL'] = dist_low/(df['Rolling High'] - df['Rolling Low'])
-    
-    rhl = df['RHL'].groupby(level='Date').mean() * 100
-
-    ################# New-High New-Low #################
-
-    # Definir a janela de rolagem
-    window = 20
-    
-    # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
-    df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
-    df['New High'] = df['High'] == df['Rolling High']
-    
-    df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
-    df['New Low'] = df['Low'] == df['Rolling Low']
-    
-    
-    # Calcular o número de novas máximas e mínimas por data
-    daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
-    
-    # Calcular o Record High Percent
-    daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
-    
-    daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
-    
-    
-    # Calcular a média móvel simples de 10 dias do Record High Percent
-    daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
-
-    daily_highs_lows['High-Low Index'] = daily_highs_lows['High-Low Index'].ffill(axis=0)
-    daily_highs_lows['Date']= daily_highs_lows.index
-    
-    
-    ###############################################################################
-       
-    def last_20_80(value):
-        if value <= 20:
-            reading = 'Strong Bull'
-        
-        if 20 <= value <= 40:
-            reading = 'Bull'
-        
-        if 40 < value <= 60:
-            reading = 'Neutral'
-        
-        if 60 <= value < 80:
-            reading = 'Bear'
-        
-        if value >= 80:
-            reading = 'Strong Bear'
-            
-        return reading
-
-    def last_30_70(value):
-        if value <= 30:
-            reading = 'Strong Bull'
-        
-        if 30 <= value <= 40:
-            reading = 'Bull'
-        
-        if 40 < value <= 60:
-            reading = 'Neutral'
-        
-        if 60 <= value < 70:
-            reading = 'Bear'
-        
-        if value >= 70:
-            reading = 'Strong Bear'
-            
-        return reading
-    
-
-    def last_nhnl(value):
-        if value <= -40:
-            reading = 'Strong Bull'
-
-        if -40 < value <= -20:
-            reading = 'Bull'
-
-        if -20 < value <= 20:
-            reading = 'Neutral'
-
-        if 20 <= value < 40:
-            reading = 'Bear'
-        
-        if value >= 40:
-            reading = 'Strong Bear'
-        
-        return reading
-
-
-
-    
-    col1, col2, col3, col4 = st.columns(4)
-
-    with col1:
-    
-        last_value_ma50 = "{:.2f}%".format(above_50.iloc[-1])
-        
-        last_signal = last_20_80(above_50.iloc[-1])
-        
-        st.metric("Stocks above 50 SMA", last_value_ma50)
-        st.text(last_signal)
-
-    with col2:
-
-        last_value_ma200 = "{:.2f}%".format(above_200.iloc[-1])
-        
-        last_signal = last_20_80(above_200.iloc[-1])
-        
-        st.metric("Stocks above 200 SMA", last_value_ma200)
-        st.text(last_signal)
-
-    with col3:
-
-        last_value_rhl = "{:.2f}%".format(rhl.iloc[-1])
-        
-        last_signal = last_20_80(rhl.iloc[-1])
-        
-        st.metric("Range High-Low", last_value_rhl)
-        st.text(last_signal)
-
-    with col4:
-
-        lat_value_nhnl =  "{:.2f}%".format(daily_highs_lows['High-Low Index'].iloc[-1])
-        
-        last_signal = last_nhnl(daily_highs_lows['High-Low Index'].iloc[-1])
-        
-        st.metric("New Highs - New Lows Index", lat_value_nhnl)
-        st.text(last_signal)
-    
-
-    
-    #################################################################################
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        mkt_50 = pd.DataFrame({'Value':above_50,
-                              'Date':above_50.index})
-        
-        fig = px.line(mkt_50, x='Date', y='Value', title='Stocks Above 50-Day SMA')
         
         fig.update_xaxes(
-                        rangeslider_visible=True,
+                        rangeslider_visible=False,
                         rangeselector=dict(
                             buttons=list([
                                 dict(count=3, label="3m", step="month", stepmode="backward"),
@@ -2340,119 +2139,282 @@ if selected == 'Technical Analysis':
                             ])
                         )
                     )
-        
-        fig.update_yaxes(ticksuffix="%")
     
-        fig.update_layout( width=600,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=20, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=40, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=60, line_dash="dash", line_color="gray")
         
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=80, line_dash="dash", line_color="gray")
+        fig.update_yaxes(tickformat='.2f')
+        
+        fig.update_layout(title='OM Monthly S&D Volatility Zones')
+        
+        st.plotly_chart(fig, use_container_width=True, height=5000)
     
-        st.plotly_chart(fig)
-
-
-    with col2:
-
-        mkt_200 = pd.DataFrame({'Value':above_200,
-                      'Date':above_200.index})
-
-        fig = px.line(mkt_200, x='Date', y='Value', title='Stocks Above 200-Day SMA')
+        ################## Stocks abova MA (50 and 200) #################
         
-        fig.update_xaxes(
-                        rangeslider_visible=True,
-                        rangeselector=dict(
-                            buttons=list([
-                                dict(count=3, label="3m", step="month", stepmode="backward"),
-                                dict(count=6, label="6m", step="month", stepmode="backward"),
-                                dict(count=1, label="YTD", step="year", stepmode="todate"),
-                                dict(count=1, label="1y", step="year", stepmode="backward"),
-                                dict(count=3, label="3y", step="year", stepmode="backward"),
-                                dict(step="all")
-                            ])
+        df['50_sma'] = df.groupby(level=1)['Adj Close']\
+                      .rolling(window=50, min_periods=1).mean()\
+                      .reset_index(level=0, drop=True)
+    
+        df['200_sma'] = df.groupby(level=1)['Adj Close']\
+                      .rolling(window=200, min_periods=1).mean()\
+                      .reset_index(level=0, drop=True)
+    
+        df['above_50_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['50_sma'])
+                                              else 0, axis=1)
+    
+        df['above_200_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['200_sma'])
+                                               else 0, axis=1)
+    
+        above_50 = round(((df.groupby(level=0)['above_50_sma'].sum()/len(list_of_stocks))*100),2)
+    
+        above_50 = above_50[above_50>0]
+        
+        above_200 = round(((df.groupby(level=0)['above_200_sma'].sum()/len(list_of_stocks))*100),2)
+        
+        above_200 = above_200[above_200>0]
+    
+        ################## Range High_Low #################
+    
+        # Definir a janela de rolagem
+        window = 200
+        
+        # Identificar novas máximas e mínimas com base em uma janela móvel de 200 dias
+        df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+        
+        df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+        
+        dist_low = (df['Close'] - df['Rolling Low'])
+        
+        dist_low[dist_low < 0] = 0
+        
+        df['RHL'] = dist_low/(df['Rolling High'] - df['Rolling Low'])
+        
+        rhl = df['RHL'].groupby(level='Date').mean() * 100
+    
+        ################# New-High New-Low #################
+    
+        # Definir a janela de rolagem
+        window = 20
+        
+        # Identificar novas máximas e mínimas com base em uma janela móvel de 260 dias
+        df['Rolling High'] = df.groupby(level=1)['High'].transform(lambda x: x.rolling(window, min_periods=1).max())
+        df['New High'] = df['High'] == df['Rolling High']
+        
+        df['Rolling Low'] = df.groupby(level=1)['Low'].transform(lambda x: x.rolling(window, min_periods=1).min())
+        df['New Low'] = df['Low'] == df['Rolling Low']
+        
+        
+        # Calcular o número de novas máximas e mínimas por data
+        daily_highs_lows = df.groupby(level='Date').agg({'New High': 'sum', 'New Low': 'sum'})
+        
+        # Calcular o Record High Percent
+        daily_highs_lows['Record High Percent'] = daily_highs_lows['New High']/len(list_of_stocks)
+        
+        daily_highs_lows['Record Low Percent'] = daily_highs_lows['New Low']/len(list_of_stocks)
+        
+        
+        # Calcular a média móvel simples de 10 dias do Record High Percent
+        daily_highs_lows['High-Low Index'] = (daily_highs_lows['Record High Percent']*100)-(daily_highs_lows['Record Low Percent']*100)
+    
+        daily_highs_lows['High-Low Index'] = daily_highs_lows['High-Low Index'].ffill(axis=0)
+        daily_highs_lows['Date']= daily_highs_lows.index
+        
+        
+        ###############################################################################
+           
+        def last_20_80(value):
+            if value <= 20:
+                reading = 'Strong Bull'
+            
+            if 20 <= value <= 40:
+                reading = 'Bull'
+            
+            if 40 < value <= 60:
+                reading = 'Neutral'
+            
+            if 60 <= value < 80:
+                reading = 'Bear'
+            
+            if value >= 80:
+                reading = 'Strong Bear'
+                
+            return reading
+    
+        def last_30_70(value):
+            if value <= 30:
+                reading = 'Strong Bull'
+            
+            if 30 <= value <= 40:
+                reading = 'Bull'
+            
+            if 40 < value <= 60:
+                reading = 'Neutral'
+            
+            if 60 <= value < 70:
+                reading = 'Bear'
+            
+            if value >= 70:
+                reading = 'Strong Bear'
+                
+            return reading
+        
+    
+        def last_nhnl(value):
+            if value <= -40:
+                reading = 'Strong Bull'
+    
+            if -40 < value <= -20:
+                reading = 'Bull'
+    
+            if -20 < value <= 20:
+                reading = 'Neutral'
+    
+            if 20 <= value < 40:
+                reading = 'Bear'
+            
+            if value >= 40:
+                reading = 'Strong Bear'
+            
+            return reading
+    
+    
+    
+        
+        col1, col2, col3, col4 = st.columns(4)
+    
+        with col1:
+        
+            last_value_ma50 = "{:.2f}%".format(above_50.iloc[-1])
+            
+            last_signal = last_20_80(above_50.iloc[-1])
+            
+            st.metric("Stocks above 50 SMA", last_value_ma50)
+            st.text(last_signal)
+    
+        with col2:
+    
+            last_value_ma200 = "{:.2f}%".format(above_200.iloc[-1])
+            
+            last_signal = last_20_80(above_200.iloc[-1])
+            
+            st.metric("Stocks above 200 SMA", last_value_ma200)
+            st.text(last_signal)
+    
+        with col3:
+    
+            last_value_rhl = "{:.2f}%".format(rhl.iloc[-1])
+            
+            last_signal = last_20_80(rhl.iloc[-1])
+            
+            st.metric("Range High-Low", last_value_rhl)
+            st.text(last_signal)
+    
+        with col4:
+    
+            lat_value_nhnl =  "{:.2f}%".format(daily_highs_lows['High-Low Index'].iloc[-1])
+            
+            last_signal = last_nhnl(daily_highs_lows['High-Low Index'].iloc[-1])
+            
+            st.metric("New Highs - New Lows Index", lat_value_nhnl)
+            st.text(last_signal)
+        
+    
+        
+        #################################################################################
+        col1, col2 = st.columns(2)
+    
+        with col1:
+    
+            mkt_50 = pd.DataFrame({'Value':above_50,
+                                  'Date':above_50.index})
+            
+            fig = px.line(mkt_50, x='Date', y='Value', title='Stocks Above 50-Day SMA')
+            
+            fig.update_xaxes(
+                            rangeslider_visible=True,
+                            rangeselector=dict(
+                                buttons=list([
+                                    dict(count=3, label="3m", step="month", stepmode="backward"),
+                                    dict(count=6, label="6m", step="month", stepmode="backward"),
+                                    dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                                    dict(step="all")
+                                ])
+                            )
                         )
-                    )
+            
+            fig.update_yaxes(ticksuffix="%")
         
-        fig.update_yaxes(ticksuffix="%")
-
-        fig.update_layout( width=600,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
-
+            fig.update_layout( width=600,  # Largura do gráfico
+                height=500  # Altura do gráfico
+            )
+    
             # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=20, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=40, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=60, line_dash="dash", line_color="gray")
-        
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=80, line_dash="dash", line_color="gray")
+            fig.add_hline(y=20, line_dash="dash", line_color="gray")
     
-        st.plotly_chart(fig)
-
-
-    col3, col4 = st.columns(2)
-
-    with col3:       
-        
-        df_rhl = pd.DataFrame({'Range High-Low':rhl,
-                       'Date': rhl.index})
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=40, line_dash="dash", line_color="gray")
     
-        fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-week Range High-Low')
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=60, line_dash="dash", line_color="gray")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=80, line_dash="dash", line_color="gray")
         
-        fig.update_xaxes(
-                    rangeslider_visible=True,
-                    rangeselector=dict(
-                        buttons=list([
-                            dict(count=3, label="3m", step="month", stepmode="backward"),
-                            dict(count=6, label="6m", step="month", stepmode="backward"),
-                            dict(count=1, label="YTD", step="year", stepmode="todate"),
-                            dict(count=1, label="1y", step="year", stepmode="backward"),
-                            dict(count=3, label="3y", step="year", stepmode="backward"),
-                            dict(step="all")
-                        ])
-                    )
-                )
-        
-        fig.update_yaxes(tickformat=".2f", ticksuffix="%")
-        
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=30, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=40, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=60, line_dash="dash", line_color="gray")
-        
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=70, line_dash="dash", line_color="gray")
+            st.plotly_chart(fig)
     
     
-        fig.update_layout( width=600,  # Largura do gráfico
+        with col2:
+    
+            mkt_200 = pd.DataFrame({'Value':above_200,
+                          'Date':above_200.index})
+    
+            fig = px.line(mkt_200, x='Date', y='Value', title='Stocks Above 200-Day SMA')
+            
+            fig.update_xaxes(
+                            rangeslider_visible=True,
+                            rangeselector=dict(
+                                buttons=list([
+                                    dict(count=3, label="3m", step="month", stepmode="backward"),
+                                    dict(count=6, label="6m", step="month", stepmode="backward"),
+                                    dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                                    dict(step="all")
+                                ])
+                            )
+                        )
+            
+            fig.update_yaxes(ticksuffix="%")
+    
+            fig.update_layout( width=600,  # Largura do gráfico
                 height=500  # Altura do gráfico
             )
-        
-        st.plotly_chart(fig)
     
-    with col4:        
+                # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=20, line_dash="dash", line_color="gray")
+    
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=40, line_dash="dash", line_color="gray")
+    
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=60, line_dash="dash", line_color="gray")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=80, line_dash="dash", line_color="gray")
         
-        fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows')
+            st.plotly_chart(fig)
+    
+    
+        col3, col4 = st.columns(2)
+    
+        with col3:       
+            
+            df_rhl = pd.DataFrame({'Range High-Low':rhl,
+                           'Date': rhl.index})
         
-        fig.update_xaxes(
+            fig = px.line(df_rhl, x='Date', y='Range High-Low', title='20-week Range High-Low')
+            
+            fig.update_xaxes(
                         rangeslider_visible=True,
                         rangeselector=dict(
                             buttons=list([
@@ -2465,26 +2427,118 @@ if selected == 'Technical Analysis':
                             ])
                         )
                     )
-        
-        fig.update_yaxes(tickformat=".2f", ticksuffix="%")
-        
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=40, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=20, line_dash="dash", line_color="gray")
-
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=-20, line_dash="dash", line_color="gray")
-        
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=-40, line_dash="dash", line_color="gray")
+            
+            fig.update_yaxes(tickformat=".2f", ticksuffix="%")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=30, line_dash="dash", line_color="gray")
     
-        fig.update_layout( width=600,  # Largura do gráfico
-                height=500  # Altura do gráfico
-            )
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=40, line_dash="dash", line_color="gray")
+    
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=60, line_dash="dash", line_color="gray")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=70, line_dash="dash", line_color="gray")
         
-        st.plotly_chart(fig)
+        
+            fig.update_layout( width=600,  # Largura do gráfico
+                    height=500  # Altura do gráfico
+                )
+            
+            st.plotly_chart(fig)
+        
+        with col4:        
+            
+            fig = px.line(daily_highs_lows, x='Date', y='High-Low Index', title='20-day New Highs - New Lows')
+            
+            fig.update_xaxes(
+                            rangeslider_visible=True,
+                            rangeselector=dict(
+                                buttons=list([
+                                    dict(count=3, label="3m", step="month", stepmode="backward"),
+                                    dict(count=6, label="6m", step="month", stepmode="backward"),
+                                    dict(count=1, label="YTD", step="year", stepmode="todate"),
+                                    dict(count=1, label="1y", step="year", stepmode="backward"),
+                                    dict(count=3, label="3y", step="year", stepmode="backward"),
+                                    dict(step="all")
+                                ])
+                            )
+                        )
+            
+            fig.update_yaxes(tickformat=".2f", ticksuffix="%")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=40, line_dash="dash", line_color="gray")
+    
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=20, line_dash="dash", line_color="gray")
+    
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=-20, line_dash="dash", line_color="gray")
+            
+            # Adicionando a linha pontilhada cinza no y=0
+            fig.add_hline(y=-40, line_dash="dash", line_color="gray")
+        
+            fig.update_layout( width=600,  # Largura do gráfico
+                    height=500  # Altura do gráfico
+                )
+            
+            st.plotly_chart(fig)
+
+    if analysis_type == "Constituents":
+
+        tickers_data = pd.DataFrame(columns=['Sector', '1D', '3D', '1W', '2W', '1M', '3M', '6M', '1Y', '2Y', 
+                                   '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High',  '% 52W Low'], 
+                            index=list_of_stocks)
+
+        price = yf.download(list_of_stocks, period='5y')
+
+        # Preenchendo os dados de variação percentual para diferentes períodos
+        tickers_data['1D'] = price.pct_change(1).iloc[-1] * 100
+        tickers_data['3D'] = price.pct_change(3).iloc[-1] * 100
+        tickers_data['1W'] = price.pct_change(5).iloc[-1] * 100   # 5 dias úteis para 1 semana
+        tickers_data['2W'] = price.pct_change(10).iloc[-1] * 100  # 10 dias úteis para 2 semanas
+        tickers_data['1M'] = price.pct_change(20).iloc[-1] * 100  # Aproximadamente 20 dias úteis para 1 mês
+        tickers_data['3M'] = price.pct_change(60).iloc[-1] * 100  # Aproximadamente 60 dias úteis para 3 meses
+        tickers_data['6M'] = price.pct_change(120).iloc[-1] * 100 # Aproximadamente 120 dias úteis para 6 meses
+        tickers_data['1Y'] = price.pct_change(260).iloc[-1] * 100 # Aproximadamente 260 dias úteis para 1 ano
+        tickers_data['2Y'] = price.pct_change(520).iloc[-1] * 100 # Aproximadamente 504 dias úteis para 2 anos
+        
+        # Calculando as médias móveis e percentuais em relação às médias móveis
+        tickers_data['% MA20'] = (price.iloc[-1] / price.rolling(window=20).mean().iloc[-1] - 1) * 100
+        tickers_data['% MA50'] = (price.iloc[-1] / price.rolling(window=50).mean().iloc[-1] - 1) * 100
+        tickers_data['% MA150'] = (price.iloc[-1] / price.rolling(window=150).mean().iloc[-1] - 1) * 100
+        tickers_data['% MA200'] = (price.iloc[-1] / price.rolling(window=200).mean().iloc[-1] - 1) * 100
+        
+        # Percentual em relação à máxima e mínima de 52 semanas
+        tickers_data['% 52W High'] = ((price.rolling(window=252).max().iloc[-1] - price.iloc[-1]) / price.rolling(window=252).max().iloc[-1]) * 100
+        tickers_data['% 52W Low'] = ((price.iloc[-1] - price.rolling(window=252).min().iloc[-1]) / price.rolling(window=252).min().iloc[-1]) * 100
+        
+        # Formatando as colunas para exibir como porcentagens com símbolo %
+        tickers_data = tickers_data.applymap(lambda x: f"{x:.2f}%" if pd.notnull(x) else np.nan)
+        
+        for i in range(0, len(tickers_data.index)):
+        
+            try:
+            
+                ticker = tickers_data.index[i]
+        
+                name = yf.Ticker(ticker).info['longName']
+                
+                sector = yf.Ticker(ticker).info['sector']
+        
+                tickers_data.index.values[i] = name
+                
+                tickers_data.loc[name, 'Sector'] = sector
+            
+            except:
+                pass
+
+        tickers_data = tickers_data.dropna(axis=0)
+
+        st.dataframe(tickers_data)
 
         
 if selected == 'Risk & Volatility':
