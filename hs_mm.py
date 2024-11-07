@@ -2495,8 +2495,6 @@ if selected == 'Technical Analysis':
 
         price = yf.download(list_of_stocks, period='5y')['Adj Close']
 
-        st.dataframe(price)
-
         # Preenchendo os dados de variação percentual para diferentes períodos
         tickers_data['1D'] = price.pct_change(1).iloc[-1] * 100
         tickers_data['3D'] = price.pct_change(3).iloc[-1] * 100
@@ -2538,7 +2536,7 @@ if selected == 'Technical Analysis':
             except:
                 pass
 
-        # tickers_data = tickers_data.dropna(axis=0)
+        tickers_data = tickers_data.dropna(axis=0)
 
         st.dataframe(tickers_data)
 
