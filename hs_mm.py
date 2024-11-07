@@ -2493,7 +2493,7 @@ if selected == 'Technical Analysis':
                                    '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High',  '% 52W Low'], 
                             index=list_of_stocks)
 
-        price = yf.download(list_of_stocks, period='5y')
+        price = yf.download(list_of_stocks, period='5y')['Adj Close']
 
         # Preenchendo os dados de variação percentual para diferentes períodos
         tickers_data['1D'] = price.pct_change(1).iloc[-1] * 100
