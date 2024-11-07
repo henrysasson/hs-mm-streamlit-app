@@ -2218,56 +2218,56 @@ if selected == 'Technical Analysis':
 
     ################# S&D Volume #######################
     
-    df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
+    # df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change(10)
         
-    # Identifique as emissões avançadas e em declínio
-    df['Advancing'] = df['Close Change'] > 0.015
-    df['Declining'] = df['Close Change'] < -0.015
+    # # Identifique as emissões avançadas e em declínio
+    # df['Advancing'] = df['Close Change'] > 0.015
+    # df['Declining'] = df['Close Change'] < -0.015
     
-    # Calcule o volume diário para emissões avançadas e em declínio
-    df['Advancing Volume'] = df['Volume'] * df['Advancing']
-    df['Declining Volume'] = df['Volume'] * df['Declining']
+    # # Calcule o volume diário para emissões avançadas e em declínio
+    # df['Advancing Volume'] = df['Volume'] * df['Advancing']
+    # df['Declining Volume'] = df['Volume'] * df['Declining']
     
-    # Faça a soma de 10 dias dos volumes
-    rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
-    rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+    # # Faça a soma de 10 dias dos volumes
+    # rolling_adv_vol = df.groupby(level=0)['Advancing Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
+    # rolling_dec_vol = df.groupby(level=0)['Declining Volume'].rolling(window=10).sum().reset_index(level=0, drop=True)
     
-    # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
-    v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
+    # # Agora, divida a soma de 10 dias do volume avançado pelo volume em declínio para obter o indicador
+    # v_r = rolling_adv_vol.groupby(level=0).sum() / (rolling_dec_vol.groupby(level=0).sum()+rolling_adv_vol.groupby(level=0).sum())
 
-    v_r = v_r*100
+    # v_r = v_r*100
 
-    v_r = v_r.ffill(axis=0)
+    # v_r = v_r.ffill(axis=0)
     
-    ################# McClellan Oscillator #######################
+    # ################# McClellan Oscillator #######################
     
-    # Calcule a mudança diária no preço de fechamento
-    df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
+    # # Calcule a mudança diária no preço de fechamento
+    # df['Close Change'] = df.groupby(level=1)['Adj Close'].pct_change()
     
-    # Identifique as emissões avançadas e em declínio
-    df['Advancing'] = df['Close Change'] > 0
-    df['Declining'] = df['Close Change'] < 0
+    # # Identifique as emissões avançadas e em declínio
+    # df['Advancing'] = df['Close Change'] > 0
+    # df['Declining'] = df['Close Change'] < 0
     
-    # Substituindo True e False por 1 e 0, respectivamente
-    df['Advancing'] = df['Advancing'].astype(int)
-    df['Declining'] = df['Declining'].astype(int)
+    # # Substituindo True e False por 1 e 0, respectivamente
+    # df['Advancing'] = df['Advancing'].astype(int)
+    # df['Declining'] = df['Declining'].astype(int)
     
-    # Calcular a diferença diária entre avanços e declínios
-    # Primeiro, somamos as emissões avançadas e em declínio para cada dia
-    daily_advances = df.groupby(level=0)['Advancing'].sum()
-    daily_declines = df.groupby(level=0)['Declining'].sum()
+    # # Calcular a diferença diária entre avanços e declínios
+    # # Primeiro, somamos as emissões avançadas e em declínio para cada dia
+    # daily_advances = df.groupby(level=0)['Advancing'].sum()
+    # daily_declines = df.groupby(level=0)['Declining'].sum()
     
-    # Depois calculamos a diferença para cada dia
-    net_advances = daily_advances - daily_declines
+    # # Depois calculamos a diferença para cada dia
+    # net_advances = daily_advances - daily_declines
     
-    # Calcular a EMA de 19 dias para Net Advances
-    mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
+    # # Calcular a EMA de 19 dias para Net Advances
+    # mco_19ema = net_advances.ewm(span=19, adjust=False).mean()
     
-    # Calcular a EMA de 39 dias para Net Advances
-    mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
+    # # Calcular a EMA de 39 dias para Net Advances
+    # mco_39ema = net_advances.ewm(span=39, adjust=False).mean()
     
-    # Calcular o McClellan Oscillator
-    mco = mco_19ema - mco_39ema
+    # # Calcular o McClellan Oscillator
+    # mco = mco_19ema - mco_39ema
     
     
     ###############################################################################
@@ -2328,33 +2328,33 @@ if selected == 'Technical Analysis':
         return reading
 
 
-    def last_vr(value):
-        if value < 50:
-            reading = 'Bear'
+    # def last_vr(value):
+    #     if value < 50:
+    #         reading = 'Bear'
         
-        if value > 50:
-            reading = 'Bull'
+    #     if value > 50:
+    #         reading = 'Bull'
         
-        return reading
+    #     return reading
 
 
-    def last_mco(value):
-        if np.percentile(mco, 10) > value:
-            reading = 'Bull'
+    # def last_mco(value):
+    #     if np.percentile(mco, 10) > value:
+    #         reading = 'Bull'
         
-        if np.percentile(mco, 10) < value < 0:
-            reading = 'Bear'
+    #     if np.percentile(mco, 10) < value < 0:
+    #         reading = 'Bear'
         
-        if 0 < value < np.percentile(mco, 90):
-            reading = 'Bull'
+    #     if 0 < value < np.percentile(mco, 90):
+    #         reading = 'Bull'
 
-        if value > np.percentile(mco, 90):
-            reading = 'Bear'
+    #     if value > np.percentile(mco, 90):
+    #         reading = 'Bear'
         
-        return reading
+    #     return reading
 
     
-    col1, col2, col3, col4, col5, col6 = st.columns(6)
+    col1, col2, col3, col4 = st.columns(4)
 
     with col1:
     
@@ -2392,23 +2392,23 @@ if selected == 'Technical Analysis':
         st.metric("New Highs - New Lows Index", lat_value_nhnl)
         st.text(last_signal)
 
-    with col5:
+    # with col5:
 
-        last_value_vr = "{:.2f}%".format(v_r.iloc[-1])
+    #     last_value_vr = "{:.2f}%".format(v_r.iloc[-1])
         
-        last_signal = last_vr(v_r.iloc[-1])
+    #     last_signal = last_vr(v_r.iloc[-1])
         
-        st.metric("S&D Volume", last_value_vr)
-        st.text(last_signal)
+    #     st.metric("S&D Volume", last_value_vr)
+    #     st.text(last_signal)
 
-    with col6:
+    # with col6:
 
-        last_value_mco = "{:.2f}".format(mco.iloc[-1])        
+    #     last_value_mco = "{:.2f}".format(mco.iloc[-1])        
         
-        last_signal = last_mco(mco.iloc[-1])
+    #     last_signal = last_mco(mco.iloc[-1])
         
-        st.metric("McClellan Oscillator", last_value_mco)
-        st.text(last_signal)
+    #     st.metric("McClellan Oscillator", last_value_mco)
+    #     st.text(last_signal)
     
 
     
@@ -2581,75 +2581,75 @@ if selected == 'Technical Analysis':
         
         st.plotly_chart(fig)
 
-    col5, col6 = st.columns(2)
+    # col5, col6 = st.columns(2)
     
-    with col5:
+    # with col5:
     
-        v_r_10 = pd.DataFrame({'Value':v_r,
-                          'Date':v_r.index})
+    #     v_r_10 = pd.DataFrame({'Value':v_r,
+    #                       'Date':v_r.index})
     
-        fig = px.line(v_r_10, x='Date', y='Value', title='10-day Supply and Demand Volume')
+    #     fig = px.line(v_r_10, x='Date', y='Value', title='10-day Supply and Demand Volume')
         
-        fig.update_xaxes(
-                        rangeslider_visible=True,
-                        rangeselector=dict(
-                            buttons=list([
-                                dict(count=3, label="3m", step="month", stepmode="backward"),
-                                dict(count=6, label="6m", step="month", stepmode="backward"),
-                                dict(count=1, label="YTD", step="year", stepmode="todate"),
-                                dict(count=1, label="1y", step="year", stepmode="backward"),
-                                dict(count=3, label="3y", step="year", stepmode="backward"),
-                                dict(step="all")
-                            ])
-                        )
-                    )
+    #     fig.update_xaxes(
+    #                     rangeslider_visible=True,
+    #                     rangeselector=dict(
+    #                         buttons=list([
+    #                             dict(count=3, label="3m", step="month", stepmode="backward"),
+    #                             dict(count=6, label="6m", step="month", stepmode="backward"),
+    #                             dict(count=1, label="YTD", step="year", stepmode="todate"),
+    #                             dict(count=1, label="1y", step="year", stepmode="backward"),
+    #                             dict(count=3, label="3y", step="year", stepmode="backward"),
+    #                             dict(step="all")
+    #                         ])
+    #                     )
+    #                 )
         
-        fig.update_yaxes(tickformat=".2f", ticksuffix="%")
+    #     fig.update_yaxes(tickformat=".2f", ticksuffix="%")
         
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=50, line_dash="dash", line_color="gray")
+    #     # Adicionando a linha pontilhada cinza no y=0
+    #     fig.add_hline(y=50, line_dash="dash", line_color="gray")
     
-        fig.update_layout( width=600,  # Largura do gráfico
-                height=500  # Altura do gráfico
-            )
+    #     fig.update_layout( width=600,  # Largura do gráfico
+    #             height=500  # Altura do gráfico
+    #         )
         
-        st.plotly_chart(fig)
+    #     st.plotly_chart(fig)
     
-    with col6:
+    # with col6:
 
-        mco_plot = pd.DataFrame({'Value':mco,
-                      'Date':mco.index})
+    #     mco_plot = pd.DataFrame({'Value':mco,
+    #                   'Date':mco.index})
 
-        fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
+    #     fig = px.line(mco_plot, x='Date', y='Value', title='McClellan Ocslillator')
         
-        fig.update_xaxes(
-                        rangeslider_visible=True,
-                        rangeselector=dict(
-                            buttons=list([
-                                dict(count=3, label="3m", step="month", stepmode="backward"),
-                                dict(count=6, label="6m", step="month", stepmode="backward"),
-                                dict(count=1, label="YTD", step="year", stepmode="todate"),
-                                dict(count=1, label="1y", step="year", stepmode="backward"),
-                                dict(count=3, label="3y", step="year", stepmode="backward"),
-                                dict(step="all")
-                            ])
-                        )
-                    )
+    #     fig.update_xaxes(
+    #                     rangeslider_visible=True,
+    #                     rangeselector=dict(
+    #                         buttons=list([
+    #                             dict(count=3, label="3m", step="month", stepmode="backward"),
+    #                             dict(count=6, label="6m", step="month", stepmode="backward"),
+    #                             dict(count=1, label="YTD", step="year", stepmode="todate"),
+    #                             dict(count=1, label="1y", step="year", stepmode="backward"),
+    #                             dict(count=3, label="3y", step="year", stepmode="backward"),
+    #                             dict(step="all")
+    #                         ])
+    #                     )
+    #                 )
         
-        fig.update_yaxes(tickformat=".2f")
+    #     fig.update_yaxes(tickformat=".2f")
         
-        # Adicionando a linha pontilhada cinza no y=0
-        fig.add_hline(y=0, line_dash="dash", line_color="gray")
+    #     # Adicionando a linha pontilhada cinza no y=0
+    #     fig.add_hline(y=0, line_dash="dash", line_color="gray")
 
-        fig.add_hline(y=np.percentile(mco, 90), line_dash="dash", line_color="gray")
+    #     fig.add_hline(y=np.percentile(mco, 90), line_dash="dash", line_color="gray")
 
-        fig.add_hline(y=np.percentile(mco, 10), line_dash="dash", line_color="gray")
+    #     fig.add_hline(y=np.percentile(mco, 10), line_dash="dash", line_color="gray")
 
-        fig.update_layout( width=600,  # Largura do gráfico
-            height=500  # Altura do gráfico
-        )
+    #     fig.update_layout( width=600,  # Largura do gráfico
+    #         height=500  # Altura do gráfico
+    #     )
     
-        st.plotly_chart(fig)
+    #     st.plotly_chart(fig)
         
 if selected == 'Risk & Volatility':
     st.title('Volatility Momentum')
