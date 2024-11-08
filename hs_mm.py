@@ -2547,6 +2547,9 @@ if selected == 'Technical Analysis':
             '1D', '3D', '1W', '2W', '1M', '3M', '6M', '1Y', '2Y', 
             '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High', '% 52W Low'
         ]
+
+        for col in percentage_columns:
+            tickers_data[col] = tickers_data[col] * 100
         
         # Definir configurações para colunas de porcentagem
         column_configs = {
@@ -2560,8 +2563,8 @@ if selected == 'Technical Analysis':
         tickers_data['% MA50'] > 0,
         tickers_data['% MA150'] > 0,
         tickers_data['% MA200'] > 0,
-        tickers_data['% 52W High'] < 30,
-        tickers_data['% 52W Low'] > 30,
+        tickers_data['% 52W High'] < 0.25,
+        tickers_data['% 52W Low'] > 0.25,
         tickers_data['RS Rating'] >=70   
         ]
     
