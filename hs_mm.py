@@ -2499,28 +2499,28 @@ if selected == 'Technical Analysis':
         price = yf.download(list_of_stocks, period='5y')['Adj Close']
 
         # Preenchendo os dados de variação percentual para diferentes períodos
-        tickers_data['1D'] = price.pct_change(1).iloc[-1] * 100
-        tickers_data['3D'] = price.pct_change(3).iloc[-1] * 100
-        tickers_data['1W'] = price.pct_change(5).iloc[-1] * 100   # 5 dias úteis para 1 semana
-        tickers_data['2W'] = price.pct_change(10).iloc[-1] * 100  # 10 dias úteis para 2 semanas
-        tickers_data['1M'] = price.pct_change(20).iloc[-1] * 100  # Aproximadamente 20 dias úteis para 1 mês
-        tickers_data['3M'] = price.pct_change(60).iloc[-1] * 100  # Aproximadamente 60 dias úteis para 3 meses
-        tickers_data['6M'] = price.pct_change(120).iloc[-1] * 100 # Aproximadamente 120 dias úteis para 6 meses
-        tickers_data['1Y'] = price.pct_change(260).iloc[-1] * 100 # Aproximadamente 260 dias úteis para 1 ano
-        tickers_data['2Y'] = price.pct_change(520).iloc[-1] * 100 # Aproximadamente 504 dias úteis para 2 anos
+        tickers_data['1D'] = price.pct_change(1).iloc[-1]
+        tickers_data['3D'] = price.pct_change(3).iloc[-1]
+        tickers_data['1W'] = price.pct_change(5).iloc[-1]   # 5 dias úteis para 1 semana
+        tickers_data['2W'] = price.pct_change(10).iloc[-1]  # 10 dias úteis para 2 semanas
+        tickers_data['1M'] = price.pct_change(20).iloc[-1]  # Aproximadamente 20 dias úteis para 1 mês
+        tickers_data['3M'] = price.pct_change(60).iloc[-1]  # Aproximadamente 60 dias úteis para 3 meses
+        tickers_data['6M'] = price.pct_change(120).iloc[-1] # Aproximadamente 120 dias úteis para 6 meses
+        tickers_data['1Y'] = price.pct_change(260).iloc[-1] # Aproximadamente 260 dias úteis para 1 ano
+        tickers_data['2Y'] = price.pct_change(520).iloc[-1] # Aproximadamente 504 dias úteis para 2 anos
         
         # Calculando as médias móveis e percentuais em relação às médias móveis
-        tickers_data['% MA20'] = (price.iloc[-1] / price.rolling(window=20).mean().iloc[-1] - 1) * 100
-        tickers_data['% MA50'] = (price.iloc[-1] / price.rolling(window=50).mean().iloc[-1] - 1) * 100
-        tickers_data['% MA150'] = (price.iloc[-1] / price.rolling(window=150).mean().iloc[-1] - 1) * 100
-        tickers_data['% MA200'] = (price.iloc[-1] / price.rolling(window=200).mean().iloc[-1] - 1) * 100
+        tickers_data['% MA20'] = (price.iloc[-1] / price.rolling(window=20).mean().iloc[-1] - 1)
+        tickers_data['% MA50'] = (price.iloc[-1] / price.rolling(window=50).mean().iloc[-1] - 1)
+        tickers_data['% MA150'] = (price.iloc[-1] / price.rolling(window=150).mean().iloc[-1] - 1)
+        tickers_data['% MA200'] = (price.iloc[-1] / price.rolling(window=200).mean().iloc[-1] - 1)
         
         # Percentual em relação à máxima e mínima de 52 semanas
-        tickers_data['% 52W High'] = ((price.rolling(window=252).max().iloc[-1] - price.iloc[-1]) / price.rolling(window=252).max().iloc[-1]) * 100
-        tickers_data['% 52W Low'] = ((price.iloc[-1] - price.rolling(window=252).min().iloc[-1]) / price.rolling(window=252).min().iloc[-1]) * 100
+        tickers_data['% 52W High'] = ((price.rolling(window=252).max().iloc[-1] - price.iloc[-1]) / price.rolling(window=252).max().iloc[-1]) # deve ser acima de 70%
+        tickers_data['% 52W Low'] = ((price.iloc[-1] - price.rolling(window=252).min().iloc[-1]) / price.rolling(window=252).min().iloc[-1]) # deve ser acima de 30%
         
         # Formatando as colunas para exibir como porcentagens com símbolo %
-        tickers_data = tickers_data.applymap(lambda x: f"{x:.2f}%" if pd.notnull(x) else np.nan)
+        # tickers_data = tickers_data.applymap(lambda x: f"{x:.2f}%" if pd.notnull(x) else np.nan)
         
         for i in range(0, len(tickers_data.index)):
         
@@ -2541,7 +2541,34 @@ if selected == 'Technical Analysis':
 
         tickers_data = tickers_data.dropna(axis=0)
 
-        st.dataframe(tickers_data)
+        # Configurar colunas para exibir valores no formato X,XX%
+        percentage_columns = [
+            '1D', '3D', '1W', '2W', '1M', '3M', '6M', '1Y', '2Y', 
+            '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High', '% 52W Low'
+        ]
+        
+        # Definir configurações para colunas de porcentagem
+        column_configs = {
+            col: st.column_config.NumberColumn(format="%.2f%%") for col in percentage_columns
+        }
+
+        tickers_data['RS Rating'] = tickers_data['1Y'].apply(lambda x: round(stats.percentileofscore(tickers_data['1Y'], x)))
+
+        conditions = [
+        tickers_data['% MA20'] > 0,
+        tickers_data['% MA50'] > 0,
+        tickers_data['% MA150'] > 0,
+        tickers_data['% MA200'] > 0,
+        tickers_data['% 52W High'] < 30,
+        tickers_data['% 52W Low'] > 30,
+        tickers_data['RS Rating'] >=70   
+        ]
+    
+        # Calculando o número de condições satisfeitas para cada linha
+        tickers_data['Trend'] = sum(condition.astype(int) for condition in conditions)
+        
+        # Exibir o DataFrame no Streamlit com configurações de colunas personalizadas
+        st.dataframe(tickers_data, column_config=column_configs)
 
         
 if selected == 'Risk & Volatility':
