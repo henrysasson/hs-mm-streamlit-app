@@ -2576,11 +2576,9 @@ if selected == 'Technical Analysis':
             '% 52W Low', 'RS Rating', 'Trend'
         ]
         
-        # Aplicar gradiente de cores apenas nas colunas selecionadas
-        styled_df = tickers_data.style.background_gradient(subset=selected_columns, cmap='RdYlGn')
         
         # Exibir o DataFrame no Streamlit com configurações de colunas personalizadas
-        st.dataframe(styled_df, column_config=column_configs, use_container_width=True)
+        st.dataframe(tickers_data, column_config=column_configs, use_container_width=True)
 
         
 if selected == 'Risk & Volatility':
