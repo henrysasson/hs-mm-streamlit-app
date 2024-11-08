@@ -9,4 +9,4 @@ inflection==0.5.1
 more-itertools==8.7.0
 python-dateutil==2.8.1
 six==1.15.0
-streamlit==1.25.0
+streamlit==1.40.0
