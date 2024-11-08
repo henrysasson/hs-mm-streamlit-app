@@ -18,6 +18,7 @@ from bcb import sgs
 import datetime
 from datetime import date
 from datetime import timedelta
+import scipy.stats as stats
 import warnings
 import numpy as np
 #import nasdaqdatalink
