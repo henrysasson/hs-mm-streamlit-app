@@ -2520,8 +2520,6 @@ if selected == 'Technical Analysis':
         tickers_data['% 52W High'] = ((price.rolling(window=252).max().iloc[-1] - price.iloc[-1]) / price.rolling(window=252).max().iloc[-1]) # deve ser acima de 70%
         tickers_data['% 52W Low'] = ((price.iloc[-1] - price.rolling(window=252).min().iloc[-1]) / price.rolling(window=252).min().iloc[-1]) # deve ser acima de 30%
         
-        # Formatando as colunas para exibir como porcentagens com símbolo %
-        # tickers_data = tickers_data.applymap(lambda x: f"{x:.2f}%" if pd.notnull(x) else np.nan)
         
         for i in range(0, len(tickers_data.index)):
         
@@ -2570,9 +2568,19 @@ if selected == 'Technical Analysis':
     
         # Calculando o número de condições satisfeitas para cada linha
         tickers_data['Trend'] = sum(condition.astype(int) for condition in conditions)
+
+        # Lista de colunas para aplicar a escala de cores
+        selected_columns = [
+            '1D', '3D', '1W', '2W', '1M', '3M', '6M', '1Y', '2Y', 
+            '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High', 
+            '% 52W Low', 'RS Rating', 'Trend'
+        ]
+        
+        # Aplicar gradiente de cores apenas nas colunas selecionadas
+        styled_df = tickers_data.style.background_gradient(subset=selected_columns, cmap='RdYlGn')
         
         # Exibir o DataFrame no Streamlit com configurações de colunas personalizadas
-        st.dataframe(tickers_data, column_config=column_configs)
+        st.dataframe(styled_df, column_config=column_configs, use_container_width=True)
 
         
 if selected == 'Risk & Volatility':
