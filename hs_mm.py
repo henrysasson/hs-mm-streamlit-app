@@ -69,13 +69,13 @@ column_mapping = dict(zip(tickers_rf, names_rf))
 # Renomeie as colunas
 df_rf.rename(columns=column_mapping, inplace=True)
 
-# Crypto
-tickers_crypto = ['BTC-USD', 'ETH-USD', 'MATIC-USD', 'LINK-USD', 'SOL-USD', 'UNI-USD', 'STX-USD', 'LDO-USD']
-df_crypto = get_data(tickers_crypto).fillna(method='ffill', axis=0)
-names_crypto = ['BTCUSD', 'ETHUSD', 'MATICUSD', 'LINKUSD', 'SOLUSD', 'UNIUSD', 'STXUSD', 'LDOUSD']
-column_mapping = dict(zip(tickers_crypto, names_crypto))
-# Renomeie as colunas
-df_crypto.rename(columns=column_mapping, inplace=True)
+# # Crypto
+# tickers_crypto = ['BTC-USD', 'ETH-USD', 'MATIC-USD', 'LINK-USD', 'SOL-USD', 'UNI-USD', 'STX-USD', 'LDO-USD']
+# df_crypto = get_data(tickers_crypto).fillna(method='ffill', axis=0)
+# names_crypto = ['BTCUSD', 'ETHUSD', 'MATICUSD', 'LINKUSD', 'SOLUSD', 'UNIUSD', 'STXUSD', 'LDOUSD']
+# column_mapping = dict(zip(tickers_crypto, names_crypto))
+# # Renomeie as colunas
+# df_crypto.rename(columns=column_mapping, inplace=True)
 
 # Factors
 tikckers_factors = ['VLUE', 'QUAL', 'MTUM',  'SMLF', 'USMV', 'IVLU', 'IQLT', 'IMTM', 'ISCF', 'ACWV', 'EEM']
@@ -94,7 +94,7 @@ column_mapping = dict(zip(tickers_sectors, names_sectors))
 df_sectors.rename(columns=column_mapping, inplace=True)
 
 # Todos os Ativos
-all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_crypto, df_factors, df_sectors], axis=1).ffill().dropna()
+all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_factors, df_sectors], axis=1).ffill().dropna()
 
 options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatility']
 selected = st.sidebar.selectbox('Main Menu', options)
@@ -186,10 +186,10 @@ if selected == 'Returns Heatmap':
     with col6:
         returns_heatmap(df_sectors, "US Sectors")
 
-    col7, col8 = st.columns(2)
+    # col7, col8 = st.columns(2)
 
-    with col7:
-        returns_heatmap(df_crypto, "Crypto")
+    # with col7:
+    #     returns_heatmap(df_crypto, "Crypto")
 
 
 # # Matriz de Correlação
@@ -291,10 +291,10 @@ if selected == 'Correlation Matrix':
     with col6:
         corr_matrix(df_sectors, lookback, "US Sectors")
 
-    col7, col8 = st.columns(2)
+    # col7, col8 = st.columns(2)
 
-    with col7:
-        corr_matrix(df_crypto, lookback, "Crypto")
+    # with col7:
+    #     corr_matrix(df_crypto, lookback, "Crypto")
 
     
 
@@ -445,11 +445,11 @@ if selected == 'Market Directionality':
 
         directional_indicator(df_rf, lookback, 'Fixed Income')
 
-    col5, col6 = st.columns(2)
+    # col5, col6 = st.columns(2)
 
-    with col5:
+    # with col5:
 
-        directional_indicator(df_crypto, lookback, 'Crypto')
+    #     directional_indicator(df_crypto, lookback, 'Crypto')
 
 
 
@@ -2670,10 +2670,10 @@ height=600  # Altura do gráfico
     with col6:
         vol_heatmap(df_sectors, "US Sectors", lookback)
 
-    col7, col8 = st.columns(2)
+    # col7, col8 = st.columns(2)
 
-    with col7:
-        vol_heatmap(df_crypto, "Crypto", lookback)
+    # with col7:
+    #     vol_heatmap(df_crypto, "Crypto", lookback)
 
     
     all_assets_list = all_assets.columns.tolist()
