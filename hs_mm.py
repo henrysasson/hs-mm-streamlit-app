@@ -1795,16 +1795,17 @@ if selected == 'Technical Analysis':
     "TLEVISACPO.MX", "PE&OLES.MX", "KIMBERA.MX", "LACOMERUBC.MX", 
     "MEGACPO.MX", "ORBIA.MX", "PINFRA.MX", "Q.MX", "RA.MX", "WALMEX.MX"]
   
-    tickers_ftse = ['ANTO.L', 'STJ.L', 'FCIT.L', 'BEZ.L', 'SSE.L', 'WEIR.L', 'RIO.L', 'AUTO.L', 'AAL.L',
-                    'BDEV.L', 'BKG.L', 'ITRK.L', 'KGF.L', 'MNG.L', 'MKS.L', 'NXT.L', 'PSON.L', 'PSN.L', 
-                    'SN.L', 'REL.L', 'TW.L', 'LSEG.L', 'JD.L', 'WTB.L', 'AAF.L', 'EXPN.L', 'WPP.L', 'ENT.L', 
-                    'DCC.L', 'SPX.L', 'NG.L', 'SHEL.L', 'FRAS.L', 'ULVR.L', 'GSK.L', 'ADM.L', 'INF.L', 'EDV.L', 
-                    'IHG.L', 'HIK.L', 'OCDO.L', 'BRBY.L', 'CPG.L', 'DPLM.L', 'LAND.L', 'PSH.L', 'AZN.L', 'AHT.L', 
-                    'ABF.L', 'RKT.L', 'BME.L', 'RR.L', 'BNZL.L', 'RMV.L', 'CRDA.L', 'RS1.L', 'CNA.L', 'DGE.L', 'HLMA.L', 
-                    'HSBA.L', 'IMI.L', 'HLN.L', 'PHNX.L', 'HWDN.L', 'UU.L', 'IMB.L', 'VOD.L', 'RTO.L', 'NWG.L', 'BARC.L', 
-                    'SBRY.L', 'SDR.L', 'BATS.L', 'SGRO.L', 'BA.L', 'SMIN.L', 'STAN.L', 'TSCO.L', 'SGE.L', 'CCH.L', 'LLOY.L', 
-                    'SMT.L', 'MNDI.L', 'FLTR.L', 'CTEC.L', 'SMDS.L', 'ICP.L', 'III.L', 'MRO.L', 'IAG.L', 'SVT.L', 'BP.L', 
-                    'BT-A.L', 'SKG.L', 'GLEN.L', 'FRES.L', 'UTG.L', 'AV.L', 'LGEN.L', 'PRU.L']
+    tickers_ftse = ["III.L", "ABDN.L", "ADM.L", "AAL.L", "ANTO.L", "AHT.L", "ABF.L", "AZN.L",
+    "AV.L", "BA.L", "BARC.L", "BDEV.L", "BKG.L", "BP.L", "BATS.L", "BT-A.L",
+    "BNZL.L", "BRBY.L", "CCH.L", "CPG.L", "CRH.L", "CRDA.L", "DCC.L", "DGE.L",
+    "ENT.L", "EXPN.L", "FLTR.L", "FRES.L", "GLEN.L", "GSK.L", "HLN.L", "HLMA.L",
+    "HL.L", "HSBA.L", "IMB.L", "INF.L", "IHG.L", "IAG.L", "ITRK.L", "JD.L", 
+    "JMAT.L", "KGF.L", "LAND.L", "LGEN.L", "LLOY.L", "LSEG.L", "MNG.L", "MRO.L",
+    "MNDI.L", "NG.L", "NWG.L", "NXT.L", "OCDO.L", "PSON.L", "PSN.L", "PHNX.L", 
+    "PRU.L", "RKT.L", "REL.L", "RTO.L", "RIO.L", "RR.L", "SGE.L", "SBRY.L", 
+    "SDR.L", "SMT.L", "SGRO.L", "SVT.L", "SHEL.L", "SN.L", "SMIN.L", "SPX.L",
+    "SSE.L", "STJ.L", "STAN.L", "TW.L", "TSCO.L", "ULVR.L", "UU.L", "VOD.L",
+    "WTB.L", "WPP.L"]
     
     tickers_nasdaq = [
     "MELI", "CDW", "MDLZ", "AMZN", "CPRT", "DDOG", "IDXX", "GOOG", "CSGP", 
