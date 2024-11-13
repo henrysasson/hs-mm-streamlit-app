@@ -2503,14 +2503,14 @@ if selected == 'Technical Analysis':
         tickers_data['2Y'] = price.pct_change(520).iloc[-1] # Aproximadamente 504 dias úteis para 2 anos
         
         # Calculando as médias móveis e percentuais em relação às médias móveis
-        tickers_data['% MA20'] = (price.iloc[-1] / price.rolling(window=20).mean().iloc[-1] - 1)
-        tickers_data['% MA50'] = (price.iloc[-1] / price.rolling(window=50).mean().iloc[-1] - 1)
-        tickers_data['% MA150'] = (price.iloc[-1] / price.rolling(window=150).mean().iloc[-1] - 1)
-        tickers_data['% MA200'] = (price.iloc[-1] / price.rolling(window=200).mean().iloc[-1] - 1)
+        tickers_data['% MA20'] = (price.iloc[-1] / price[-20:].mean() - 1)
+        tickers_data['% MA50'] = (price.iloc[-1] / price[-50:].mean() - 1)
+        tickers_data['% MA150'] = (price.iloc[-1] / price[-150:].mean() - 1)
+        tickers_data['% MA200'] = (price.iloc[-1] / price[-200:].mean()- 1)
         
         # Percentual em relação à máxima e mínima de 52 semanas
-        tickers_data['% 52W High'] = ((price.rolling(window=252).max().iloc[-1] - price.iloc[-1]) / price.rolling(window=252).max().iloc[-1]) # deve ser acima de 70%
-        tickers_data['% 52W Low'] = ((price.iloc[-1] - price.rolling(window=252).min().iloc[-1]) / price.rolling(window=252).min().iloc[-1]) # deve ser acima de 30%
+        tickers_data['% 52W High'] = ((price[-252:].max() - price.iloc[-1]) / price[-252:].max()) # deve ser acima de 70%
+        tickers_data['% 52W Low'] = ((price.iloc[-1] - price[-252:].min()) / price[-252:].min()) # deve ser acima de 30%
         
         
         for i in range(0, len(tickers_data.index)):
