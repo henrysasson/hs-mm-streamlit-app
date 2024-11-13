@@ -1854,16 +1854,13 @@ if selected == 'Technical Analysis':
                    'AMGN', 'AAPL', 'CSCO', 'UNH', 'CRM', 'DOW', 'V', 'WBA', 'NKE']
 
     tickers_euro_stoxx = [
-    "OR.PA", "DG.PA", "BBVA.MC", "SAN.MC", "ASML.AS", "TTE.PA",
-    "AI.PA", "CS.PA", "BNP.PA", "BN.PA", "SGO.PA", "EL.PA",
-    "MC.PA", "KER.PA", "RACE.MI", "SAF.PA", "WKL.AS", "AD.AS",
-    "UCG.MI", "IBE.MC", "RMS.PA", "INGA.AS", "STLAM.MI", "PRX.AS",
-    "ITX.MC", "ISP.MI", "ENI.MI", "ABI.BR", "NDA-FI.HE", "ADYEN.AS",
-    "SAN.PA", "ENEL.MI", "NOKIA.HE", "SU.PA", "ALV.DE", "AIR.PA",
-    "BAYN.DE", "BMW.DE", "BAS.DE", "SIE.DE", "VOW3.DE", "MUV2.DE",
-    "SAP.DE", "RI.PA", "ADS.DE", "DTE.DE", "DHL.DE", "MBG.DE",
-    "IFX.DE", "DB1.DE"
-]
+    "INGA.AS", "PHIA.AS", "STLAM.MI", "BAS.DE", "BAYN.DE", "ALV.DE", "ADS.DE",
+    "SIE.DE", "DHL.DE", "MBG.DE", "DB1.DE", "AI.PA", "CS.PA", "BN.PA", "BNP.PA",
+    "MC.PA", "OR.PA", "SU.PA", "EL.PA", "RI.PA", "AIR.PA", "SAN.PA", "TTE.PA",
+    "DG.PA", "BBVA.MC", "ITX.MC", "IBE.MC", "SAN.MC", "KNEBV.HE", "BMW.DE",
+    "DTE.DE", "IFX.DE", "MUV2.DE", "SAP.DE", "KER.PA", "FLTR.L", "AD.AS", 
+    "ASML.AS", "ISP.MI", "ENEL.MI", "ENI.MI", "RMS.PA", "SAF.PA", "ABI.BR",
+    "VOW3.DE", "RACE.MI", "ADYEN.AS", "PRX.AS"]
 
     tickers_asx = [
     "CQE.AX", "QBE.AX", "ALX.AX", "BKW.AX", "WEB.AX", "PNI.AX", "BOQ.AX", 
