@@ -1786,14 +1786,14 @@ if selected == 'Technical Analysis':
        'USIM5.SA', 'VALE3.SA', 'VAMO3.SA', 'VBBR3.SA', 'VIVA3.SA', 'VIVT3.SA',
        'WEGE3.SA', 'YDUQ3.SA']
 
-    tickers_bmv = [
-    "MEGACPO.MX", "AC.MX", "ASURB.MX", "FEMSAUBD.MX", "CUERVO.MX", "KIMBERA.MX",
-    "GRUMAB.MX", "GMEXICOB.MX", "GCC.MX", "BOLSAA.MX", "OMAB.MX", "GFNORTEO.MX",
-    "BIMBOA.MX", "ALSEA.MX", "LABB.MX", "GAPB.MX", "GENTERA.MX", "TLEVISACPO.MX",
-    "GCARSOA1.MX", "BBAJIOO.MX", "CEMEXCPO.MX", "AMXB.MX", "PINFRA.MX",
-    "WALMEX.MX", "ORBIA.MX", "Q.MX", "RA.MX", "PE&OLES.MX", "CHDRAUIB.MX", "ELEKTRA.MX", "KOFUBL.MX",
-    "ALFAA.MX", "GFINBURO.MX", "VESTA.MX", "VOLARA.MX"
-]
+    tickers_bmv =  [
+    "ALFAA.MX", "ALSEA.MX", "AMXB.MX", "AC.MX", "BBAJIOO.MX", "CUERVO.MX", 
+    "BOLSAA.MX", "CEMEXCPO.MX", "KOFUBL.MX", "VESTA.MX", "LIVEPOLC-1.MX", 
+    "FEMSAUBD.MX", "LABB.MX", "GENTERA.MX", "GRUMAB.MX", "OMAB.MX", 
+    "GAPB.MX", "ASURB.MX", "BIMBOA.MX", "GCARSOA1.MX", "GCC.MX", 
+    "CHDRAUIB.MX", "GFNORTEO.MX", "GFINBURO.MX", "GMEXICOB.MX", 
+    "TLEVISACPO.MX", "PE&OLES.MX", "KIMBERA.MX", "LACOMERUBC.MX", 
+    "MEGACPO.MX", "ORBIA.MX", "PINFRA.MX", "Q.MX", "RA.MX", "WALMEX.MX"]
   
     tickers_ftse = ['ANTO.L', 'STJ.L', 'FCIT.L', 'BEZ.L', 'SSE.L', 'WEIR.L', 'RIO.L', 'AUTO.L', 'AAL.L',
                     'BDEV.L', 'BKG.L', 'ITRK.L', 'KGF.L', 'MNG.L', 'MKS.L', 'NXT.L', 'PSON.L', 'PSN.L', 
