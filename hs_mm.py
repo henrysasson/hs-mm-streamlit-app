@@ -104,7 +104,7 @@ if selected == 'Market Monitor':
     st.markdown('##')
 
     def market_return (df, classe):
-        st.subheader(classe)
+        st.text(classe)
         
         daily_diff = df.ffill().diff(1).iloc[-1]
         daily_returns = df.ffill().pct_change(1).iloc[-1]
