@@ -103,19 +103,28 @@ if selected == 'Market Monitor':
     st.title('Market Monitor')
     st.markdown('##')
 
-    def market_return (df, classe):
-        st.text(classe)
+    def market_return(df, classe):
+        # Subtítulo para a classe de ativos com tamanho ajustado
+        st.text(
+            f"<h4 style='font-size:14px; color:gray;'>{classe}</h4>", unsafe_allow_html=True
+        )
         
+        # Calcula diferenças absolutas e percentuais
         daily_diff = df.ffill().diff(1).iloc[-1]
         daily_returns = df.ffill().pct_change(1).iloc[-1]
-
-        for instrument in df.columns:           
-            st.metric(
-            label=instrument,
-            value=f"{daily_returns.loc[instrument]:.2%}",  # Formatação como percentual
-            delta=f"{daily_diff.loc[instrument]:.2f}",  # Diferença absoluta
-            label_visibility="visible"
-        )
+    
+        # Exibe métricas com texto personalizado
+        for instrument in df.columns:
+            st.markdown(
+                f"""
+                <div style="display: flex; justify-content: space-between; align-items: center; background-color: #f4f4f4; padding: 8px; border-radius: 5px; margin-bottom: 8px;">
+                    <span style="font-size:12px; font-weight:bold; color:#333;">{instrument}</span>
+                    <span style="font-size:12px; color:green;">{daily_returns.loc[instrument]:.2%}</span>
+                    <span style="font-size:12px; color:blue;">Δ {daily_diff.loc[instrument]:.2f}</span>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
     
 
     col1, col2, col3, col4, col5, col6 = st.columns(6)
