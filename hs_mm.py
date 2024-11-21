@@ -110,7 +110,12 @@ if selected == 'Market Monitor':
         daily_returns = df.ffill().pct_change(1).iloc[-1]
 
         for instrument in df.columns:           
-            st.metric(label=instrument, value=daily_returns.loc[instrument], delta=daily_diff.loc[instrument], label_visibility="visible")
+            st.metric(
+            label=instrument,
+            value=f"{daily_returns.loc[instrument]:.2%}",  # Formatação como percentual
+            delta=f"{daily_diff.loc[instrument]:.2f}",  # Diferença absoluta
+            label_visibility="visible"
+        )
     
 
     col1, col2, col3 = st.columns(3)
