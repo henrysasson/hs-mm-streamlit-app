@@ -117,9 +117,11 @@ if selected == 'Market Monitor':
         # Calcula diferenças absolutas e percentuais
         daily_diff = df.ffill().diff(1).iloc[-1]
         daily_returns = df.ffill().pct_change(1).iloc[-1]
+
+        tickers_order = daily_diff.sort_values(ascending=False).index
         
         # Renderiza cada instrumento com formatação dinâmica
-        for instrument in df.columns:
+        for instrument in tickers_order:
             # Cor de fundo com base no retorno (verde para positivo, vermelho para negativo)
             bg_color = "#005f00" if daily_returns.loc[instrument] > 0 else "#8b0000"
             
