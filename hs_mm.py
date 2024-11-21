@@ -106,21 +106,25 @@ if selected == 'Market Monitor':
     def market_return(df, classe):
         # Subtítulo para a classe de ativos com tamanho ajustado
         st.markdown(
-            f"<h4 style='font-size:14px; color:gray;'>{classe}</h4>", unsafe_allow_html=True
+            f"<h4 style='font-size:14px; color:white;'>{classe}</h4>", unsafe_allow_html=True
         )
         
         # Calcula diferenças absolutas e percentuais
         daily_diff = df.ffill().diff(1).iloc[-1]
         daily_returns = df.ffill().pct_change(1).iloc[-1]
     
-        # Exibe métricas com texto personalizado
+        # Renderiza cada instrumento com formatação dinâmica
         for instrument in df.columns:
+            # Cor de fundo com base no retorno (verde para positivo, vermelho para negativo)
+            bg_color = "green" if daily_returns.loc[instrument] > 0 else "red"
+    
+            # Card customizado com estilos
             st.markdown(
                 f"""
-                <div style="display: flex; justify-content: space-between; align-items: center; background-color: #f4f4f4; padding: 8px; border-radius: 5px; margin-bottom: 8px;">
-                    <span style="font-size:12px; font-weight:bold; color:#333;">{instrument}</span>
-                    <span style="font-size:12px; color:green;">{daily_returns.loc[instrument]:.2%}</span>
-                    <span style="font-size:12px; color:blue;">Δ {daily_diff.loc[instrument]:.2f}</span>
+                <div style="background-color: {bg_color}; padding: 15px; border-radius: 10px; margin-bottom: 10px; text-align: center; color: white;">
+                    <div style="font-size: 14px; font-weight: bold;">{instrument}</div>
+                    <div style="font-size: 20px; font-weight: bold;">{daily_returns.loc[instrument]:.2%}</div>
+                    <div style="font-size: 12px;">Δ {daily_diff.loc[instrument]:.2f}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
