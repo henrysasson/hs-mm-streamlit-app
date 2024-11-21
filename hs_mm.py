@@ -96,8 +96,40 @@ df_sectors.rename(columns=column_mapping, inplace=True)
 # Todos os Ativos
 all_assets = pd.concat([df_acoes, df_moedas, df_commodities, df_rf, df_factors, df_sectors], axis=1).ffill().dropna()
 
-options = ['Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatility']
+options = ['Market Monitor', 'Returns Heatmap', 'Correlation Matrix',  'Market Directionality', 'Macro Indicators', 'Positioning',  'Technical Analysis', 'Risk & Volatility']
 selected = st.sidebar.selectbox('Main Menu', options)
+
+if selected == 'Market Monitor':
+    st.title('Market Monitor')
+    st.markdown('##')
+
+    def market_return (df, classe):
+        st.subheader(classe)
+        
+        daily_diff = df.ffill().diff(1).iloc[-1]
+        daily_returns = df.ffill().pct_change(1).iloc[-1]
+
+        for instrument in df.columns:           
+            st.metric(label=instrument, value=daily_returns.loc[instrument], delta=daily_diff.loc[instrument], label_visibility="visible")
+    
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        market_return(df_acoes, "Equities")
+    with col2:
+        market_return(df_moedas, "Currencies (Futures)")
+    with col3:
+        market_return(df_commodities, "Commodities")
+
+    col4, col5, col6 = st.columns(3)
+    with col4:
+        market_return(df_rf, "Fixed Income")
+    with col5:
+        market_return(df_factors, "Factors")
+    with col6:
+        market_return(df_sectors, "US Sectors")
+
 
 
 if selected == 'Returns Heatmap':
