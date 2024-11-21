@@ -105,7 +105,7 @@ if selected == 'Market Monitor':
 
     def market_return(df, classe):
         # Subtítulo para a classe de ativos com tamanho ajustado
-        st.text(
+        st.markdown(
             f"<h4 style='font-size:14px; color:gray;'>{classe}</h4>", unsafe_allow_html=True
         )
         
