@@ -118,7 +118,7 @@ if selected == 'Market Monitor':
         )
     
 
-    col1, col2, col3 = st.columns(3)
+    col1, col2, col3, col4, col5, col6 = st.columns(6)
 
     with col1:
         market_return(df_acoes, "Equities")
@@ -127,7 +127,7 @@ if selected == 'Market Monitor':
     with col3:
         market_return(df_commodities, "Commodities")
 
-    col4, col5, col6 = st.columns(3)
+    # col4, col5, col6 = st.columns(3)
     with col4:
         market_return(df_rf, "Fixed Income")
     with col5:
