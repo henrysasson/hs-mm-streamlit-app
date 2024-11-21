@@ -106,9 +106,9 @@ if selected == 'Market Monitor':
     def market_return(df, classe):
         # Subtítulo para a classe de ativos com tamanho ajustado
         st.markdown(
-            f"<h4 style='font-size:14px; color:white;'>{classe}</h4>", unsafe_allow_html=True
-        )
-        
+        f"<h4 style='font-size:14px; color:gray;'>{classe}</h4>", unsafe_allow_html=True
+    )
+    
         # Calcula diferenças absolutas e percentuais
         daily_diff = df.ffill().diff(1).iloc[-1]
         daily_returns = df.ffill().pct_change(1).iloc[-1]
@@ -121,7 +121,7 @@ if selected == 'Market Monitor':
             # Card customizado com estilos
             st.markdown(
                 f"""
-                <div style="background-color: {bg_color}; padding: 15px; border-radius: 10px; margin-bottom: 10px; text-align: center; color: white;">
+                <div style="background-color: {bg_color}; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: center; color: white; width: 90%; margin-left: auto; margin-right: auto;">
                     <div style="font-size: 14px; font-weight: bold;">{instrument}</div>
                     <div style="font-size: 20px; font-weight: bold;">{daily_returns.loc[instrument]:.2%}</div>
                     <div style="font-size: 12px;">Δ {daily_diff.loc[instrument]:.2f}</div>
