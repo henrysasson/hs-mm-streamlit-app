@@ -122,13 +122,16 @@ if selected == 'Market Monitor':
         for instrument in df.columns:
             # Cor de fundo com base no retorno (verde para positivo, vermelho para negativo)
             bg_color = "green" if daily_returns.loc[instrument] > 0 else "red"
+            
+            # Adiciona "+" no retorno se for positivo
+            return_value = f"+{daily_returns.loc[instrument]:.2%}" if daily_returns.loc[instrument] > 0 else f"{daily_returns.loc[instrument]:.2%}"
     
             # Card customizado com estilos
             st.markdown(
                 f"""
                 <div style="background-color: {bg_color}; padding: 10px; border-radius: 8px; margin-bottom: 8px; text-align: center; color: white; width: 90%; margin-left: auto; margin-right: auto;">
                     <div style="font-size: 14px; font-weight: bold;">{instrument}</div>
-                    <div style="font-size: 20px; font-weight: bold;">{daily_returns.loc[instrument]:.2%}</div>
+                    <div style="font-size: 20px; font-weight: bold;">{return_value}</div>
                     <div style="font-size: 12px;">Δ {daily_diff.loc[instrument]:.2f}</div>
                 </div>
                 """,
