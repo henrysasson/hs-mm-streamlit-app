@@ -115,8 +115,8 @@ if selected == 'Market Monitor':
         )
         
         # Calcula diferenças absolutas e percentuais
-        daily_diff = df.ffill().diff(1).iloc[-1]
-        daily_returns = df.ffill().pct_change(1).iloc[-1]
+        daily_diff = df.ffill().diff(1).fillna(0).iloc[-1]
+        daily_returns = df.ffill().pct_change(1).fillna(0).iloc[-1]
 
         tickers_order = daily_returns.sort_values(ascending=False).index
         
