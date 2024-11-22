@@ -1882,15 +1882,15 @@ if selected == 'Technical Analysis':
     "SIRI", "WBD", "MU", "TMUS", "VRSK", "DLTR", "FANG", "DXCM", "FTNT", 
     "TTD"]
     
-    tickers_sp500 = ['LYB', 'AXP', 'VZ', 'AVGO', 'BA', 'CAT', 'JPM', 'CVX', 'KO', 'ABBV', 'DIS', 'FLT', 'EXR', 
+    tickers_sp500 = ['LYB', 'AXP', 'VZ', 'AVGO', 'BA', 'CAT', 'JPM', 'CVX', 'KO', 'ABBV', 'DIS', 'EXR', 
                      'XOM', 'PSX', 'GE', 'HPQ', 'HD', 'MPWR', 'IBM', 'JNJ', 'LULU', 'MCD', 'MRK', 'MMM', 'AWK', 
                      'BAC', 'PFE', 'PG', 'T', 'TRV', 'RTX', 'ADI', 'WMT', 'CSCO', 'INTC', 'GM', 'MSFT', 'DG', 'CI', 
                      'KMI', 'C', 'AIG', 'MO', 'HCA', 'IP', 'HPE', 'ABT', 'AFL', 'APD', 'RCL', 'HES', 'ADM', 'ADP', 'VRSK', 
-                     'AZO', 'LIN', 'AVY', 'ENPH', 'MSCI', 'BALL', 'AXON', 'CDAY', 'CARR', 'BK', 'OTIS', 'BAX', 'BDX', 'BRK-B', 
+                     'AZO', 'LIN', 'AVY', 'ENPH', 'MSCI', 'BALL', 'AXON', 'CARR', 'BK', 'OTIS', 'BAX', 'BDX', 'BRK-B', 
                      'BBY', 'BSX', 'BMY', 'BF-B', 'CTRA', 'CPB', 'HLT', 'CCL', 'QRVO', 'BLDR', 'UDR', 'CLX', 'PAYC', 'CMS', 'CL', 
                      'EPAM', 'CMA', 'CAG', 'ABNB', 'ED', 'GLW', 'CMI', 'CZR', 'DHR', 'TGT', 'DE', 'D', 'DOV', 'LNT', 'STLD', 'DUK', 
                      'REG', 'ETN', 'ECL', 'RVTY', 'EMR', 'EOG', 'AON', 'ETR', 'EFX', 'EQT', 'IQV', 'IT', 'FDX', 'FMC', 'BRO', 'F', 'NEE', 
-                     'BEN', 'GRMN', 'FCX', 'DXCM', 'GD', 'GIS', 'GPC', 'ATO', 'GWW', 'HAL', 'LHX', 'PEAK', 'PODD', 'CTLT', 'FTV', 'HSY', 'SYF', 
+                     'BEN', 'GRMN', 'FCX', 'DXCM', 'GD', 'GIS', 'GPC', 'ATO', 'GWW', 'HAL', 'LHX', 'PODD', 'CTLT', 'FTV', 'HSY', 'SYF', 
                      'HRL', 'AJG', 'MDLZ', 'CNP', 'HUM', 'WTW', 'ITW', 'CDW', 'TT', 'IPG', 'IFF', 'GNRC', 'NXPI', 'K', 'BR', 'KMB', 'KIM', 'ORCL', 
                      'KR', 'LEN', 'LLY', 'BBWI', 'CHTR', 'L', 'LOW', 'HUBB', 'IEX', 'MMC', 'MAS', 'SPGI', 'MDT', 'VTRS', 'CVS', 'DD', 'MU', 'MSI', 
                      'CBOE', 'LH', 'NEM', 'NKE', 'NI', 'NSC', 'PFG', 'ES', 'NOC', 'WFC', 'NUE', 'OXY', 'OMC', 'OKE', 'RJF', 'PCG', 'PH', 'ROL', 
@@ -1902,12 +1902,12 @@ if selected == 'Technical Analysis':
                      'PAYX', 'QCOM', 'ROST', 'IDXX', 'SBUX', 'KEY', 'FOXA', 'FOX', 'STT', 'NCLH', 'USB', 'AOS', 'GEN', 'TROW', 'WM', 'STZ', 'XRAY', 'ZION', 
                      'IVZ', 'INTU', 'MS', 'MCHP', 'CB', 'HOLX', 'CFG', 'JBL', 'ORLY', 'ALL', 'EQR', 'BWA', 'KDP', 'HST', 'INCY', 'SPG', 'EMN', 'AVB', 'PRU', 
                      'UPS', 'WBA', 'STE', 'MCK', 'LMT', 'COR', 'COF', 'WAT', 'NDSN', 'DLTR', 'DRI', 'EVRG', 'MTCH', 'DPZ', 'NVR', 'NTAP', 'ODFL', 'DVA', 'HIG', 
-                     'IRM', 'EL', 'CDNS', 'TYL', 'UHS', 'SWKS', 'DGX', 'ROK', 'KHC', 'AMT', 'REGN', 'AMZN', 'JKHY', 'RL', 'BXP', 'APH', 'HWM', 'PXD', 'VLO', 'SNPS', 
+                     'IRM', 'EL', 'CDNS', 'TYL', 'UHS', 'SWKS', 'DGX', 'ROK', 'KHC', 'AMT', 'REGN', 'AMZN', 'JKHY', 'RL', 'BXP', 'APH', 'HWM', 'VLO', 'SNPS', 
                      'ETSY', 'CHRW', 'ACN', 'TDG', 'YUM', 'PLD', 'FE', 'VRSN', 'PWR', 'HSIC', 'AEE', 'ANSS', 'FDS', 'NVDA', 'CTSH', 'ISRG', 'TTWO', 'RSG', 'EBAY', 'GS', 
                      'SBAC', 'SRE', 'MCO', 'ON', 'BKNG', 'FFIV', 'AKAM', 'CRL', 'MKTX', 'DVN', 'TECH', 'GOOGL', 'TFX', 'NFLX', 'ALLE', 'A', 'WBD', 'ELV', 'TRMB', 'CME', 
                      'JNPR', 'BLK', 'DTE', 'NDAQ', 'CE', 'PM', 'CRM', 'IR', 'HII', 'ROP', 'MET', 'TPR', 'CSX', 'EW', 'AMP', 'ZBRA', 'ZBH', 'CBRE', 'CPT', 'MA', 'KMX', 'ICE', 
                      'FIS', 'CMG', 'WYNN', 'LYV', 'AIZ', 'NRG', 'RF', 'MNST', 'MOS', 'BKR', 'EXPE', 'CF', 'LDOS', 'APA', 'GOOG', 'FSLR', 'TEL', 'DFS', 'V', 'MAA', 'XYL', 'MPC', 
-                     'AMD', 'TSCO', 'RMD', 'MTD', 'J', 'CPRT', 'VICI', 'FTNT', 'ALB', 'MRNA', 'ESS', 'CSGP', 'O', 'WRK', 'WAB', 'POOL', 'WDC', 'PEP', 'FANG', 'PANW', 'NOW', 'CHD', 
+                     'AMD', 'TSCO', 'RMD', 'MTD', 'J', 'CPRT', 'VICI', 'FTNT', 'ALB', 'MRNA', 'ESS', 'CSGP', 'O', 'WAB', 'POOL', 'WDC', 'PEP', 'FANG', 'PANW', 'NOW', 'CHD', 
                      'FRT', 'MGM', 'AEP', 'INVH', 'PTC', 'JBHT', 'LRCX', 'MHK', 'PNR', 'GEHC', 'VRTX', 'AMCR', 'META', 'TMUS', 'URI', 'HON', 'ARE', 'DAL', 'STX', 'UAL', 'NWS', 'CNC', 
                      'MLM', 'TER', 'PYPL', 'TSLA', 'ACGL', 'DOW', 'EG', 'TDY', 'NWSA', 'EXC', 'GPN', 'CCI', 'APTV', 'ALGN', 'ILMN', 'KVUE', 'TRGP', 'BG', 'LKQ', 'ZTS', 'DLR', 'EQIX', 'LVS', 'MOH']
     
