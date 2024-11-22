@@ -2750,7 +2750,7 @@ height=600  # Altura do gráfico
     # Verificar a correspondência
     correspondencia_original = correspondencia.get(nome_procurado)
 
-    df_asset = yf.download(correspondencia_original, period='25y')['Adj Close']
+    df_asset = yf.download(correspondencia_original, period='10y')['Adj Close']
     
     hist_vol_asset_20d = (np.round(df_asset.ffill().pct_change(1).rolling(window=20).std()*np.sqrt(252), 4))
     
