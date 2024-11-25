@@ -2597,11 +2597,7 @@ if selected == 'Technical Analysis':
 
                 tickers_data.loc[name, 'Industry'] = industry
 
-                tickers_data.loc[name, 'Market Cap'] = round(mkt_cap / 1000000000, 2)
-
-
-                tickers_data.columns = [col.replace('Market Cap', 'Market Cap ' + curncy + ' bn') for col in tickers_data.columns]
-                
+                tickers_data.loc[name, 'Market Cap'] = round(mkt_cap / 1000000000, 2)              
 
                 
             
@@ -2609,6 +2605,8 @@ if selected == 'Technical Analysis':
                 pass
 
         tickers_data = tickers_data.dropna(axis=0)
+
+        tickers_data.columns = [col.replace('Market Cap', 'Market Cap ' + curncy + ' bn') for col in tickers_data.columns]
 
         # Configurar colunas para exibir valores no formato X,XX%
         percentage_columns = [
