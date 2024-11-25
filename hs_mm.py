@@ -2547,7 +2547,7 @@ if selected == 'Technical Analysis':
 
     if analysis_type == "Constituents":
 
-        tickers_data = pd.DataFrame(columns=['Sector', '1D', '3D', '1W', '2W', '1M', '3M', '6M', '1Y', '2Y', 
+        tickers_data = pd.DataFrame(columns=['Sector', 'Industry', 'Market Cap', '1D', '3D', '1W', '2W', '1M', '3M', '6M', '1Y', '2Y', 
                                    '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High',  '% 52W Low'], 
                             index=list_of_stocks)
 
@@ -2584,10 +2584,26 @@ if selected == 'Technical Analysis':
                 name = yf.Ticker(stock).info['longName']
                 
                 sector = yf.Ticker(stock).info['sector']
+
+                industry = yf.Ticker(stock).info['industry']
+
+                mkt_cap = yf.Ticker(stock).info['marketCap']
+
+                curncy = yf.Ticker(stock).info['financialCurrency']
         
                 tickers_data.index.values[i] = name
                 
                 tickers_data.loc[name, 'Sector'] = sector
+
+                tickers_data.loc[name, 'Industry'] = industry
+
+                tickers_data.loc[name, 'Market Cap'] = round(mkt_cap / 1000000000, 2)
+
+
+                tickers_data.columns = [col.replace('Market Cap', 'Market Cap ' + curncy + ' bn') for col in tickers_data.columns]
+                
+
+                
             
             except:
                 pass
