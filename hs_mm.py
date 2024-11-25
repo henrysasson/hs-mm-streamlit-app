@@ -2589,7 +2589,7 @@ if selected == 'Technical Analysis':
 
                 mkt_cap = yf.Ticker(stock).info['marketCap']
 
-                curncy = yf.Ticker(stock).info['financialCurrency']
+                curncy = yf.Ticker(stock).info['currency']
         
                 tickers_data.index.values[i] = name
                 
