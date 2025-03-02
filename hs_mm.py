@@ -2090,18 +2090,18 @@ if selected == 'Technical Analysis':
     if analysis_type == "Index":
     
         df1 = yf.download(ticker, period='10y')
-        df1.columns = ['Adj Close', 'Close', 'High', 'Low', 'Open', 'Volume']
-        df1['Returns'] = df1['Adj Close'].pct_change()
-        df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
-        df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
-        df1['Open'] = df1['Open'] - (df1['Close']-df1['Adj Close'])
+        df1.columns = ['Close', 'High', 'Low', 'Open', 'Volume']
+        df1['Returns'] = df1['Close'].pct_change()
+        # df1['High'] = df1['High'] - (df1['Close']-df1['Adj Close'])
+        # df1['Low'] = df1['Low'] - (df1['Close']-df1['Adj Close'])
+        # df1['Open'] = df1['Open'] - (df1['Close']-df1['Adj Close'])
         df1.index = df1.index.tz_localize(None)
         df1['Dates'] = df1.index
     
         vol_pl = 20
         df1['Vol'] = (np.round(df1['Returns'].rolling(window=vol_pl).std()*np.sqrt(252), 4))/np.sqrt(12)
         
-        df1['Month_End'] = df1['Adj Close'].asfreq('BM').ffill()  # 'BM' para o último dia útil de cada mês
+        df1['Month_End'] = df1['Close'].asfreq('BM').ffill()  # 'BM' para o último dia útil de cada mês
         df1['Month_End_Vol'] = df1['Vol'].asfreq('BM').ffill()
     
         df1 = df1.ffill()
@@ -2207,18 +2207,18 @@ if selected == 'Technical Analysis':
     
         ################## Stocks abova MA (50 and 200) #################
         
-        df['50_sma'] = df.groupby(level=1)['Adj Close']\
+        df['50_sma'] = df.groupby(level=1)['Close']\
                       .rolling(window=50, min_periods=1).mean()\
                       .reset_index(level=0, drop=True)
     
-        df['200_sma'] = df.groupby(level=1)['Adj Close']\
+        df['200_sma'] = df.groupby(level=1)['Close']\
                       .rolling(window=200, min_periods=1).mean()\
                       .reset_index(level=0, drop=True)
     
-        df['above_50_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['50_sma'])
+        df['above_50_sma'] = df.apply(lambda x: 1 if (x['Close'] > x['50_sma'])
                                               else 0, axis=1)
     
-        df['above_200_sma'] = df.apply(lambda x: 1 if (x['Adj Close'] > x['200_sma'])
+        df['above_200_sma'] = df.apply(lambda x: 1 if (x['Close'] > x['200_sma'])
                                                else 0, axis=1)
     
         above_50 = round(((df.groupby(level=0)['above_50_sma'].sum()/len(list_of_stocks))*100),2)
@@ -2551,7 +2551,7 @@ if selected == 'Technical Analysis':
                                    '% MA20', '% MA50', '% MA150', '% MA200', '% 52W High',  '% 52W Low'], 
                             index=list_of_stocks)
 
-        price = yf.download(list_of_stocks, period='5y')['Adj Close']
+        price = yf.download(list_of_stocks, period='5y')['Close']
 
         # Preenchendo os dados de variação percentual para diferentes períodos
         tickers_data['1D'] = price.pct_change(1).iloc[-1]
@@ -2764,7 +2764,7 @@ height=600  # Altura do gráfico
     # Verificar a correspondência
     correspondencia_original = correspondencia.get(nome_procurado)
 
-    df_asset = yf.download(correspondencia_original, period='10y')['Adj Close']
+    df_asset = yf.download(correspondencia_original, period='10y')['Close']
     
     hist_vol_asset_20d = (np.round(df_asset.ffill().pct_change(1).rolling(window=20).std()*np.sqrt(252), 4))
     
@@ -2842,9 +2842,9 @@ height=600  # Altura do gráfico
 
     correspondencia_original_2 = correspondencia.get(nome_procurado_2)
 
-    df_asset_1 = yf.download(correspondencia_original_1, period='10y')['Adj Close']
+    df_asset_1 = yf.download(correspondencia_original_1, period='10y')['Close']
 
-    df_asset_2 = yf.download(correspondencia_original_2, period='10y')['Adj Close']
+    df_asset_2 = yf.download(correspondencia_original_2, period='10y')['Close']
     
 
     # Volatilidade de 20, 60 e 260 dias
