@@ -2144,7 +2144,7 @@ if selected == 'Technical Analysis':
                               open=df1['Open'],
                               high=df1['High'],
                               low=df1['Low'],
-                              close=df1['Adj Close'],
+                              close=df1['Close'],
                               hovertext=hovertext,
                               hoverinfo='text',
                               name=market,
