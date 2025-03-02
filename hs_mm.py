@@ -2131,7 +2131,7 @@ if selected == 'Technical Analysis':
         hovertext = [
             'Date: {}<br>Open: {:.2f}<br>High: {:.2f}<br>Low: {:.2f}<br>Close: {:.2f}'.format(
                 df1.index[i].strftime('%Y-%m-%d'), df1.iloc[i]['Open'], df1.iloc[i]['High'],
-                df1.iloc[i]['Low'], df1.iloc[i]['Adj Close']
+                df1.iloc[i]['Low'], df1.iloc[i]['Close']
             )
             for i in range(len(df1))
 ]
